@@ -51,7 +51,7 @@ class _ZikrCardState extends State<ZikrCard> {
                               ? kGreenPrimaryColor
                               : kBluePrimaryColor, //hereeee
                       fontSize:
-                          Provider.of<Settings>(context).isFontMed ? 22 : 28,
+                          Provider.of<Settings>(context).isFontMed ? 22 : 26,
                       //fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -62,8 +62,8 @@ class _ZikrCardState extends State<ZikrCard> {
             decoration: BoxDecoration(
               //color: Color.fromRGBO(245, 245, 245, 1),
               color: Provider.of<Settings>(context).isNightTheme
-                  ? Color(0xFF202020)
-                  : Colors.grey[50], //hereeee
+                  ? kNightBackgroundColor
+                  : kLightBackgroundColor, //hereeee
               borderRadius: BorderRadius.circular(10.0),
               boxShadow: [
                 BoxShadow(
@@ -85,7 +85,7 @@ class _ZikrCardState extends State<ZikrCard> {
                       height: 45.0,
                       decoration: BoxDecoration(
                         color: Provider.of<Settings>(context).isNightTheme
-                            ? Color(0xFF202020)
+                            ? kNightBackgroundColor
                             : Color.fromRGBO(245, 245, 245, 1), //hereeee
                         borderRadius: BorderRadius.circular(45.0),
                         boxShadow: [
@@ -127,12 +127,14 @@ class _ZikrCardState extends State<ZikrCard> {
                         padding: const EdgeInsets.symmetric(horizontal: 5.0),
                         color: Provider.of<Settings>(context, listen: false)
                                 .isNightTheme
-                            ? Color(0xFF202020)
-                            : Colors.grey[50],
+                            ? kNightBackgroundColor
+                            : kLightBackgroundColor,
                         child: Text(
                           widget.title,
                           style: TextStyle(
-                            fontSize: 25.0,
+                            fontSize: Provider.of<Settings>(context).isFontMed
+                                ? 25
+                                : 28,
                             color: Provider.of<Settings>(context).isNightTheme
                                 ? Colors.white
                                 : Provider.of<Settings>(context).isGreenTheme

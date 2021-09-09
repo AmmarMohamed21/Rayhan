@@ -19,8 +19,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Provider.of<Settings>(context).isNightTheme
-          ? Color(0xFF202020)
-          : Colors.grey[50],
+          ? kNightBackgroundColor
+          : kLightBackgroundColor,
       appBar: getAppBar(title: 'الإعدادات', context: context),
       body: SettingsRows(
           //sabahNotify: prefs.getBool(''),
@@ -54,7 +54,7 @@ class SettingsRows extends StatelessWidget {
           ),
           SettingRow(
             label: 'حجم الخط',
-            icon: MyFlutterApp.arabicfont,
+            icon: CustomIcons.arabicfont,
             iconColor: Provider.of<Settings>(context).isGreenTheme
                 ? kGreenLightPrimaryColor
                 : kBlueLightPrimaryColor, //hereeee

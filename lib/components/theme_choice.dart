@@ -22,7 +22,7 @@ class ThemeChoice extends StatelessWidget {
                 : Colors.grey,
             child: TwoColouredCircle(
               upperColor: kGreenLightPrimaryColor,
-              lowerColor: Colors.grey[50],
+              lowerColor: kLightBackgroundColor,
               diameter: Provider.of<Settings>(context).isGreenTheme &&
                       !Provider.of<Settings>(context).isNightTheme
                   ? 44
@@ -44,7 +44,7 @@ class ThemeChoice extends StatelessWidget {
                 : Colors.grey,
             child: TwoColouredCircle(
               upperColor: kBlueLightPrimaryColor,
-              lowerColor: Colors.grey[50],
+              lowerColor: kLightBackgroundColor,
               diameter: !Provider.of<Settings>(context).isGreenTheme ? 44 : 40,
             ),
           ),

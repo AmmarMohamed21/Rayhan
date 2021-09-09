@@ -12,8 +12,8 @@ class FontSizeChoice extends StatelessWidget {
           : Colors.black54, //hereeee
       selectedColor: kSecondaryColor,
       fillColor: Provider.of<Settings>(context).isNightTheme
-          ? Color(0xFF202020)
-          : Colors.grey[50], //hereeee
+          ? kNightBackgroundColor
+          : kLightBackgroundColor, //hereeee
       renderBorder: false,
       //borderRadius: BorderRadius.circular(20.0),
       children: [

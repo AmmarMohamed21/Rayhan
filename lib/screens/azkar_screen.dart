@@ -19,8 +19,8 @@ class AzkarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Provider.of<Settings>(context).isNightTheme
-          ? Color(0xFF202020)
-          : Colors.grey[50],
+          ? kNightBackgroundColor
+          : kLightBackgroundColor,
       appBar: getAppBar(title: title, context: context),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

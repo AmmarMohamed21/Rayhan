@@ -11,11 +11,11 @@ import "dart:math";
 
 class Settings extends ChangeNotifier {
   final String _sabahNotifyTitle = 'أذكار الصباح';
-  final String _sabahNotifyBody =
+  String _sabahNotifyBody =
       azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
           '.\nاضغط على الإشعار لقراءة أذكار الصباح.';
   final String _masaaNotifyTitle = 'أذكار المساء';
-  final String _masaaNotifyBody =
+  String _masaaNotifyBody =
       azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
           '.\nاضغط على الإشعار لقراءة أذكار المساء.';
 
@@ -39,6 +39,14 @@ class Settings extends ChangeNotifier {
 
   Future<void> initializeSettings(BuildContext context) async {
     this.context = context;
+
+    _sabahNotifyBody =
+        azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
+            '.\nاضغط على الإشعار لقراءة أذكار الصباح.';
+    _masaaNotifyBody =
+        azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
+            '.\nاضغط على الإشعار لقراءة أذكار المساء.';
+
     tz.initializeTimeZones();
     final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
@@ -124,7 +132,7 @@ class Settings extends ChangeNotifier {
       isGreenTheme = true;
     }
 
-    await Future.delayed(Duration(seconds: 3));
+    //await Future.delayed(Duration(seconds: 3));
     if (notificationAppLaunchDetails.payload == 'أذكار الصباح') {
       return Navigator.push(
         context,

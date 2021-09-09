@@ -76,8 +76,8 @@ class _NotificationSwitchState extends State<NotificationSwitch> {
                 theme: ThemeData(
                   dialogBackgroundColor:
                       Provider.of<Settings>(context, listen: false).isNightTheme
-                          ? Color(0xFF202020)
-                          : Colors.grey[50],
+                          ? kNightBackgroundColor
+                          : kLightBackgroundColor,
                   primarySwatch:
                       Provider.of<Settings>(context, listen: false).isGreenTheme
                           ? kGreenMaterialPrimary

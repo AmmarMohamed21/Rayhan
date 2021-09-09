@@ -21,10 +21,25 @@ class HomeScreen extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (snap.connectionState == ConnectionState.done) {
             return Scaffold(
+              // drawer: Drawer(
+              //   child: ListView(
+              //     children: [
+              //       ListTile(
+              //         title: Text('الأذكار'),
+              //       ),
+              //       ListTile(
+              //         title: Text('مواقيت الصلاة'),
+              //       ),
+              //       ListTile(
+              //         title: Text('عن التطبيق'),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               backgroundColor:
                   Provider.of<Settings>(context, listen: false).isNightTheme
-                      ? Color(0xFF202020)
-                      : Colors.grey[50],
+                      ? kNightBackgroundColor
+                      : kLightBackgroundColor,
               appBar: getAppBar(title: 'روحٌ وريحان', context: context),
               body: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,8 +84,8 @@ class HomeScreen extends StatelessWidget {
               backgroundColor:
                   SchedulerBinding.instance.window.platformBrightness ==
                           Brightness.dark
-                      ? Color(0xFF202020)
-                      : Colors.grey[50],
+                      ? kNightBackgroundColor
+                      : kLightBackgroundColor,
               body: Stack(
                 alignment: Alignment.center,
                 children: [

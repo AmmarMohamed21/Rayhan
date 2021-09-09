@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const Color kNightBackgroundColor = Color(0xFF202020);
+final Color kLightBackgroundColor = Colors.grey[50];
+
 const Color kBluePrimaryColor = Color(0xFF1d3557);
 const Color kBlueLightPrimaryColor = Color(0xFF457b9d);
 const Color kBlueLightColor = Color(0xFFa8dadc);

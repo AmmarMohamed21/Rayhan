@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,14 @@ class LeafButton extends StatelessWidget {
   LeafButton({this.label, this.isInversed});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      highlightColor: Provider.of<Settings>(context, listen: false).isNightTheme
+          ? kNightBackgroundColor
+          : kLightBackgroundColor,
+      splashColor: Provider.of<Settings>(context, listen: false).isGreenTheme
+          ? kGreenLightColor.withAlpha(100)
+          : kBlueLightColor.withAlpha(100),
+      borderRadius: BorderRadius.circular(80),
       onTap: () {
         if (label != 'الإعدادات') {
           Navigator.push(
@@ -37,7 +45,7 @@ class LeafButton extends StatelessWidget {
             alignment: Alignment.center,
             transform: Matrix4.rotationY(isInversed ? math.pi : 0),
             child: Icon(
-              MyFlutterApp.leaf,
+              CustomIcons.leaf,
               color: Provider.of<Settings>(context, listen: false).isGreenTheme
                   ? kGreenLightPrimaryColor
                   : kBlueLightPrimaryColor,
