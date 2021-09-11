@@ -132,7 +132,7 @@ class Settings extends ChangeNotifier {
       isGreenTheme = true;
     }
 
-    //await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 3));
     if (notificationAppLaunchDetails.payload == 'أذكار الصباح') {
       return Navigator.push(
         context,

@@ -18,11 +18,11 @@ class LeafButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Provider.of<Settings>(context, listen: false).isNightTheme
-          ? kNightBackgroundColor
-          : kLightBackgroundColor,
-      splashColor: Provider.of<Settings>(context, listen: false).isGreenTheme
-          ? kGreenLightColor.withAlpha(100)
-          : kBlueLightColor.withAlpha(100),
+          ? Color.fromRGBO(45, 45, 45, 0.2)
+          : Color.fromRGBO(215, 215, 215, 0.2),
+      splashColor: Provider.of<Settings>(context, listen: false).isNightTheme
+          ? Color.fromRGBO(45, 45, 45, 0.2)
+          : Color.fromRGBO(215, 215, 215, 0.2),
       borderRadius: BorderRadius.circular(80),
       onTap: () {
         if (label != 'الإعدادات') {
