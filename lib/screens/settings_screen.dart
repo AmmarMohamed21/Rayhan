@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/custom_icons.dart';
 import 'package:rayhan/components/font_size_choice.dart';
 import 'package:rayhan/components/main_app_bar.dart';
@@ -18,13 +19,15 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       backgroundColor: Provider.of<Settings>(context).isNightTheme
           ? kNightBackgroundColor
           : kLightBackgroundColor,
-      appBar: getAppBar(title: 'الإعدادات', context: context),
-      body: SettingsRows(
-          //sabahNotify: prefs.getBool(''),
-          ),
+      appBar: getAppBar(
+        title: 'الإعدادات',
+        context: context,
+      ),
+      body: SettingsRows(),
     );
   }
 }

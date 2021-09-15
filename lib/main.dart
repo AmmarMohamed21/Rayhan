@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:rayhan/screens/about_screen.dart';
+import 'package:rayhan/screens/prayer_times_screen.dart';
 
 import 'package:rayhan/screens/settings_screen.dart';
 import 'constants.dart';
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
+          PrayerTimesScreen.id: (context) => PrayerTimesScreen(),
+          AboutScreen.id: (context) => AboutScreen(),
         },
       ),
     );

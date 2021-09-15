@@ -43,6 +43,7 @@ flutter:
   assets:
     - assets/
     - assets/icon/logo.png
+    - assets/icon/logodark.png
   fonts:
     - family: Harmattans
       fonts:

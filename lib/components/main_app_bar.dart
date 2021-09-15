@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rayhan/screens/home_screen.dart';
 import 'dart:math' as math;
 
 import 'package:rayhan/services/settings.dart';
@@ -11,25 +12,15 @@ AppBar getAppBar({String title, BuildContext context}) {
     backgroundColor: Provider.of<Settings>(context).isGreenTheme
         ? kGreenPrimaryColor
         : kBluePrimaryColor,
-    // leading: Hero(
-    //   tag: 'logo',
-    //   child: Padding(
-    //     padding: const EdgeInsets.all(2.0),
-    //     child: Container(
-    //       //color: Colors.white,
-    //       decoration: BoxDecoration(
-    //         color: Colors.white,
-    //         borderRadius: BorderRadius.circular(5.0),
-    //       ),
-    //       child: Image.asset(
-    //         'assets/icon/logo.png',
-    //         // width: 120,
-    //         // height: 120,
-    //       ),
-    //     ),
-    //   ),
-    // ),
     centerTitle: true,
+    leading: ModalRoute.of(context).settings.name != HomeScreen.id
+        ? IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        : null,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,

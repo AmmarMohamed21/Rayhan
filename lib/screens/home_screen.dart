@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/custom_icons.dart';
+import 'package:rayhan/components/drawer_list_tile.dart';
 import 'package:rayhan/constants.dart';
 import 'package:rayhan/components/leaf_button.dart';
 import 'package:rayhan/components/main_app_bar.dart';
@@ -21,21 +24,7 @@ class HomeScreen extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (snap.connectionState == ConnectionState.done) {
             return Scaffold(
-              // drawer: Drawer(
-              //   child: ListView(
-              //     children: [
-              //       ListTile(
-              //         title: Text('الأذكار'),
-              //       ),
-              //       ListTile(
-              //         title: Text('مواقيت الصلاة'),
-              //       ),
-              //       ListTile(
-              //         title: Text('عن التطبيق'),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              drawer: AppDrawer(),
               backgroundColor:
                   Provider.of<Settings>(context, listen: false).isNightTheme
                       ? kNightBackgroundColor
@@ -89,13 +78,6 @@ class HomeScreen extends StatelessWidget {
               body: Stack(
                 alignment: Alignment.center,
                 children: [
-                  SchedulerBinding.instance.window.platformBrightness ==
-                          Brightness.dark
-                      ? CircleAvatar(
-                          radius: 80,
-                          backgroundColor: Colors.white,
-                        )
-                      : SizedBox.shrink(),
                   Center(
                     child: SpinKitPulse(
                       color: kGreenPrimaryColor,
@@ -103,7 +85,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Image.asset(
-                    'assets/icon/logo.png',
+                    SchedulerBinding.instance.window.platformBrightness ==
+                            Brightness.dark
+                        ? 'assets/icon/logodark.png'
+                        : 'assets/icon/logo.png',
                     width: 120,
                     height: 120,
                   ),

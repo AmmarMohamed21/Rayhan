@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/zikr_card.dart';
 import 'package:rayhan/components/custom_icons.dart';
 import 'package:rayhan/components/main_app_bar.dart';
@@ -18,10 +19,14 @@ class AzkarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       backgroundColor: Provider.of<Settings>(context).isNightTheme
           ? kNightBackgroundColor
           : kLightBackgroundColor,
-      appBar: getAppBar(title: title, context: context),
+      appBar: getAppBar(
+        title: title,
+        context: context,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: getAzkar(),
