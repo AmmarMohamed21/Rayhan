@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/constants.dart';
+import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/services/settings.dart';
 import 'dart:math' as math;
 

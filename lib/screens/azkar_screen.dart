@@ -5,7 +5,7 @@ import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/zikr_card.dart';
 import 'package:rayhan/components/custom_icons.dart';
 import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/constants.dart';
+import 'package:rayhan/utilities/constants.dart';
 import 'dart:math' as math;
 import 'package:rayhan/services/azkar_list.dart';
 import 'package:rayhan/services/settings.dart';

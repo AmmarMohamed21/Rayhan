@@ -6,10 +6,10 @@ import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/custom_icons.dart';
 import 'package:rayhan/components/font_size_choice.dart';
 import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/components/setting_row.dart';
+import 'package:rayhan/components/icon_label_row.dart';
 import 'package:rayhan/components/theme_choice.dart';
-import 'package:rayhan/constants.dart';
-import 'package:rayhan/services/helper.dart';
+import 'package:rayhan/utilities/constants.dart';
+import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/services/settings.dart';
 import '../components/notificaton_switch.dart';
 import 'dart:math' as math;
@@ -55,7 +55,7 @@ class SettingsRows extends StatelessWidget {
                 ? Colors.white
                 : Color(0xFF1d3557), //hereeee
           ),
-          SettingRow(
+          IconLabelRow(
             label: 'حجم الخط',
             icon: CustomIcons.arabicfont,
             iconColor: Provider.of<Settings>(context).isGreenTheme
@@ -63,7 +63,7 @@ class SettingsRows extends StatelessWidget {
                 : kBlueLightPrimaryColor, //hereeee
             endWidget: FontSizeChoice(),
           ),
-          SettingRow(
+          IconLabelRow(
             label: 'ألوان التطبيق',
             icon: Icons.color_lens,
             iconColor: kSecondaryColor, //hereeee

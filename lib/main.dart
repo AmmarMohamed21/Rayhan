@@ -5,7 +5,7 @@ import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/prayer_times_screen.dart';
 
 import 'package:rayhan/screens/settings_screen.dart';
-import 'constants.dart';
+import 'utilities/constants.dart';
 import 'screens/home_screen.dart';
 
 import 'services/settings.dart';

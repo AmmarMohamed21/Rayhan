@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/services/settings.dart';
 
-class SettingRow extends StatelessWidget {
+class IconLabelRow extends StatelessWidget {
   final String label;
   final IconData icon;
   final Color iconColor;
   final Widget endWidget;
 
-  SettingRow({this.label, this.icon, this.iconColor, this.endWidget});
+  IconLabelRow({this.label, this.icon, this.iconColor, this.endWidget});
 
   @override
   Widget build(BuildContext context) {

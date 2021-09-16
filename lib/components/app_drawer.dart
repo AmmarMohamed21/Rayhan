@@ -6,7 +6,7 @@ import 'package:rayhan/screens/prayer_times_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
 import 'package:rayhan/services/settings.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'drawer_list_tile.dart';
 
 class AppDrawer extends StatelessWidget {

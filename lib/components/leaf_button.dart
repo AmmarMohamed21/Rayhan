@@ -8,7 +8,7 @@ import 'package:rayhan/screens/settings_screen.dart';
 import 'package:rayhan/services/settings.dart';
 import 'dart:math' as math;
 import 'custom_icons.dart';
-import 'package:rayhan/constants.dart';
+import 'package:rayhan/utilities/constants.dart';
 
 class LeafButton extends StatelessWidget {
   final String label;

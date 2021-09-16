@@ -1,4 +1,4 @@
-import 'package:rayhan/constants.dart';
+import 'package:rayhan/utilities/constants.dart';
 
 String getArabicNumber(int num) {
   String arabicNum = '';

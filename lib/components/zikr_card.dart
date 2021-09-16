@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/constants.dart';
+import 'package:rayhan/utilities/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
-import 'package:rayhan/services/helper.dart';
+import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/services/settings.dart';
 
 class ZikrCard extends StatefulWidget {

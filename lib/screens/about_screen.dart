@@ -4,7 +4,7 @@ import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/main_app_bar.dart';
 import 'package:rayhan/services/settings.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class AboutScreen extends StatelessWidget {
   static final String id = 'about_screen';
