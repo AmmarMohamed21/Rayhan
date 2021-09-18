@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/components/two_coloured_circle.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/services/settings.dart';
-import 'dart:math' as math;
 
 class ThemeChoice extends StatelessWidget {
   @override
@@ -74,54 +74,4 @@ class ThemeChoice extends StatelessWidget {
       ],
     );
   }
-}
-
-class TwoColouredCircle extends StatelessWidget {
-  final Color upperColor;
-  final Color lowerColor;
-  final double diameter;
-  TwoColouredCircle({this.upperColor, this.lowerColor, this.diameter = 38});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomPaint(
-          painter: SemiCircle(color: upperColor),
-          size: Size(diameter, diameter),
-        ),
-        Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.rotationX(math.pi),
-          child: CustomPaint(
-            painter: SemiCircle(color: lowerColor),
-            size: Size(diameter, diameter),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SemiCircle extends CustomPainter {
-  final Color color;
-  SemiCircle({this.color});
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = color;
-    canvas.drawArc(
-      Rect.fromCenter(
-        center: Offset(size.height / 2, size.width / 2),
-        height: size.height,
-        width: size.width,
-      ),
-      math.pi,
-      math.pi,
-      false,
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

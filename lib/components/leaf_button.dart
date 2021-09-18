@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/screens/azkar_screen.dart';
-import 'package:rayhan/screens/home_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
 import 'package:rayhan/services/settings.dart';
 import 'dart:math' as math;

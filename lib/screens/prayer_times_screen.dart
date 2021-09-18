@@ -133,7 +133,7 @@ class PrayerTimesScreen extends StatelessWidget {
                           height: 20.0,
                         ),
                         Text(
-                          'تأكد من الإتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
+                          'تأكد من الاتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Provider.of<Settings>(context).isNightTheme
@@ -156,11 +156,12 @@ class PrayerTimesScreen extends StatelessWidget {
                 context: context,
               ),
               body: Center(
-                  child: SpinKitSpinningLines(
-                color: Provider.of<Settings>(context).isGreenTheme
-                    ? kGreenPrimaryColor
-                    : kBluePrimaryColor,
-              )),
+                child: SpinKitChasingDots(
+                  color: Provider.of<Settings>(context).isGreenTheme
+                      ? kGreenPrimaryColor
+                      : kBluePrimaryColor,
+                ),
+              ),
             );
           }
         });

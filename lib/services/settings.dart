@@ -37,6 +37,8 @@ class Settings extends ChangeNotifier {
   bool isNightTheme;
   bool isGreenTheme;
 
+  bool firstTime;
+
   Future<void> initializeSettings(BuildContext context) async {
     this.context = context;
 
@@ -133,6 +135,7 @@ class Settings extends ChangeNotifier {
     }
 
     await Future.delayed(Duration(seconds: 3));
+
     if (notificationAppLaunchDetails.payload == 'أذكار الصباح') {
       return Navigator.push(
         context,
@@ -153,10 +156,12 @@ class Settings extends ChangeNotifier {
       );
     }
 
-    return;
+    firstTime = false;
+    if (prefs.getBool('firsTime') == null) {
+      firstTime = true;
+    }
 
-    // flutterLocalNotificationsPlugin.initialize(initializationSettings,
-    //     onSelectNotification: onSelectNotification);
+    return;
   }
 
   void setNotification(int id, int hours, int minutes) async {
@@ -277,6 +282,12 @@ class Settings extends ChangeNotifier {
     isGreenTheme = false;
     prefs.setBool('isNightTheme', false);
     prefs.setBool('isGreenTheme', false);
+    notifyListeners();
+  }
+
+  Future<void> setFirstTime() async {
+    firstTime = false;
+    prefs.setBool('firsTime', false);
     notifyListeners();
   }
 }

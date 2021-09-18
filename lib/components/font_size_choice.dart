@@ -9,13 +9,12 @@ class FontSizeChoice extends StatelessWidget {
     return ToggleButtons(
       color: Provider.of<Settings>(context).isNightTheme
           ? Colors.white70
-          : Colors.black54, //hereeee
+          : Colors.black54,
       selectedColor: kSecondaryColor,
       fillColor: Provider.of<Settings>(context).isNightTheme
           ? kNightBackgroundColor
-          : kLightBackgroundColor, //hereeee
+          : kLightBackgroundColor,
       renderBorder: false,
-      //borderRadius: BorderRadius.circular(20.0),
       children: [
         Text(
           'متوسط',

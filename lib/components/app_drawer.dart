@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/home_screen.dart';
 import 'package:rayhan/screens/prayer_times_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
 import 'package:rayhan/services/settings.dart';
-
 import '../utilities/constants.dart';
 import 'drawer_list_tile.dart';
 
@@ -35,6 +35,7 @@ class AppDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 label: 'الأذكار',
+                icon: FontAwesomeIcons.pagelines,
                 onTap: () {
                   Navigator.pop(context);
                   if (ModalRoute.of(context).settings.name != HomeScreen.id)
@@ -44,6 +45,7 @@ class AppDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 label: 'مواقيت الصلاة',
+                icon: Icons.access_time,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, PrayerTimesScreen.id);
@@ -51,6 +53,7 @@ class AppDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 label: 'الإعدادات',
+                icon: Icons.settings,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, SettingsScreen.id);
@@ -58,6 +61,7 @@ class AppDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 label: 'عن التطبيق',
+                icon: Icons.info_outline,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, AboutScreen.id);

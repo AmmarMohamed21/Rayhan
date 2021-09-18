@@ -5,37 +5,35 @@ import 'package:rayhan/utilities/helper.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class PrayerTimes {
-  static double longitude;
-  static double latitude;
+  static double _longitude;
+  static double _latitude;
 
-  static Future<void> getCurrentLocation() async {
+  static Future<void> _getCurrentLocation() async {
     try {
       Position pos = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      longitude = pos.longitude;
-      latitude = pos.latitude;
-    } catch (e) {
-      print(e);
-    }
+      _longitude = pos.longitude;
+      _latitude = pos.latitude;
+    } catch (e) {}
 
     return;
   }
 
   static Future<dynamic> getData() async {
-    await getCurrentLocation();
+    await _getCurrentLocation();
     Uri uri = Uri.parse(
-        'http://api.aladhan.com/v1/timings?latitude=${latitude}&longitude=${longitude}&method=5');
+        'http://api.aladhan.com/v1/timings?latitude=${_latitude}&longitude=${_longitude}&method=5');
     http.Response response = await http.get(uri);
     if (response.statusCode == 200) {
       String data = response.body;
       var decodedData = jsonDecode(data);
-      var prayerTimes = SetPrayerTimes(decodedData);
+      var prayerTimes = _SetPrayerTimes(decodedData);
       return prayerTimes;
-    } else
-      print(response.statusCode);
+    }
+    return;
   }
 
-  static Map<String, String> SetPrayerTimes(var decodedData) {
+  static Map<String, String> _SetPrayerTimes(var decodedData) {
     Map<String, String> prayerTimes = {
       'Fajr': '',
       'Sunrise': '',

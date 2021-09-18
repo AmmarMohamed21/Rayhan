@@ -242,7 +242,7 @@ class AzkarList {
       count: 1,
     ),
     Zikr(
-      text: 'سبحان اللَّه.',
+      text: 'سُبحَان اللَّه.',
       count: 33,
     ),
     Zikr(

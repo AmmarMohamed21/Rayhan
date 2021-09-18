@@ -19,6 +19,32 @@ class AboutScreen extends StatelessWidget {
         title: 'عن التطبيق',
         context: context,
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Image.asset(
+              Provider.of<Settings>(context).isNightTheme
+                  ? 'assets/icon/logodark.png'
+                  : 'assets/icon/logo.png',
+              height: 150.0,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Provider.of<Settings>(context).isNightTheme
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

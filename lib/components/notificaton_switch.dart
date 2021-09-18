@@ -39,7 +39,7 @@ class _NotificationSwitchState extends State<NotificationSwitch> {
           ),
           subtitle: widget.isActive
               ? Text(
-                  getSubtitle(widget.title),
+                  getSubtitle(widget.title, context),
                   style: TextStyle(
                     fontSize: 20.0,
                     color: Provider.of<Settings>(context).isNightTheme
@@ -81,7 +81,7 @@ class _NotificationSwitchState extends State<NotificationSwitch> {
                   primarySwatch:
                       Provider.of<Settings>(context, listen: false).isGreenTheme
                           ? kGreenMaterialPrimary
-                          : kBlueMaterialPrimary, //hereeee
+                          : kBlueMaterialPrimary,
                 ),
               );
               if (timeofDay == null) {
@@ -102,9 +102,6 @@ class _NotificationSwitchState extends State<NotificationSwitch> {
               Provider.of<Settings>(context, listen: false)
                   .cancelNotification(id);
             }
-
-            //prefs.setBool(notificationKey, value);
-
             setState(() {
               widget.isActive = value;
             });
@@ -121,21 +118,5 @@ class _NotificationSwitchState extends State<NotificationSwitch> {
         ),
       ),
     );
-  }
-
-  String getSubtitle(String title) {
-    int hours;
-    int minutes;
-    if (title == 'إشعارات أذكار الصباح') {
-      hours = Provider.of<Settings>(context, listen: false).sabahHours;
-      minutes = Provider.of<Settings>(context, listen: false).sabahMinutes;
-    } else {
-      hours = Provider.of<Settings>(context, listen: false).masaaHours;
-      minutes = Provider.of<Settings>(context, listen: false).masaaMinutes;
-    }
-    return 'وقت الإشعار اليومي: ' +
-        addZeroToSingleDigit(getArabicNumber(hours)) +
-        ':' +
-        addZeroToSingleDigit(getArabicNumber(minutes));
   }
 }
