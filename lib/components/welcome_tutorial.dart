@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/components/tutorial_first_page.dart';
+import 'package:rayhan/components/tutorial_second_page.dart';
+import 'package:rayhan/components/tutorial_third_page.dart';
 import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
 
@@ -13,9 +16,9 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
   int index = 0;
 
   List<Widget> contentWidgets = [
-    kTutorialFirstPage,
-    kTutorialSecondPage,
-    kTutorialThirdPage,
+    TutorialFirstPage(),
+    TutorialSecondPage(),
+    TutorialThirdPage(),
   ];
 
   @override

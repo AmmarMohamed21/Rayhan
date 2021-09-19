@@ -72,32 +72,3 @@ const List<String> azkarMessageBody = [
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "يقول الله تعالى : أنا عند ظن عبدي بي، و أنا معه إذا ذكرني، فان ذكرني في نفسه ذكرته في نفسي و ان ذكرني في ملأ ذكرته في ملأ خير منهم.."',
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "مثل الذي يذكر ربه و الذي لا يذكر ربه مثل الحي و الميت"',
 ];
-
-const Widget kTutorialFirstPage = Text(
-  'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
-  textAlign: TextAlign.justify,
-  style: TextStyle(
-    fontSize: 25.0,
-  ),
-);
-
-const Widget kTutorialSecondPage = Text(
-  'يمكنك تفعيل إشعارات للتذكير بأذكار الصباح والمساء واختيار وقت الإشعار من قائمة الإعدادات.',
-  textAlign: TextAlign.justify,
-  style: TextStyle(
-    fontSize: 25.0,
-  ),
-);
-
-Widget kTutorialThirdPage = Column(
-  children: [
-    Text(
-      'أثناء قراءة الأذكار اضغط على المربع المخصص للذكر لاحتساب العدد.',
-      textAlign: TextAlign.justify,
-      style: TextStyle(
-        fontSize: 22.0,
-      ),
-    ),
-    ZikrCardTutorial(),
-  ],
-);

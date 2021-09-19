@@ -40,6 +40,7 @@ class Settings extends ChangeNotifier {
   bool firstTime;
 
   Future<void> initializeSettings(BuildContext context) async {
+    //variables initializations
     this.context = context;
 
     _sabahNotifyBody =
