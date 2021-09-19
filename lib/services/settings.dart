@@ -61,6 +61,12 @@ class Settings extends ChangeNotifier {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
     prefs = await SharedPreferences.getInstance();
+
+    firstTime = false;
+    if (prefs.getBool('firsTime') == null) {
+      firstTime = true;
+    }
+
     if (prefs.getBool('isSabahActive') == null) {
       prefs.setBool('isSabahActive', false);
     }
@@ -155,11 +161,6 @@ class Settings extends ChangeNotifier {
           ),
         ),
       );
-    }
-
-    firstTime = false;
-    if (prefs.getBool('firsTime') == null) {
-      firstTime = true;
     }
 
     return;
