@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/zikr_card.dart';
-import 'package:rayhan/components/custom_icons.dart';
 import 'package:rayhan/components/main_app_bar.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'dart:math' as math;
@@ -29,7 +26,7 @@ class AzkarScreen extends StatelessWidget {
         context: context,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(20.0 * heightRatio),
         child: getAzkar(),
       ),
     );

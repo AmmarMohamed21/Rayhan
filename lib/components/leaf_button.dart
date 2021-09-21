@@ -21,7 +21,7 @@ class LeafButton extends StatelessWidget {
       splashColor: Provider.of<Settings>(context, listen: false).isNightTheme
           ? Color.fromRGBO(45, 45, 45, 0.2)
           : Color.fromRGBO(215, 215, 215, 0.2),
-      borderRadius: BorderRadius.circular(80),
+      borderRadius: BorderRadius.circular(80.0 * widthRatio),
       onTap: () {
         if (label != 'الإعدادات') {
           Navigator.push(
@@ -47,7 +47,7 @@ class LeafButton extends StatelessWidget {
               color: Provider.of<Settings>(context, listen: false).isGreenTheme
                   ? kGreenLightPrimaryColor
                   : kBlueLightPrimaryColor,
-              size: 160.0,
+              size: 160.0 * widthRatio,
             ),
           ),
           Text(
@@ -55,7 +55,7 @@ class LeafButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20.0,
+              fontSize: 20.0 * widthRatio,
             ),
           ),
         ],

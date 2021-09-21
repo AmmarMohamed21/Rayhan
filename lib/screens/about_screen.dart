@@ -27,16 +27,16 @@ class AboutScreen extends StatelessWidget {
               Provider.of<Settings>(context).isNightTheme
                   ? 'assets/icon/logodark.png'
                   : 'assets/icon/logo.png',
-              height: 150.0,
+              height: 150.0 * heightRatio * widthRatio,
             ),
             SizedBox(
-              height: 20.0,
+              height: 20.0 * heightRatio,
             ),
             Text(
               'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
               textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: 25.0,
+                fontSize: 25.0 * heightRatio * widthRatio,
                 color: Provider.of<Settings>(context).isNightTheme
                     ? Colors.white
                     : Colors.black,

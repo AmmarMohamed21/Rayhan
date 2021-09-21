@@ -13,7 +13,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200.0,
+      width: 200.0 * widthRatio,
       child: Drawer(
         child: Container(
           color: Provider.of<Settings>(context, listen: false).isNightTheme
@@ -22,6 +22,13 @@ class AppDrawer extends StatelessWidget {
           child: ListView(
             children: [
               DrawerHeader(
+                margin: EdgeInsets.only(bottom: 8.0 * widthRatio),
+                padding: EdgeInsets.fromLTRB(
+                  16.0 * widthRatio,
+                  16.0 * widthRatio,
+                  16.0 * widthRatio,
+                  8.0 * widthRatio,
+                ),
                 decoration: BoxDecoration(
                   color:
                       Provider.of<Settings>(context, listen: false).isNightTheme

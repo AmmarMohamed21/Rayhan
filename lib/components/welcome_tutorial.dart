@@ -31,7 +31,7 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
         children: [
           Container(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height / 2,
+              minHeight: 396.0 * heightRatio,
             ),
             width: double.infinity,
             padding: const EdgeInsets.all(20.0),
@@ -53,22 +53,22 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                         Text(
                           'أهلًا بكم في',
                           style: TextStyle(
-                            fontSize: 27.0,
+                            fontSize: 27.0 * heightRatio,
                           ),
                         ),
                         SizedBox(
-                          width: 10.0,
+                          width: 10.0 * heightRatio,
                         ),
                         Image.asset(
                           'assets/icon/logo.png',
-                          height: 55.0,
-                          width: 55.0,
+                          height: 55.0 * heightRatio,
+                          width: 55.0 * heightRatio,
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 130.0,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 130.0 * widthRatio,
                       ),
                       child: Divider(
                         color: kGreenPrimaryColor,
@@ -88,7 +88,7 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                   child: Text(
                     index == contentWidgets.length - 1 ? 'حسنًا' : 'التالي',
                     style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: 30.0 * heightRatio,
                       color: kGreenLightPrimaryColor,
                     ),
                   ),

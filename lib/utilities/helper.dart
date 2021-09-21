@@ -22,10 +22,10 @@ String addZeroToSingleDigit(String number) {
   return number;
 }
 
-String getSubtitle(String title, BuildContext context) {
+String getSubtitle(bool isSabah, BuildContext context) {
   int hours;
   int minutes;
-  if (title == 'إشعارات أذكار الصباح') {
+  if (isSabah) {
     hours = Provider.of<Settings>(context, listen: false).sabahHours;
     minutes = Provider.of<Settings>(context, listen: false).sabahMinutes;
   } else {

@@ -17,7 +17,7 @@ class LoadingScreen extends StatelessWidget {
           Center(
             child: SpinKitPulse(
               color: kGreenPrimaryColor,
-              size: 160.0,
+              size: MediaQuery.of(context).size.width * 0.41,
             ),
           ),
           Image.asset(
@@ -25,8 +25,8 @@ class LoadingScreen extends StatelessWidget {
                     Brightness.dark
                 ? 'assets/icon/logodark.png'
                 : 'assets/icon/logo.png',
-            width: 120,
-            height: 120,
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.3,
           ),
         ],
       ),

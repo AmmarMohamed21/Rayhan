@@ -38,7 +38,9 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0),
+                      padding: EdgeInsets.only(
+                        bottom: 50.0 * heightRatio,
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -49,15 +51,17 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     VerticalDivider(
-                      thickness: 8.0,
-                      width: 8.0,
+                      thickness: 8.0 * heightRatio,
+                      width: 8.0 * heightRatio,
                       color: Provider.of<Settings>(context, listen: false)
                               .isGreenTheme
                           ? kGreenLightPrimaryColor
                           : kBlueLightPrimaryColor,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
+                      padding: EdgeInsets.only(
+                        top: 50.0 * heightRatio,
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

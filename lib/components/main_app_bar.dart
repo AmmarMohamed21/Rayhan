@@ -13,6 +13,8 @@ AppBar getAppBar({String title, BuildContext context}) {
         ? kGreenPrimaryColor
         : kBluePrimaryColor,
     centerTitle: true,
+    toolbarHeight: 56.0 * heightRatio,
+    leadingWidth: 56.0 * heightRatio,
     leading: ModalRoute.of(context).settings.name != HomeScreen.id
         ? IconButton(
             icon: Icon(Icons.arrow_back),
@@ -28,7 +30,7 @@ AppBar getAppBar({String title, BuildContext context}) {
         Text(
           title,
           style: TextStyle(
-            fontSize: 25.0,
+            fontSize: 25.0 * heightRatio,
           ),
         ),
         Transform(
@@ -39,6 +41,7 @@ AppBar getAppBar({String title, BuildContext context}) {
             color: Provider.of<Settings>(context).isGreenTheme
                 ? kGreenLightColor
                 : kBlueLightColor,
+            size: 25.0 * heightRatio,
           ),
         ),
       ],

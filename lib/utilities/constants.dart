@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rayhan/components/zikr_card_tutorial.dart';
 
 const Color kNightBackgroundColor = Color(0xFF202020);
 final Color kLightBackgroundColor = Colors.grey[50];
@@ -72,3 +71,10 @@ const List<String> azkarMessageBody = [
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "يقول الله تعالى : أنا عند ظن عبدي بي، و أنا معه إذا ذكرني، فان ذكرني في نفسه ذكرته في نفسي و ان ذكرني في ملأ ذكرته في ملأ خير منهم.."',
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "مثل الذي يذكر ربه و الذي لا يذكر ربه مثل الحي و الميت"',
 ];
+
+const double kReferenceWidth = 392.7272;
+
+const double kReferenceHeight = 791.6363;
+
+double widthRatio;
+double heightRatio;

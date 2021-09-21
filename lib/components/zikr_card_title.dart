@@ -16,16 +16,18 @@ class ZikrCardTitle extends StatelessWidget {
       child: Align(
         alignment: Alignment.topRight,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: EdgeInsets.symmetric(horizontal: 25.0 * heightRatio),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            padding: EdgeInsets.symmetric(horizontal: 5.0 * heightRatio),
             color: Provider.of<Settings>(context, listen: false).isNightTheme
                 ? kNightBackgroundColor
                 : kLightBackgroundColor,
             child: Text(
               title,
               style: TextStyle(
-                fontSize: Provider.of<Settings>(context).isFontMed ? 25 : 28,
+                fontSize: Provider.of<Settings>(context).isFontMed
+                    ? 25 * heightRatio
+                    : 28 * heightRatio,
                 color: Provider.of<Settings>(context).isNightTheme
                     ? Colors.white
                     : Provider.of<Settings>(context).isGreenTheme

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rayhan/utilities/constants.dart';
 
 class TutorialFirstPage extends StatelessWidget {
   @override
@@ -7,7 +8,7 @@ class TutorialFirstPage extends StatelessWidget {
       'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
       textAlign: TextAlign.justify,
       style: TextStyle(
-        fontSize: 25.0,
+        fontSize: 25.0 * heightRatio,
       ),
     );
   }

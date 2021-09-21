@@ -6,7 +6,7 @@ class TwoColouredCircle extends StatelessWidget {
   final Color upperColor;
   final Color lowerColor;
   final double diameter;
-  TwoColouredCircle({this.upperColor, this.lowerColor, this.diameter = 38});
+  TwoColouredCircle({this.upperColor, this.lowerColor, this.diameter});
 
   @override
   Widget build(BuildContext context) {

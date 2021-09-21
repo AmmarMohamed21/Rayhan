@@ -17,20 +17,20 @@ class ZikrCardCounter extends StatelessWidget {
       child: Align(
         alignment: Alignment.topLeft,
         child: Container(
-          width: 45.0,
-          height: 45.0,
+          width: 45.0 * heightRatio,
+          height: 45.0 * heightRatio,
           decoration: BoxDecoration(
             color: Provider.of<Settings>(context).isNightTheme
                 ? kNightBackgroundColor
                 : Color.fromRGBO(245, 245, 245, 1),
-            borderRadius: BorderRadius.circular(45.0),
+            borderRadius: BorderRadius.circular(45.0 * heightRatio),
             boxShadow: [
               BoxShadow(
                 color: !Provider.of<Settings>(context).isGreenTheme
                     ? kBlueLightPrimaryColor
                     : kGreenLightPrimaryColor,
                 offset: Offset(0.0, 1.0),
-                blurRadius: 3.0,
+                blurRadius: 3.0 * heightRatio,
               ),
             ],
           ),
@@ -38,7 +38,7 @@ class ZikrCardCounter extends StatelessWidget {
             child: Text(
               getArabicNumber(number),
               style: TextStyle(
-                fontSize: 30.0,
+                fontSize: 30.0 * heightRatio,
                 color: Provider.of<Settings>(context).isNightTheme
                     ? Colors.white
                     : Provider.of<Settings>(context).isGreenTheme

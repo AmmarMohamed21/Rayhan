@@ -1,7 +1,3 @@
-import 'package:flutter/services.dart';
-
-import 'package:path/path.dart';
-import 'dart:io';
 import 'zikr.dart';
 
 class AzkarList {

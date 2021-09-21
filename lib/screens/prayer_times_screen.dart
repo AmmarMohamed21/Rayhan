@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/components/icon_label_row.dart';
+import 'package:rayhan/components/icon_label_tile.dart';
 import 'package:rayhan/services/prayer_times.dart';
 import 'package:rayhan/services/settings.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -28,95 +28,105 @@ class PrayerTimesScreen extends StatelessWidget {
                 context: context,
               ),
               body: snap.hasData
-                  ? ListView(
-                      children: [
-                        IconLabelRow(
-                          label: 'الفجر',
-                          icon: CupertinoIcons.sun_dust_fill,
-                          iconColor: Colors.deepOrangeAccent,
-                          endWidget: Text(
-                            snap.data['Fajr'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                  ? Padding(
+                      padding: EdgeInsets.only(top: 10.0 * heightRatio),
+                      child: ListView(
+                        children: [
+                          IconLabelTile(
+                            label: 'الفجر',
+                            icon: CupertinoIcons.sun_dust_fill,
+                            iconColor: Colors.deepOrangeAccent,
+                            endWidget: Text(
+                              snap.data['Fajr'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                        IconLabelRow(
-                          label: 'الشروق',
-                          icon: Icons.wb_sunny_rounded,
-                          iconColor: Colors.yellow,
-                          endWidget: Text(
-                            snap.data['Sunrise'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                          IconLabelTile(
+                            label: 'الشروق',
+                            icon: Icons.wb_sunny_rounded,
+                            iconColor: Colors.yellow,
+                            endWidget: Text(
+                              snap.data['Sunrise'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                        IconLabelRow(
-                          label: 'الظهر',
-                          icon: FontAwesomeIcons.solidSun,
-                          iconColor: Colors.amber,
-                          endWidget: Text(
-                            snap.data['Dhuhr'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                          IconLabelTile(
+                            label: 'الظهر',
+                            icon: FontAwesomeIcons.solidSun,
+                            iconColor: Colors.amber,
+                            endWidget: Text(
+                              snap.data['Dhuhr'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                        IconLabelRow(
-                          label: 'العصر',
-                          icon: CupertinoIcons.cloud_sun_fill,
-                          iconColor: Colors.orangeAccent,
-                          endWidget: Text(
-                            snap.data['Asr'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                          IconLabelTile(
+                            label: 'العصر',
+                            icon: CupertinoIcons.cloud_sun_fill,
+                            iconColor: Colors.orangeAccent,
+                            endWidget: Text(
+                              snap.data['Asr'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                        IconLabelRow(
-                          label: 'المغرب',
-                          icon: CupertinoIcons.sun_haze_fill,
-                          iconColor: Colors.orange,
-                          endWidget: Text(
-                            snap.data['Maghrib'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                          IconLabelTile(
+                            label: 'المغرب',
+                            icon: CupertinoIcons.sun_haze_fill,
+                            iconColor: Colors.orange,
+                            endWidget: Text(
+                              snap.data['Maghrib'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                        IconLabelRow(
-                          label: 'العشاء',
-                          icon: CupertinoIcons.moon_fill,
-                          iconColor: Provider.of<Settings>(context).isNightTheme
-                              ? Colors.white
-                              : Color(0xFF1d3557),
-                          endWidget: Text(
-                            snap.data['Isha'],
-                            style: TextStyle(
-                              color: Provider.of<Settings>(context).isNightTheme
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 25.0,
+                          IconLabelTile(
+                            label: 'العشاء',
+                            icon: CupertinoIcons.moon_fill,
+                            iconColor:
+                                Provider.of<Settings>(context).isNightTheme
+                                    ? Colors.white
+                                    : Color(0xFF1d3557),
+                            endWidget: Text(
+                              snap.data['Isha'],
+                              style: TextStyle(
+                                color:
+                                    Provider.of<Settings>(context).isNightTheme
+                                        ? Colors.white
+                                        : Colors.black,
+                                fontSize: 25.0 * heightRatio * widthRatio,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -124,13 +134,13 @@ class PrayerTimesScreen extends StatelessWidget {
                       children: [
                         Icon(
                           FontAwesomeIcons.frown,
-                          size: 50.0,
+                          size: 50.0 * heightRatio * widthRatio,
                           color: Provider.of<Settings>(context).isNightTheme
                               ? Colors.white
                               : Colors.black,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 20 * heightRatio,
                         ),
                         Text(
                           'تأكد من الاتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
@@ -139,7 +149,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             color: Provider.of<Settings>(context).isNightTheme
                                 ? Colors.white
                                 : Colors.black,
-                            fontSize: 30.0,
+                            fontSize: 30 * heightRatio * widthRatio,
                           ),
                         ),
                       ],
@@ -160,6 +170,7 @@ class PrayerTimesScreen extends StatelessWidget {
                   color: Provider.of<Settings>(context).isGreenTheme
                       ? kGreenPrimaryColor
                       : kBluePrimaryColor,
+                  size: 60 * widthRatio * heightRatio,
                 ),
               ),
             );

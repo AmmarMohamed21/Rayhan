@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Zikr {
   final String text;
   final int count;

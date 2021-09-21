@@ -37,7 +37,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: kGreenPrimaryColor,
-                    fontSize: 22,
+                    fontSize: 22 * heightRatio,
                   ),
                 ),
               ],
@@ -61,7 +61,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
             alignment: Alignment(0.5, 1),
             child: Icon(
               Icons.touch_app,
-              size: 65.0,
+              size: 65.0 * heightRatio,
             ),
           ),
         ),
@@ -71,7 +71,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   alignment: Alignment(0.48, 0.39),
                   child: CircleAvatar(
                     backgroundColor: Colors.black26.withOpacity(0.1),
-                    radius: 30.0,
+                    radius: 30.0 * heightRatio,
                   ),
                 ),
               )
@@ -80,11 +80,11 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
-              width: 45.0,
-              height: 45.0,
+              width: 45.0 * heightRatio,
+              height: 45.0 * heightRatio,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(245, 245, 245, 1),
-                borderRadius: BorderRadius.circular(45.0),
+                borderRadius: BorderRadius.circular(45.0 * heightRatio),
                 boxShadow: [
                   BoxShadow(
                     color: kGreenLightPrimaryColor,
@@ -97,7 +97,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Text(
                   getArabicNumber(number),
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 30.0 * heightRatio,
                     color: kGreenPrimaryColor,
                   ),
                   //textAlign: TextAlign.center,
@@ -114,7 +114,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
               child: Icon(
                 FontAwesomeIcons.pagelines,
                 color: kGreenLightPrimaryColor,
-                size: 60.0,
+                size: 60.0 * heightRatio,
               ),
             ),
           ),
@@ -130,7 +130,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Icon(
                   FontAwesomeIcons.pagelines,
                   color: kGreenLightPrimaryColor,
-                  size: 60.0,
+                  size: 60.0 * heightRatio,
                 ),
               ),
             ),

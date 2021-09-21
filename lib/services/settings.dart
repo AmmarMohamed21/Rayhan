@@ -40,6 +40,17 @@ class Settings extends ChangeNotifier {
   bool firstTime;
 
   Future<void> initializeSettings(BuildContext context) async {
+    //initialize scalable sizes
+    widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
+    print(MediaQuery.of(context).size.width);
+    print(MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
+    heightRatio = (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top -
+            MediaQuery.of(context).padding.bottom) /
+        kReferenceHeight;
+
     //variables initializations
     this.context = context;
 

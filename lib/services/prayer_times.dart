@@ -2,7 +2,6 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rayhan/utilities/helper.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class PrayerTimes {
   static double _longitude;
