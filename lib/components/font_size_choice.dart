@@ -19,13 +19,13 @@ class FontSizeChoice extends StatelessWidget {
         Text(
           'متوسط',
           style: TextStyle(
-            fontSize: 27.0 * heightRatio,
+            fontSize: 25.0 * heightRatio * widthRatio,
           ),
         ),
         Text(
           'كبير',
           style: TextStyle(
-            fontSize: 27.0 * heightRatio,
+            fontSize: 25.0 * heightRatio * widthRatio,
           ),
         ),
       ],
