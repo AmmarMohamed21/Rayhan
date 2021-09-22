@@ -28,14 +28,13 @@ class _SwitchNotificationTileState extends State<SwitchNotificationTile> {
       onTap: setNotification,
       child: Padding(
         padding: EdgeInsets.only(
-          top: 10.0 * heightRatio,
-          left: 20.0 * heightRatio,
-          right: 20.0 * heightRatio,
-          bottom: 10.0 * heightRatio,
+          top: 10.0 * sizeRatio,
+          left: 20.0 * sizeRatio,
+          right: 20.0 * sizeRatio,
+          bottom: 10.0 * sizeRatio,
         ),
         child: Container(
-          constraints:
-              BoxConstraints(minHeight: 45.0 * heightRatio * widthRatio),
+          constraints: BoxConstraints(minHeight: 45.0 * sizeRatio),
           //height: 45.0 * heightRatio * widthRatio,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,17 +42,17 @@ class _SwitchNotificationTileState extends State<SwitchNotificationTile> {
               Icon(
                 widget.icon,
                 color: widget.iconColor,
-                size: 45.0 * heightRatio * widthRatio,
+                size: 45.0 * sizeRatio,
               ),
               SizedBox(
-                width: 17.0 * heightRatio * widthRatio,
+                width: 17.0 * sizeRatio,
               ),
               Column(
                 children: [
                   Text(
                     widget.label,
                     style: TextStyle(
-                      fontSize: 25.0 * heightRatio * widthRatio,
+                      fontSize: 25.0 * sizeRatio,
                       color: Provider.of<Settings>(context).isNightTheme
                           ? Colors.white
                           : Colors.black,
@@ -63,7 +62,7 @@ class _SwitchNotificationTileState extends State<SwitchNotificationTile> {
                       ? Text(
                           getSubtitle(widget.isSabah, context),
                           style: TextStyle(
-                            fontSize: 20.0 * heightRatio * widthRatio,
+                            fontSize: 20.0 * sizeRatio,
                             color: Provider.of<Settings>(context).isNightTheme
                                 ? Colors.white70
                                 : Colors.black54,

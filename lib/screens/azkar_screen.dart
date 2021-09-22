@@ -26,7 +26,7 @@ class AzkarScreen extends StatelessWidget {
         context: context,
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0 * heightRatio),
+        padding: EdgeInsets.all(20.0 * sizeRatio),
         child: getAzkar(),
       ),
     );
@@ -47,12 +47,12 @@ class AzkarScreen extends StatelessWidget {
       alignment: Alignment.center,
       transform: Matrix4.rotationY(math.pi),
       child: Scrollbar(
-        thickness: 3.0,
+        thickness: 3.0 * sizeRatio,
         child: Transform(
           alignment: Alignment.center,
           transform: Matrix4.rotationY(math.pi),
           child: ListView(
-            padding: const EdgeInsets.all(2.0),
+            padding: EdgeInsets.all(2.0 * sizeRatio),
             children: zikrCards,
           ),
         ),

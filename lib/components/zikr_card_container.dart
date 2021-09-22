@@ -15,7 +15,7 @@ class ZikrCardContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.all(20.0 * heightRatio),
+        padding: EdgeInsets.all(20.0 * sizeRatio),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,26 +31,26 @@ class ZikrCardContainer extends StatelessWidget {
                         ? kGreenPrimaryColor
                         : kBluePrimaryColor,
                 fontSize: Provider.of<Settings>(context).isFontMed
-                    ? 22.0 * heightRatio
-                    : 26.0 * heightRatio,
+                    ? 22.0 * sizeRatio
+                    : 26.0 * sizeRatio,
               ),
             ),
           ],
         ),
       ),
-      margin: EdgeInsets.all(20 * heightRatio),
+      margin: EdgeInsets.all(20 * sizeRatio),
       decoration: BoxDecoration(
         color: Provider.of<Settings>(context).isNightTheme
             ? kNightBackgroundColor
             : kLightBackgroundColor,
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10.0 * sizeRatio),
         boxShadow: [
           BoxShadow(
             color: !Provider.of<Settings>(context).isGreenTheme
                 ? kBlueLightPrimaryColor
                 : kGreenLightPrimaryColor,
             offset: Offset(0.0, 1.0),
-            blurRadius: 3.0,
+            blurRadius: 3.0 * sizeRatio,
           ),
         ],
       ),

@@ -29,7 +29,7 @@ class PrayerTimesScreen extends StatelessWidget {
               ),
               body: snap.hasData
                   ? Padding(
-                      padding: EdgeInsets.only(top: 10.0 * heightRatio),
+                      padding: EdgeInsets.only(top: 10.0 * sizeRatio),
                       child: ListView(
                         children: [
                           IconLabelTile(
@@ -43,7 +43,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -58,7 +58,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -73,7 +73,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -88,7 +88,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -103,7 +103,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -121,7 +121,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     Provider.of<Settings>(context).isNightTheme
                                         ? Colors.white
                                         : Colors.black,
-                                fontSize: 25.0 * heightRatio * widthRatio,
+                                fontSize: 25.0 * sizeRatio,
                               ),
                             ),
                           ),
@@ -134,13 +134,13 @@ class PrayerTimesScreen extends StatelessWidget {
                       children: [
                         Icon(
                           FontAwesomeIcons.frown,
-                          size: 50.0 * heightRatio * widthRatio,
+                          size: 50.0 * sizeRatio,
                           color: Provider.of<Settings>(context).isNightTheme
                               ? Colors.white
                               : Colors.black,
                         ),
                         SizedBox(
-                          height: 20 * heightRatio,
+                          height: 20 * sizeRatio,
                         ),
                         Text(
                           'تأكد من الاتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
@@ -149,7 +149,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             color: Provider.of<Settings>(context).isNightTheme
                                 ? Colors.white
                                 : Colors.black,
-                            fontSize: 30 * heightRatio * widthRatio,
+                            fontSize: 30 * sizeRatio,
                           ),
                         ),
                       ],
@@ -170,7 +170,7 @@ class PrayerTimesScreen extends StatelessWidget {
                   color: Provider.of<Settings>(context).isGreenTheme
                       ? kGreenPrimaryColor
                       : kBluePrimaryColor,
-                  size: 60 * widthRatio * heightRatio,
+                  size: 60 * sizeRatio,
                 ),
               ),
             );

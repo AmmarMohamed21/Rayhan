@@ -22,13 +22,13 @@ class ZikrCardIcon extends StatelessWidget {
           transform:
               isReversed ? Matrix4.rotationY(math.pi) : Matrix4.rotationY(0.0),
           child: Padding(
-            padding: EdgeInsets.only(bottom: 7.0 * heightRatio),
+            padding: EdgeInsets.only(bottom: 7.0 * sizeRatio),
             child: Icon(
               FontAwesomeIcons.pagelines,
               color: !Provider.of<Settings>(context).isGreenTheme
                   ? kBlueLightPrimaryColor
                   : kGreenLightPrimaryColor,
-              size: 60.0 * heightRatio,
+              size: 60.0 * sizeRatio,
             ),
           ),
         ),

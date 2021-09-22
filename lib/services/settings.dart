@@ -40,19 +40,10 @@ class Settings extends ChangeNotifier {
   bool firstTime;
 
   Future<void> initializeSettings(BuildContext context) async {
-    //initialize scalable sizes
-    widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
-    print(MediaQuery.of(context).size.width);
-    print(MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom);
-    heightRatio = (MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.top -
-            MediaQuery.of(context).padding.bottom) /
-        kReferenceHeight;
-
     //variables initializations
     this.context = context;
+
+    initializeScaleFactor(context);
 
     _sabahNotifyBody =
         azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
@@ -78,6 +69,34 @@ class Settings extends ChangeNotifier {
       firstTime = true;
     }
 
+    if (prefs.getBool('isGreenTheme') == null) {
+      prefs.setBool('isGreenTheme', true);
+      isGreenTheme = true;
+    } else {
+      isGreenTheme = prefs.getBool('isGreenTheme');
+    }
+
+    if (prefs.getBool('isNightTheme') == null) {
+      var brightness = sch.SchedulerBinding.instance.window.platformBrightness;
+      bool isDarkMode = brightness == Brightness.dark;
+      if (isDarkMode) {
+        isNightTheme = true;
+        prefs.setBool('isNightTheme', true);
+      } else {
+        isNightTheme = false;
+        prefs.setBool('isNightTheme', false);
+      }
+    } else {
+      isNightTheme = prefs.getBool('isNightTheme');
+    }
+
+    if (prefs.getBool('isFontMed') == null) {
+      prefs.setBool('isFontMed', true);
+      isFontMed = true;
+    } else {
+      isFontMed = prefs.getBool('isFontMed');
+    }
+
     if (prefs.getBool('isSabahActive') == null) {
       prefs.setBool('isSabahActive', false);
     }
@@ -98,27 +117,6 @@ class Settings extends ChangeNotifier {
     }
     isSabahActive = prefs.getBool('isSabahActive');
     isMasaaActive = prefs.getBool('isMasaaActive');
-
-    if (prefs.getBool('isFontMed') == null) {
-      prefs.setBool('isFontMed', true);
-      isFontMed = true;
-    } else {
-      isFontMed = prefs.getBool('isFontMed');
-    }
-
-    if (prefs.getBool('isNightTheme') == null) {
-      prefs.setBool('isNightTheme', false);
-      isNightTheme = false;
-    } else {
-      isNightTheme = prefs.getBool('isNightTheme');
-    }
-
-    if (prefs.getBool('isGreenTheme') == null) {
-      prefs.setBool('isGreenTheme', true);
-      isGreenTheme = true;
-    } else {
-      isGreenTheme = prefs.getBool('isGreenTheme');
-    }
 
     final List<PendingNotificationRequest> pendingNotificationRequests =
         await flutterLocalNotificationsPlugin.pendingNotificationRequests();
@@ -142,17 +140,10 @@ class Settings extends ChangeNotifier {
           notificationsIDs.masaaNotificationID.index, masaaHours, masaaMinutes);
     }
 
+    await Future.delayed(Duration(seconds: 3));
+
     final NotificationAppLaunchDetails notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-
-    var brightness = sch.SchedulerBinding.instance.window.platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      isNightTheme = true;
-      isGreenTheme = true;
-    }
-
-    await Future.delayed(Duration(seconds: 3));
 
     if (notificationAppLaunchDetails.payload == 'أذكار الصباح') {
       return Navigator.push(
@@ -207,7 +198,7 @@ class Settings extends ChangeNotifier {
             'روحٌ وريحان',
             'إشعارات يومية لأذكار الصباح والمساء',
             playSound: true,
-            sound: RawResourceAndroidNotificationSound('pop'),
+            sound: RawResourceAndroidNotificationSound('notify'),
             importance: Importance.max,
             priority: Priority.high,
             styleInformation: BigTextStyleInformation(''),
@@ -302,5 +293,34 @@ class Settings extends ChangeNotifier {
     firstTime = false;
     prefs.setBool('firsTime', false);
     notifyListeners();
+  }
+
+  void initializeScaleFactor(BuildContext context) {
+    double widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
+
+    double heightRatio = (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top -
+            MediaQuery.of(context).padding.bottom) /
+        kReferenceHeight;
+
+    if (widthRatio > 1.5) {
+      widthRatio = 1.3;
+    } else if (widthRatio > 1.1) {
+      widthRatio = 1.1;
+    }
+    if (heightRatio > 1.5) {
+      heightRatio = 1.3;
+    } else if (heightRatio > 1.1) {
+      heightRatio = 1.1;
+    }
+
+    if (widthRatio < 0.9) {
+      widthRatio = 0.9;
+    }
+    if (heightRatio < 0.9) {
+      heightRatio = 0.9;
+    }
+
+    sizeRatio = heightRatio * widthRatio;
   }
 }

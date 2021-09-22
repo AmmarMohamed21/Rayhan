@@ -20,23 +20,23 @@ class AboutScreen extends StatelessWidget {
         context: context,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0 * sizeRatio),
         child: Column(
           children: [
             Image.asset(
               Provider.of<Settings>(context).isNightTheme
                   ? 'assets/icon/logodark.png'
                   : 'assets/icon/logo.png',
-              height: 150.0 * heightRatio * widthRatio,
+              height: 150.0 * sizeRatio,
             ),
             SizedBox(
-              height: 20.0 * heightRatio,
+              height: 20.0 * sizeRatio,
             ),
             Text(
               'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
               textAlign: TextAlign.justify,
               style: TextStyle(
-                fontSize: 25.0 * heightRatio * widthRatio,
+                fontSize: 25.0 * sizeRatio,
                 color: Provider.of<Settings>(context).isNightTheme
                     ? Colors.white
                     : Colors.black,

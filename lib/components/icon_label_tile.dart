@@ -16,28 +16,28 @@ class IconLabelTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: 10.0 * heightRatio,
-        left: 20.0 * heightRatio,
-        right: 20.0 * heightRatio,
-        bottom: 10.0 * heightRatio,
+        top: 10.0 * sizeRatio,
+        left: 20.0 * sizeRatio,
+        right: 20.0 * sizeRatio,
+        bottom: 10.0 * sizeRatio,
       ),
       child: Container(
-        height: 45.0 * heightRatio * widthRatio,
+        height: 45.0 * sizeRatio,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               icon,
               color: iconColor,
-              size: 45.0 * heightRatio * widthRatio,
+              size: 45.0 * sizeRatio,
             ),
             SizedBox(
-              width: 17.0 * heightRatio * widthRatio,
+              width: 17.0 * sizeRatio,
             ),
             Text(
               label,
               style: TextStyle(
-                fontSize: 25.0 * heightRatio * widthRatio,
+                fontSize: 25.0 * sizeRatio,
                 color: Provider.of<Settings>(context).isNightTheme
                     ? Colors.white
                     : Colors.black,

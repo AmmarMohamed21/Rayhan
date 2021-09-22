@@ -14,8 +14,8 @@ class ThemeChoice extends StatelessWidget {
           child: CircleAvatar(
             radius: Provider.of<Settings>(context).isGreenTheme &&
                     !Provider.of<Settings>(context).isNightTheme
-                ? 22.0 * heightRatio
-                : 20.0 * heightRatio,
+                ? 22.0 * sizeRatio
+                : 20.0 * sizeRatio,
             backgroundColor: Provider.of<Settings>(context).isGreenTheme &&
                     !Provider.of<Settings>(context).isNightTheme
                 ? kSecondaryColor
@@ -25,8 +25,8 @@ class ThemeChoice extends StatelessWidget {
               lowerColor: kLightBackgroundColor,
               diameter: Provider.of<Settings>(context).isGreenTheme &&
                       !Provider.of<Settings>(context).isNightTheme
-                  ? 38.0 * heightRatio
-                  : 36.0 * heightRatio,
+                  ? 38.0 * sizeRatio
+                  : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {
@@ -34,13 +34,13 @@ class ThemeChoice extends StatelessWidget {
           },
         ),
         SizedBox(
-          width: 5.0 * heightRatio,
+          width: 5.0 * sizeRatio,
         ),
         GestureDetector(
           child: CircleAvatar(
             radius: !Provider.of<Settings>(context).isGreenTheme
-                ? 22.0 * heightRatio
-                : 20.0 * heightRatio,
+                ? 22.0 * sizeRatio
+                : 20.0 * sizeRatio,
             backgroundColor: !Provider.of<Settings>(context).isGreenTheme
                 ? kSecondaryColor
                 : Colors.grey,
@@ -48,8 +48,8 @@ class ThemeChoice extends StatelessWidget {
               upperColor: kBlueLightPrimaryColor,
               lowerColor: kLightBackgroundColor,
               diameter: !Provider.of<Settings>(context).isGreenTheme
-                  ? 38.0 * heightRatio
-                  : 36.0 * heightRatio,
+                  ? 38.0 * sizeRatio
+                  : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {
@@ -57,13 +57,13 @@ class ThemeChoice extends StatelessWidget {
           },
         ),
         SizedBox(
-          width: 5.0 * heightRatio,
+          width: 5.0 * sizeRatio,
         ),
         GestureDetector(
           child: CircleAvatar(
             radius: Provider.of<Settings>(context).isNightTheme
-                ? 22.0 * heightRatio
-                : 20.0 * heightRatio,
+                ? 22.0 * sizeRatio
+                : 20.0 * sizeRatio,
             backgroundColor: Provider.of<Settings>(context).isNightTheme
                 ? kSecondaryColor
                 : Colors.grey,
@@ -71,8 +71,8 @@ class ThemeChoice extends StatelessWidget {
               upperColor: kGreenLightPrimaryColor,
               lowerColor: Color.fromRGBO(40, 40, 40, 1),
               diameter: Provider.of<Settings>(context).isNightTheme
-                  ? 38.0 * heightRatio
-                  : 36.0 * heightRatio,
+                  ? 38.0 * sizeRatio
+                  : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {

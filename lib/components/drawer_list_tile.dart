@@ -14,20 +14,20 @@ class DrawerListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      minVerticalPadding: 4.0 * heightRatio,
-      minLeadingWidth: 40.0 * widthRatio,
+      minVerticalPadding: 4.0 * sizeRatio,
+      minLeadingWidth: 40.0 * sizeRatio,
       horizontalTitleGap: 0.0,
       leading: Icon(
         icon,
         color: Provider.of<Settings>(context, listen: false).isNightTheme
             ? Colors.white
             : Colors.black,
-        size: 26.0 * widthRatio,
+        size: 26.0 * sizeRatio,
       ),
       title: Text(
         label,
         style: TextStyle(
-          fontSize: 25.0 * widthRatio,
+          fontSize: 25.0 * sizeRatio,
           color: Provider.of<Settings>(context, listen: false).isNightTheme
               ? Colors.white
               : Colors.black,

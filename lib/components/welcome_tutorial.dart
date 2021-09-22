@@ -31,15 +31,20 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
         children: [
           Container(
             constraints: BoxConstraints(
-              minHeight: 396.0 * heightRatio,
+              minHeight: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      MediaQuery.of(context).padding.bottom) *
+                  0.5,
             ),
             width: double.infinity,
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0 * sizeRatio),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Provider.of<Settings>(context).isNightTheme
+                  ? kNightBackgroundColor
+                  : kLightBackgroundColor,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
+                topLeft: Radius.circular(20.0 * sizeRatio),
+                topRight: Radius.circular(20.0 * sizeRatio),
               ),
             ),
             child: Column(
@@ -53,26 +58,31 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                         Text(
                           'أهلًا بكم في',
                           style: TextStyle(
-                            fontSize: 27.0 * heightRatio,
+                            fontSize: 27.0 * sizeRatio,
+                            color: Provider.of<Settings>(context).isNightTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                         ),
                         SizedBox(
-                          width: 10.0 * heightRatio,
+                          width: 10.0 * sizeRatio,
                         ),
                         Image.asset(
-                          'assets/icon/logo.png',
-                          height: 55.0 * heightRatio,
-                          width: 55.0 * heightRatio,
+                          Provider.of<Settings>(context).isNightTheme
+                              ? 'assets/icon/logodark.png'
+                              : 'assets/icon/logo.png',
+                          height: 55.0 * sizeRatio,
+                          width: 55.0 * sizeRatio,
                         ),
                       ],
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 130.0 * widthRatio,
+                        horizontal: 130.0 * sizeRatio,
                       ),
                       child: Divider(
                         color: kGreenPrimaryColor,
-                        thickness: 2.5,
+                        thickness: 2.5 * sizeRatio,
                       ),
                     ),
                   ],
@@ -88,7 +98,7 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                   child: Text(
                     index == contentWidgets.length - 1 ? 'حسنًا' : 'التالي',
                     style: TextStyle(
-                      fontSize: 30.0 * heightRatio,
+                      fontSize: 30.0 * sizeRatio,
                       color: kGreenLightPrimaryColor,
                     ),
                   ),

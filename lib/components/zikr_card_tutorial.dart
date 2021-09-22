@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
@@ -26,7 +28,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
         Container(
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0 * sizeRatio),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,22 +38,26 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   textDirection: TextDirection.rtl,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
-                    color: kGreenPrimaryColor,
-                    fontSize: 22 * heightRatio,
+                    color: Provider.of<Settings>(context).isNightTheme
+                        ? Colors.white
+                        : kGreenPrimaryColor,
+                    fontSize: 22 * sizeRatio,
                   ),
                 ),
               ],
             ),
           ),
-          margin: EdgeInsets.all(20.0),
+          margin: EdgeInsets.all(20.0 * sizeRatio),
           decoration: BoxDecoration(
-            color: kLightBackgroundColor,
-            borderRadius: BorderRadius.circular(10.0),
+            color: Provider.of<Settings>(context).isNightTheme
+                ? kNightBackgroundColor
+                : kLightBackgroundColor,
+            borderRadius: BorderRadius.circular(10.0 * sizeRatio),
             boxShadow: [
               BoxShadow(
                 color: kGreenLightPrimaryColor,
                 offset: Offset(0.0, 1.0),
-                blurRadius: 3.0,
+                blurRadius: 3.0 * sizeRatio,
               ),
             ],
           ),
@@ -61,7 +67,10 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
             alignment: Alignment(0.5, 1),
             child: Icon(
               Icons.touch_app,
-              size: 65.0 * heightRatio,
+              size: 65.0 * sizeRatio,
+              color: Provider.of<Settings>(context).isNightTheme
+                  ? Colors.white
+                  : Colors.black,
             ),
           ),
         ),
@@ -71,7 +80,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   alignment: Alignment(0.48, 0.39),
                   child: CircleAvatar(
                     backgroundColor: Colors.black26.withOpacity(0.1),
-                    radius: 30.0 * heightRatio,
+                    radius: 30.0 * sizeRatio,
                   ),
                 ),
               )
@@ -80,16 +89,18 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
-              width: 45.0 * heightRatio,
-              height: 45.0 * heightRatio,
+              width: 45.0 * sizeRatio,
+              height: 45.0 * sizeRatio,
               decoration: BoxDecoration(
-                color: Color.fromRGBO(245, 245, 245, 1),
-                borderRadius: BorderRadius.circular(45.0 * heightRatio),
+                color: Provider.of<Settings>(context).isNightTheme
+                    ? kNightBackgroundColor
+                    : Color.fromRGBO(245, 245, 245, 1),
+                borderRadius: BorderRadius.circular(45.0 * sizeRatio),
                 boxShadow: [
                   BoxShadow(
                     color: kGreenLightPrimaryColor,
                     offset: Offset(0.0, 1.0),
-                    blurRadius: 3.0,
+                    blurRadius: 3.0 * sizeRatio,
                   ),
                 ],
               ),
@@ -97,8 +108,10 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Text(
                   getArabicNumber(number),
                   style: TextStyle(
-                    fontSize: 30.0 * heightRatio,
-                    color: kGreenPrimaryColor,
+                    fontSize: 30.0 * sizeRatio,
+                    color: Provider.of<Settings>(context).isNightTheme
+                        ? Colors.white
+                        : kGreenPrimaryColor,
                   ),
                   //textAlign: TextAlign.center,
                 ),
@@ -114,7 +127,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
               child: Icon(
                 FontAwesomeIcons.pagelines,
                 color: kGreenLightPrimaryColor,
-                size: 60.0 * heightRatio,
+                size: 60.0 * sizeRatio,
               ),
             ),
           ),
@@ -130,7 +143,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Icon(
                   FontAwesomeIcons.pagelines,
                   color: kGreenLightPrimaryColor,
-                  size: 60.0 * heightRatio,
+                  size: 60.0 * sizeRatio,
                 ),
               ),
             ),

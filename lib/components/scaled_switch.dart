@@ -13,7 +13,7 @@ class ScaledSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.scale(
       alignment: Alignment.centerLeft,
-      scale: 0.7 * heightRatio,
+      scale: 0.7 * sizeRatio,
       child: CupertinoSwitch(
         value: isActive,
         activeColor: kSecondaryColor,

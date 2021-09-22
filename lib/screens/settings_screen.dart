@@ -36,7 +36,7 @@ class SettingsRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10.0 * heightRatio),
+      padding: EdgeInsets.only(top: 10.0 * sizeRatio),
       child: ListView(
         children: [
           SwitchNotificationTile(

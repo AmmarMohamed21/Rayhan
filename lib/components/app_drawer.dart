@@ -13,7 +13,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200.0 * widthRatio,
+      width: 200.0 * sizeRatio,
       child: Drawer(
         child: Container(
           color: Provider.of<Settings>(context, listen: false).isNightTheme
@@ -21,24 +21,27 @@ class AppDrawer extends StatelessWidget {
               : kLightBackgroundColor,
           child: ListView(
             children: [
-              DrawerHeader(
-                margin: EdgeInsets.only(bottom: 8.0 * widthRatio),
-                padding: EdgeInsets.fromLTRB(
-                  16.0 * widthRatio,
-                  16.0 * widthRatio,
-                  16.0 * widthRatio,
-                  8.0 * widthRatio,
-                ),
-                decoration: BoxDecoration(
-                  color:
+              Container(
+                constraints: BoxConstraints(
+                    minHeight: 175.0 * sizeRatio, maxHeight: 175.0 * sizeRatio),
+                child: DrawerHeader(
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: Provider.of<Settings>(context, listen: false)
+                            .isNightTheme
+                        ? kNightBackgroundColor
+                        : kLightBackgroundColor,
+                  ),
+                  child:
                       Provider.of<Settings>(context, listen: false).isNightTheme
-                          ? kNightBackgroundColor
-                          : kLightBackgroundColor,
+                          ? Image.asset(
+                              'assets/icon/logodark.png',
+                            )
+                          : Image.asset(
+                              'assets/icon/logo.png',
+                            ),
                 ),
-                child:
-                    Provider.of<Settings>(context, listen: false).isNightTheme
-                        ? Image.asset('assets/icon/logodark.png')
-                        : Image.asset('assets/icon/logo.png'),
               ),
               DrawerListTile(
                 label: 'الأذكار',
