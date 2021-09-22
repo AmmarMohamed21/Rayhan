@@ -62,6 +62,19 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
             ],
           ),
         ),
+        showCircle
+            ? Positioned.fill(
+                child: Align(
+                  alignment: Alignment(0.48, 0.39),
+                  child: CircleAvatar(
+                    backgroundColor: Provider.of<Settings>(context).isNightTheme
+                        ? Colors.white.withOpacity(0.1)
+                        : Colors.black26.withOpacity(0.1),
+                    radius: 30.0 * sizeRatio,
+                  ),
+                ),
+              )
+            : SizedBox.shrink(),
         Positioned.fill(
           child: Align(
             alignment: Alignment(0.5, 1),
@@ -74,17 +87,6 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
             ),
           ),
         ),
-        showCircle
-            ? Positioned.fill(
-                child: Align(
-                  alignment: Alignment(0.48, 0.39),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black26.withOpacity(0.1),
-                    radius: 30.0 * sizeRatio,
-                  ),
-                ),
-              )
-            : SizedBox.shrink(),
         Positioned.fill(
           child: Align(
             alignment: Alignment.topLeft,
