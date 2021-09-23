@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'روحٌ وريحان',
         theme: ThemeData(
           fontFamily: 'Harmattans',
+          accentColor: Colors.grey.withOpacity(0.1),
         ),
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
