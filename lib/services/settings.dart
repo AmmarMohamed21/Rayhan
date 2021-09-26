@@ -43,7 +43,7 @@ class Settings extends ChangeNotifier {
     //variables initializations
     this.context = context;
 
-    initializeScaleFactor(context);
+    _initializeScaleFactor(context);
 
     _sabahNotifyBody =
         azkarMessageBody[Random().nextInt(azkarMessageBody.length)] +
@@ -97,6 +97,10 @@ class Settings extends ChangeNotifier {
       isFontMed = prefs.getBool('isFontMed');
     }
 
+    if (prefs.getBool('fridayNotifiation') == null) {
+      _setWeeklyFridayNotification();
+    }
+
     if (prefs.getBool('isSabahActive') == null) {
       prefs.setBool('isSabahActive', false);
     }
@@ -128,6 +132,9 @@ class Settings extends ChangeNotifier {
       if (not.id == notificationsIDs.sabahNotificationID.index) {
         isSabahActive = true;
         prefs.setBool('isSabahActive', isSabahActive);
+      }
+      if (not.id == 7 && prefs.getBool('fridayNotifiation') == null) {
+        prefs.setBool('fridayNotification', true);
       }
     }
 
@@ -295,7 +302,48 @@ class Settings extends ChangeNotifier {
     notifyListeners();
   }
 
-  void initializeScaleFactor(BuildContext context) {
+  Future<void> _setWeeklyFridayNotification() async {
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (String payload) async {});
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        7,
+        'دعاء يوم الجمعة',
+        'قَالَ رسُولُ اللَّهِ ﷺ: "إِنَّ مِنْ أَفضَلِ أَيَّامِكُمْ يَوْم الجُمُعَةِ، فأَكثروا عليَّ مِنَ الصَّلاةِ فِيهِ، فَإِنَّ صَلاتَكُمْ مَعْروضَةٌ عليَّ"\n وقَالَ رسُولُ اللَّهِ ﷺ عن يوم الجمعة: "فيهِ ساعَةٌ لا يُوَافِقُها عَبْدٌ مُسْلِمٌ وَهُوَ قَائِمٌ يُصَلِّي يَسألُ اللَّهَ تَعالى شَيْئاً إِلاَّ أعْطاهُ إيَّاهُ".',
+        _nextInstanceOfFriday(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'إشعار يوم الجمعة',
+            'إشعار يوم الجمعة',
+            'إشعار للتذكير بالدعاء يوم الجمعة',
+            playSound: true,
+            sound: RawResourceAndroidNotificationSound('notify'),
+            importance: Importance.max,
+            priority: Priority.high,
+            styleInformation: BigTextStyleInformation(''),
+          ),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: 'إشعار يوم الجمعة',
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+  }
+
+  tz.TZDateTime _nextInstanceOfFriday() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 15, 00);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    while (scheduledDate.weekday != DateTime.sunday) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    print(scheduledDate);
+    return scheduledDate;
+  }
+
+  void _initializeScaleFactor(BuildContext context) {
     double widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
 
     double heightRatio = (MediaQuery.of(context).size.height -
