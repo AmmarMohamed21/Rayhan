@@ -336,7 +336,7 @@ class Settings extends ChangeNotifier {
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    while (scheduledDate.weekday != DateTime.sunday) {
+    while (scheduledDate.weekday != DateTime.friday) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     print(scheduledDate);
