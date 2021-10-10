@@ -1,16 +1,10 @@
-# rayhan
+# Rayhan
 
-أذكار المسلم
+Rayhan (روح وريحان) is a Mobile Application where you can read "Azkar Al-Muslim", Get reminders to read them and know prayer times.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+to Download Android Version APK:
+```
+https://github.com/AmmarMohamed21/Rayhan/releases/tag/v1.0.0
+```
