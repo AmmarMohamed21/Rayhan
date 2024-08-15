@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/two_coloured_circle.dart';
+import 'package:rayhan/providers/theme_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
-import 'package:rayhan/services/settings.dart';
 
 class ThemeChoice extends StatelessWidget {
   @override
@@ -12,25 +11,27 @@ class ThemeChoice extends StatelessWidget {
       children: [
         GestureDetector(
           child: CircleAvatar(
-            radius: Provider.of<Settings>(context).isGreenTheme &&
-                    !Provider.of<Settings>(context).isNightTheme
+            radius: Provider.of<ThemeProvider>(context).currentThemeName ==
+                    'lightGreen'
                 ? 22.0 * sizeRatio
                 : 20.0 * sizeRatio,
-            backgroundColor: Provider.of<Settings>(context).isGreenTheme &&
-                    !Provider.of<Settings>(context).isNightTheme
-                ? kSecondaryColor
-                : Colors.grey,
+            backgroundColor:
+                Provider.of<ThemeProvider>(context).currentThemeName ==
+                        'lightGreen'
+                    ? kSecondaryColor
+                    : Colors.grey,
             child: TwoColouredCircle(
-              upperColor: kGreenLightPrimaryColor,
+              upperColor: kGreenPrimaryColor,
               lowerColor: kLightBackgroundColor,
-              diameter: Provider.of<Settings>(context).isGreenTheme &&
-                      !Provider.of<Settings>(context).isNightTheme
+              diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
+                      'lightGreen'
                   ? 38.0 * sizeRatio
                   : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {
-            Provider.of<Settings>(context, listen: false).setGreenTheme();
+            Provider.of<ThemeProvider>(context, listen: false)
+                .changeTheme('lightGreen');
           },
         ),
         SizedBox(
@@ -38,22 +39,27 @@ class ThemeChoice extends StatelessWidget {
         ),
         GestureDetector(
           child: CircleAvatar(
-            radius: !Provider.of<Settings>(context).isGreenTheme
+            radius: Provider.of<ThemeProvider>(context).currentThemeName ==
+                    'lightBlue'
                 ? 22.0 * sizeRatio
                 : 20.0 * sizeRatio,
-            backgroundColor: !Provider.of<Settings>(context).isGreenTheme
-                ? kSecondaryColor
-                : Colors.grey,
+            backgroundColor:
+                Provider.of<ThemeProvider>(context).currentThemeName ==
+                        'lightBlue'
+                    ? kSecondaryColor
+                    : Colors.grey,
             child: TwoColouredCircle(
-              upperColor: kBlueLightPrimaryColor,
+              upperColor: kBluePrimaryColor,
               lowerColor: kLightBackgroundColor,
-              diameter: !Provider.of<Settings>(context).isGreenTheme
+              diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
+                      'lightBlue'
                   ? 38.0 * sizeRatio
                   : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {
-            Provider.of<Settings>(context, listen: false).setBlueTheme();
+            Provider.of<ThemeProvider>(context, listen: false)
+                .changeTheme('lightBlue');
           },
         ),
         SizedBox(
@@ -61,22 +67,27 @@ class ThemeChoice extends StatelessWidget {
         ),
         GestureDetector(
           child: CircleAvatar(
-            radius: Provider.of<Settings>(context).isNightTheme
+            radius: Provider.of<ThemeProvider>(context).currentThemeName ==
+                    'darkGreen'
                 ? 22.0 * sizeRatio
                 : 20.0 * sizeRatio,
-            backgroundColor: Provider.of<Settings>(context).isNightTheme
-                ? kSecondaryColor
-                : Colors.grey,
+            backgroundColor:
+                Provider.of<ThemeProvider>(context).currentThemeName ==
+                        'darkGreen'
+                    ? kSecondaryColor
+                    : Colors.grey,
             child: TwoColouredCircle(
-              upperColor: kGreenLightPrimaryColor,
-              lowerColor: Color.fromRGBO(40, 40, 40, 1),
-              diameter: Provider.of<Settings>(context).isNightTheme
+              upperColor: kGreenPrimaryColor,
+              lowerColor: const Color.fromRGBO(40, 40, 40, 1),
+              diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
+                      'darkGreen'
                   ? 38.0 * sizeRatio
                   : 36.0 * sizeRatio,
             ),
           ),
           onTap: () {
-            Provider.of<Settings>(context, listen: false).setNightTheme();
+            Provider.of<ThemeProvider>(context, listen: false)
+                .changeTheme('darkGreen');
           },
         ),
       ],

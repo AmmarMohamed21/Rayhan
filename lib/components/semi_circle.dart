@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
 
 class SemiCircle extends CustomPainter {
   final Color color;
-  SemiCircle({this.color});
+  SemiCircle({required this.color});
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = color;

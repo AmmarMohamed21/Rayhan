@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 class TutorialSecondPage extends StatelessWidget {
+  const TutorialSecondPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -11,7 +11,7 @@ class TutorialSecondPage extends StatelessWidget {
       textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize: 25.0 * sizeRatio,
-        color: Provider.of<Settings>(context).isNightTheme
+        color: Theme.of(context).brightness == Brightness.dark
             ? Colors.white
             : Colors.black,
       ),

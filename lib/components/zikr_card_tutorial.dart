@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/services/settings.dart';
-import 'package:rayhan/utilities/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
 class ZikrCardTutorial extends StatefulWidget {
+  const ZikrCardTutorial({super.key});
+
   @override
-  _ZikrCardTutorialState createState() => _ZikrCardTutorialState();
+  ZikrCardTutorialState createState() => ZikrCardTutorialState();
 }
 
-class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
+class ZikrCardTutorialState extends State<ZikrCardTutorial> {
   int number = 3;
   bool showCircle = false;
 
@@ -27,6 +28,18 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
       children: [
         Container(
           width: double.infinity,
+          margin: EdgeInsets.all(20.0 * sizeRatio),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(10.0 * sizeRatio),
+            boxShadow: [
+              BoxShadow(
+                color: kGreenPrimaryColor,
+                offset: const Offset(0.0, 1.0),
+                blurRadius: 3.0 * sizeRatio,
+              ),
+            ],
+          ),
           child: Padding(
             padding: EdgeInsets.all(20.0 * sizeRatio),
             child: Column(
@@ -38,50 +51,37 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   textDirection: TextDirection.rtl,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
-                    color: Provider.of<Settings>(context).isNightTheme
+                    color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
-                        : kGreenPrimaryColor,
+                        : kGreenDarkColor,
                     fontSize: 22 * sizeRatio,
                   ),
                 ),
               ],
             ),
           ),
-          margin: EdgeInsets.all(20.0 * sizeRatio),
-          decoration: BoxDecoration(
-            color: Provider.of<Settings>(context).isNightTheme
-                ? kNightBackgroundColor
-                : kLightBackgroundColor,
-            borderRadius: BorderRadius.circular(10.0 * sizeRatio),
-            boxShadow: [
-              BoxShadow(
-                color: kGreenLightPrimaryColor,
-                offset: Offset(0.0, 1.0),
-                blurRadius: 3.0 * sizeRatio,
-              ),
-            ],
-          ),
         ),
         showCircle
             ? Positioned.fill(
                 child: Align(
-                  alignment: Alignment(0.48, 0.39),
+                  alignment: const Alignment(0.48, 0.39),
                   child: CircleAvatar(
-                    backgroundColor: Provider.of<Settings>(context).isNightTheme
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.black26.withOpacity(0.1),
+                    backgroundColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white.withOpacity(0.1)
+                            : Colors.black26.withOpacity(0.1),
                     radius: 30.0 * sizeRatio,
                   ),
                 ),
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         Positioned.fill(
           child: Align(
-            alignment: Alignment(0.5, 1),
+            alignment: const Alignment(0.5, 1),
             child: Icon(
               Icons.touch_app,
               size: 65.0 * sizeRatio,
-              color: Provider.of<Settings>(context).isNightTheme
+              color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
             ),
@@ -94,13 +94,13 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
               width: 45.0 * sizeRatio,
               height: 45.0 * sizeRatio,
               decoration: BoxDecoration(
-                color: Provider.of<Settings>(context).isNightTheme
-                    ? kNightBackgroundColor
-                    : Color.fromRGBO(245, 245, 245, 1),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? kDarkBackgroundColor
+                    : const Color.fromRGBO(245, 245, 245, 1),
                 borderRadius: BorderRadius.circular(45.0 * sizeRatio),
                 boxShadow: [
                   BoxShadow(
-                    color: kGreenLightPrimaryColor,
+                    color: kGreenPrimaryColor,
                     offset: Offset(0.0, 1.0),
                     blurRadius: 3.0 * sizeRatio,
                   ),
@@ -111,9 +111,9 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                   getArabicNumber(number),
                   style: TextStyle(
                     fontSize: 30.0 * sizeRatio,
-                    color: Provider.of<Settings>(context).isNightTheme
+                    color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
-                        : kGreenPrimaryColor,
+                        : kGreenDarkColor,
                   ),
                   //textAlign: TextAlign.center,
                 ),
@@ -128,7 +128,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
               padding: const EdgeInsets.only(bottom: 7.0),
               child: Icon(
                 FontAwesomeIcons.pagelines,
-                color: kGreenLightPrimaryColor,
+                color: kGreenPrimaryColor,
                 size: 60.0 * sizeRatio,
               ),
             ),
@@ -144,7 +144,7 @@ class _ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 padding: const EdgeInsets.only(bottom: 7.0),
                 child: Icon(
                   FontAwesomeIcons.pagelines,
-                  color: kGreenLightPrimaryColor,
+                  color: kGreenPrimaryColor,
                   size: 60.0 * sizeRatio,
                 ),
               ),

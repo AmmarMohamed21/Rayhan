@@ -1,21 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/tutorial_first_page.dart';
 import 'package:rayhan/components/tutorial_second_page.dart';
 import 'package:rayhan/components/tutorial_third_page.dart';
-import 'package:rayhan/services/settings.dart';
+import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 class WelcomeTutorial extends StatefulWidget {
+  const WelcomeTutorial({super.key});
+
   @override
-  _WelcomeTutorialState createState() => _WelcomeTutorialState();
+  WelcomeTutorialState createState() => WelcomeTutorialState();
 }
 
-class _WelcomeTutorialState extends State<WelcomeTutorial> {
+class WelcomeTutorialState extends State<WelcomeTutorial> {
   int index = 0;
 
-  List<Widget> contentWidgets = [
+  List<Widget> contentWidgets = const [
     TutorialFirstPage(),
     TutorialSecondPage(),
     TutorialThirdPage(),
@@ -24,7 +25,7 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(100, 100, 100, 0.5),
+      color: const Color.fromRGBO(100, 100, 100, 0.5),
       height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -39,8 +40,8 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
             width: double.infinity,
             padding: EdgeInsets.all(20.0 * sizeRatio),
             decoration: BoxDecoration(
-              color: Provider.of<Settings>(context).isNightTheme
-                  ? kNightBackgroundColor
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? kDarkBackgroundColor
                   : kLightBackgroundColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0 * sizeRatio),
@@ -59,16 +60,17 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                           'أهلًا بكم في',
                           style: TextStyle(
                             fontSize: 27.0 * sizeRatio,
-                            color: Provider.of<Settings>(context).isNightTheme
-                                ? Colors.white
-                                : Colors.black,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
                           ),
                         ),
                         SizedBox(
                           width: 10.0 * sizeRatio,
                         ),
                         Image.asset(
-                          Provider.of<Settings>(context).isNightTheme
+                          Theme.of(context).brightness == Brightness.dark
                               ? 'assets/icon/logodark.png'
                               : 'assets/icon/logo.png',
                           height: 55.0 * sizeRatio,
@@ -81,7 +83,7 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                         horizontal: 130.0 * sizeRatio,
                       ),
                       child: Divider(
-                        color: kGreenPrimaryColor,
+                        color: kGreenDarkColor,
                         thickness: 2.5 * sizeRatio,
                       ),
                     ),
@@ -92,19 +94,19 @@ class _WelcomeTutorialState extends State<WelcomeTutorial> {
                 //Spacer(),
                 TextButton(
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all<Color>(
+                    overlayColor: WidgetStateProperty.all<Color>(
                         kGreenLightColor.withOpacity(0.3)),
                   ),
                   child: Text(
                     index == contentWidgets.length - 1 ? 'حسنًا' : 'التالي',
                     style: TextStyle(
                       fontSize: 30.0 * sizeRatio,
-                      color: kGreenLightPrimaryColor,
+                      color: kGreenPrimaryColor,
                     ),
                   ),
                   onPressed: () {
                     if (index == contentWidgets.length - 1) {
-                      Provider.of<Settings>(context, listen: false)
+                      Provider.of<SettingsProvider>(context, listen: false)
                           .setFirstTime();
                       return;
                     }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 class DrawerListTile extends StatelessWidget {
-  final Function onTap;
+  final void Function() onTap;
   final String label;
   final IconData icon;
 
-  DrawerListTile({this.onTap, this.label, this.icon});
+  const DrawerListTile(
+      {required this.onTap, required this.label, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class DrawerListTile extends StatelessWidget {
       horizontalTitleGap: 0.0,
       leading: Icon(
         icon,
-        color: Provider.of<Settings>(context, listen: false).isNightTheme
+        color: Theme.of(context).brightness == Brightness.dark
             ? Colors.white
             : Colors.black,
         size: 26.0 * sizeRatio,
@@ -27,8 +26,8 @@ class DrawerListTile extends StatelessWidget {
       title: Text(
         label,
         style: TextStyle(
-          fontSize: 25.0 * sizeRatio,
-          color: Provider.of<Settings>(context, listen: false).isNightTheme
+          fontSize: 22.0 * sizeRatio,
+          color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
               : Colors.black,
         ),

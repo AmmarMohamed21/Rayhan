@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 class ZikrCardIcon extends StatelessWidget {
@@ -25,9 +24,7 @@ class ZikrCardIcon extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 7.0 * sizeRatio),
             child: Icon(
               FontAwesomeIcons.pagelines,
-              color: !Provider.of<Settings>(context).isGreenTheme
-                  ? kBlueLightPrimaryColor
-                  : kGreenLightPrimaryColor,
+              color: Theme.of(context).primaryColor,
               size: 60.0 * sizeRatio,
             ),
           ),

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/home_screen.dart';
 import 'package:rayhan/screens/prayer_times_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
-import 'package:rayhan/services/settings.dart';
+
 import '../utilities/constants.dart';
 import 'drawer_list_tile.dart';
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 200.0 * sizeRatio,
       child: Drawer(
         child: Container(
-          color: Provider.of<Settings>(context, listen: false).isNightTheme
-              ? kNightBackgroundColor
+          color: Theme.of(context).brightness == Brightness.dark
+              ? kDarkBackgroundColor
               : kLightBackgroundColor,
           child: ListView(
             children: [
@@ -28,19 +29,17 @@ class AppDrawer extends StatelessWidget {
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
                   decoration: BoxDecoration(
-                    color: Provider.of<Settings>(context, listen: false)
-                            .isNightTheme
-                        ? kNightBackgroundColor
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? kDarkBackgroundColor
                         : kLightBackgroundColor,
                   ),
-                  child:
-                      Provider.of<Settings>(context, listen: false).isNightTheme
-                          ? Image.asset(
-                              'assets/icon/logodark.png',
-                            )
-                          : Image.asset(
-                              'assets/icon/logo.png',
-                            ),
+                  child: Theme.of(context).brightness == Brightness.dark
+                      ? Image.asset(
+                          'assets/icon/logodark.png',
+                        )
+                      : Image.asset(
+                          'assets/icon/logo.png',
+                        ),
                 ),
               ),
               DrawerListTile(
@@ -48,9 +47,10 @@ class AppDrawer extends StatelessWidget {
                 icon: FontAwesomeIcons.pagelines,
                 onTap: () {
                   Navigator.pop(context);
-                  if (ModalRoute.of(context).settings.name != HomeScreen.id)
+                  if (ModalRoute.of(context)?.settings.name != HomeScreen.id) {
                     Navigator.popUntil(
                         context, ModalRoute.withName(HomeScreen.id));
+                  }
                 },
               ),
               DrawerListTile(

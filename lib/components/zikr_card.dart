@@ -1,63 +1,77 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:rayhan/components/zikr_card_container.dart';
 import 'package:rayhan/components/zikr_card_counter.dart';
 import 'package:rayhan/components/zikr_card_icon.dart';
 import 'package:rayhan/components/zikr_card_title.dart';
-import 'package:rayhan/services/settings.dart';
 import 'package:rayhan/utilities/constants.dart';
-import 'package:flutter/services.dart';
 
 class ZikrCard extends StatefulWidget {
   final String text;
-  final String title;
-  int number;
+  final String? title;
   final bool isCounted;
+  final int? number;
 
-  ZikrCard({this.text, this.title, this.number, this.isCounted});
+  const ZikrCard(
+      {super.key,
+      required this.text,
+      this.title,
+      this.number,
+      required this.isCounted});
 
   @override
-  _ZikrCardState createState() => _ZikrCardState();
+  ZikrCardState createState() => ZikrCardState();
 }
 
-class _ZikrCardState extends State<ZikrCard> {
+class ZikrCardState extends State<ZikrCard> {
+  late int currentNumber;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.number != null) {
+      currentNumber = widget.number!;
+    } else {
+      currentNumber = 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      highlightColor: Provider.of<Settings>(context, listen: false).isNightTheme
-          ? Color.fromRGBO(55, 55, 55, 0.2)
-          : Color.fromRGBO(215, 215, 215, 0.2),
-      splashColor: Provider.of<Settings>(context, listen: false).isNightTheme
-          ? Color.fromRGBO(55, 55, 55, 0.2)
-          : Color.fromRGBO(215, 215, 215, 0.2),
+      highlightColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color.fromRGBO(55, 55, 55, 0.2)
+          : const Color.fromRGBO(215, 215, 215, 0.2),
+      splashColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color.fromRGBO(55, 55, 55, 0.2)
+          : const Color.fromRGBO(215, 215, 215, 0.2),
       borderRadius: BorderRadius.circular(20.0 * sizeRatio),
       onTap: () {
-        if (widget.number > 0) {
+        if (currentNumber > 0) {
           setState(() {
-            widget.number--;
+            currentNumber--;
           });
         } else {}
       },
       onLongPress: () {
         Clipboard.setData(ClipboardData(text: widget.text));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor:
-              Provider.of<Settings>(context, listen: false).isNightTheme
-                  ? kNightBackgroundColor
-                  : kLightBackgroundColor,
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? kDarkBackgroundColor
+              : kLightBackgroundColor,
           content: Text(
             'تم نسخ الذكر',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Harmattans',
               fontSize: 20.0 * sizeRatio,
-              color: Provider.of<Settings>(context, listen: false).isNightTheme
+              color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
             ),
           ),
-          duration: Duration(seconds: 1),
+          duration: const Duration(seconds: 1),
         ));
       },
       child: Stack(
@@ -65,12 +79,12 @@ class _ZikrCardState extends State<ZikrCard> {
           ZikrCardContainer(text: widget.text),
           widget.isCounted
               ? ZikrCardCounter(
-                  number: widget.number,
+                  number: currentNumber,
                 )
-              : SizedBox.shrink(),
-          widget.title.length > 0
-              ? ZikrCardTitle(title: widget.title)
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
+          widget.title != null
+              ? ZikrCardTitle(title: widget.title!)
+              : const SizedBox.shrink(),
           ZikrCardIcon(),
           ZikrCardIcon(isReversed: true),
         ],

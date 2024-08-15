@@ -1,26 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/components/app_drawer.dart';
-import 'package:rayhan/components/zikr_card.dart';
-import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/utilities/constants.dart';
-import 'dart:math' as math;
-import 'package:rayhan/services/azkar_list.dart';
-import 'package:rayhan/services/settings.dart';
-import 'package:rayhan/services/zikr.dart';
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
+import 'package:rayhan/components/app_drawer.dart';
+import 'package:rayhan/components/main_app_bar.dart';
+import 'package:rayhan/components/zikr_card.dart';
+import 'package:rayhan/data/azkar_list.dart';
+import 'package:rayhan/models/zikr.dart';
+import 'package:rayhan/utilities/constants.dart';
+
 class AzkarScreen extends StatelessWidget {
-  static final String id = 'azkar_screen';
+  static const String id = 'azkar_screen';
   final String title;
-  AzkarScreen({this.title});
+  const AzkarScreen({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
-      backgroundColor: Provider.of<Settings>(context).isNightTheme
-          ? kNightBackgroundColor
-          : kLightBackgroundColor,
+      drawer: const AppDrawer(),
+      // backgroundColor: Theme.of(context).brightness == Brightness.dark
+      //     ? kDarkBackgroundColor
+      //     : kLightBackgroundColor,
       appBar: getAppBar(
         title: title,
         context: context,

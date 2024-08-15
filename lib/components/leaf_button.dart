@@ -1,26 +1,30 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rayhan/screens/azkar_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
-import 'package:rayhan/services/settings.dart';
-import 'dart:math' as math;
-import 'custom_icons.dart';
 import 'package:rayhan/utilities/constants.dart';
+
+import 'custom_icons.dart';
 
 class LeafButton extends StatelessWidget {
   final String label;
-  final bool isInversed;
-  LeafButton({this.label, this.isInversed});
+  final bool isInverse;
+  final int position;
+  const LeafButton(
+      {super.key,
+      required this.label,
+      required this.isInverse,
+      required this.position});
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      highlightColor: Provider.of<Settings>(context, listen: false).isNightTheme
-          ? Color.fromRGBO(45, 45, 45, 0.2)
-          : Color.fromRGBO(215, 215, 215, 0.2),
-      splashColor: Provider.of<Settings>(context, listen: false).isNightTheme
-          ? Color.fromRGBO(45, 45, 45, 0.2)
-          : Color.fromRGBO(215, 215, 215, 0.2),
+      highlightColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color.fromRGBO(45, 45, 45, 0.2)
+          : const Color.fromRGBO(215, 215, 215, 0.2),
+      splashColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color.fromRGBO(45, 45, 45, 0.2)
+          : const Color.fromRGBO(215, 215, 215, 0.2),
       borderRadius: BorderRadius.circular(80.0 * sizeRatio),
       onTap: () {
         if (label != 'الإعدادات') {
@@ -41,13 +45,34 @@ class LeafButton extends StatelessWidget {
         children: [
           Transform(
             alignment: Alignment.center,
-            transform: Matrix4.rotationY(isInversed ? math.pi : 0),
-            child: Icon(
-              CustomIcons.leaf,
-              color: Provider.of<Settings>(context, listen: false).isGreenTheme
-                  ? kGreenLightPrimaryColor
-                  : kBlueLightPrimaryColor,
-              size: 160.0 * sizeRatio,
+            transform: Matrix4.rotationY(isInverse ? math.pi : 0),
+            child: ShaderMask(
+              blendMode: BlendMode.srcATop,
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                  colors: position == 0
+                      ? [
+                          Theme.of(context).primaryColorLight.withOpacity(0.75),
+                          Theme.of(context).primaryColor,
+                        ]
+                      : position == 1
+                          ? [
+                              Theme.of(context).primaryColorLight,
+                              Theme.of(context).primaryColor
+                            ]
+                          : [
+                              Theme.of(context).primaryColorLight,
+                              Theme.of(context).primaryColorDark,
+                            ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ).createShader(bounds);
+              },
+              child: Icon(
+                CustomIcons.leaf,
+                color: Colors.white,
+                size: 160.0 * sizeRatio,
+              ),
             ),
           ),
           Text(

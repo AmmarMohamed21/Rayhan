@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
-import 'package:rayhan/services/settings.dart';
 
 class FontSizeChoice extends StatelessWidget {
+  const FontSizeChoice({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
-      color: Provider.of<Settings>(context).isNightTheme
+      color: Theme.of(context).brightness == Brightness.dark
           ? Colors.white70
           : Colors.black54,
       selectedColor: kSecondaryColor,
-      fillColor: Provider.of<Settings>(context).isNightTheme
-          ? kNightBackgroundColor
+      fillColor: Theme.of(context).brightness == Brightness.dark
+          ? kDarkBackgroundColor
           : kLightBackgroundColor,
       renderBorder: false,
+      onPressed: (int index) {
+        Provider.of<SettingsProvider>(context, listen: false)
+            .setIsFontMed(index == 0);
+      },
+      isSelected: [
+        Provider.of<SettingsProvider>(context).isFontMed ?? true,
+        !(Provider.of<SettingsProvider>(context).isFontMed ?? true)
+      ],
       children: [
         Text(
           'متوسط',
@@ -28,13 +38,6 @@ class FontSizeChoice extends StatelessWidget {
             fontSize: 25.0 * sizeRatio,
           ),
         ),
-      ],
-      onPressed: (int index) {
-        Provider.of<Settings>(context, listen: false).setFontSize(index);
-      },
-      isSelected: [
-        Provider.of<Settings>(context).isFontMed,
-        !Provider.of<Settings>(context).isFontMed
       ],
     );
   }

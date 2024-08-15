@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859529468646",
+    "project_id": "rayhan-cc091",
+    "storage_bucket": "rayhan-cc091.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859529468646:android:430790fc15d1b71e347927",
+        "android_client_info": {
+          "package_name": "com.example.rayhan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRq8sJGcLz_bUvSQZZPrz2irEn-Xkt0b4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

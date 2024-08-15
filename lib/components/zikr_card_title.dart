@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/services/settings.dart';
+import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 class ZikrCardTitle extends StatelessWidget {
-  ZikrCardTitle({
-    this.title,
+  const ZikrCardTitle({
+    super.key,
+    required this.title,
   });
 
   final String title;
@@ -19,20 +20,17 @@ class ZikrCardTitle extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 25.0 * sizeRatio),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5.0 * sizeRatio),
-            color: Provider.of<Settings>(context, listen: false).isNightTheme
-                ? kNightBackgroundColor
-                : kLightBackgroundColor,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: Text(
               title,
               style: TextStyle(
-                fontSize: Provider.of<Settings>(context).isFontMed
-                    ? 25 * sizeRatio
-                    : 28 * sizeRatio,
-                color: Provider.of<Settings>(context).isNightTheme
+                fontSize:
+                    Provider.of<SettingsProvider>(context).isFontMed ?? false
+                        ? 25 * sizeRatio
+                        : 28 * sizeRatio,
+                color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
-                    : Provider.of<Settings>(context).isGreenTheme
-                        ? kGreenPrimaryColor
-                        : kBluePrimaryColor,
+                    : Theme.of(context).primaryColorDark,
               ),
             ),
           ),

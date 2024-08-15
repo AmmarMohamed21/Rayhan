@@ -1,149 +1,141 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/scaled_switch.dart';
-import 'package:rayhan/services/settings.dart';
+import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
-class SwitchNotificationTile extends StatefulWidget {
+class SwitchNotificationTile extends StatelessWidget {
   final String label;
   final IconData icon;
   final Color iconColor;
   final bool isSabah;
-  bool isActive;
+  final bool isActive;
 
-  SwitchNotificationTile(
-      {this.label, this.icon, this.iconColor, this.isSabah, this.isActive});
+  const SwitchNotificationTile(
+      {super.key,
+      required this.label,
+      required this.icon,
+      required this.iconColor,
+      required this.isSabah,
+      required this.isActive});
 
-  @override
-  _SwitchNotificationTileState createState() => _SwitchNotificationTileState();
-}
-
-class _SwitchNotificationTileState extends State<SwitchNotificationTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: setNotification,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: 10.0 * sizeRatio,
-          left: 20.0 * sizeRatio,
-          right: 20.0 * sizeRatio,
-          bottom: 10.0 * sizeRatio,
-        ),
-        child: Container(
-          constraints: BoxConstraints(minHeight: 45.0 * sizeRatio),
-          //height: 45.0 * heightRatio * widthRatio,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                widget.icon,
-                color: widget.iconColor,
-                size: 45.0 * sizeRatio,
-              ),
-              SizedBox(
-                width: 17.0 * sizeRatio,
-              ),
-              Column(
-                children: [
-                  Text(
-                    widget.label,
-                    style: TextStyle(
-                      fontSize: 25.0 * sizeRatio,
-                      color: Provider.of<Settings>(context).isNightTheme
-                          ? Colors.white
-                          : Colors.black,
-                    ),
+      onTap: () {
+        setNotification(context);
+      },
+      child: Container(
+        constraints: BoxConstraints(minHeight: 45.0 * sizeRatio),
+        //height: 45.0 * heightRatio * widthRatio,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: iconColor,
+              size: 45.0 * sizeRatio,
+            ),
+            SizedBox(
+              width: 17.0 * sizeRatio,
+            ),
+            Column(
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 25.0 * sizeRatio,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
                   ),
-                  widget.isActive
-                      ? Text(
-                          getSubtitle(widget.isSabah, context),
-                          style: TextStyle(
-                            fontSize: 20.0 * sizeRatio,
-                            color: Provider.of<Settings>(context).isNightTheme
-                                ? Colors.white70
-                                : Colors.black54,
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                ],
-              ),
-              Spacer(),
-              ScaledSwitch(
-                isActive: widget.isActive,
-                onChanged: boolCallback,
-              ),
-            ],
-          ),
+                ),
+                isActive
+                    ? Text(
+                        getSubtitle(isSabah, context),
+                        style: TextStyle(
+                          fontSize: 20.0 * sizeRatio,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white70
+                              : Colors.black54,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+            const Spacer(),
+            ScaledSwitch(
+              isActive: isActive,
+              onChanged: (bool value) {
+                if (value) {
+                  setNotification(context);
+                } else {
+                  if (isSabah) {
+                    Provider.of<SettingsProvider>(context, listen: false)
+                        .cancelNotification(
+                            NotificationIDs.morningNotificationID.index);
+                  } else {
+                    Provider.of<SettingsProvider>(context, listen: false)
+                        .cancelNotification(
+                            NotificationIDs.dawnNotificationID.index);
+                  }
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void boolCallback(bool value) {
-    setNotification();
-  }
-
-  void setNotification() async {
-    int id;
-    TimeOfDay initialTime;
-    String notificationKey;
-    String hoursKey;
-    String minutesKey;
-    if (widget.isSabah) {
-      id = notificationsIDs.sabahNotificationID.index;
-      initialTime = TimeOfDay(hour: 3, minute: 0);
-      notificationKey = 'isSabahActive';
-      hoursKey = 'sabahHours';
-      minutesKey = 'sabahMinutes';
+  void setNotification(BuildContext context) async {
+    late TimeOfDay initialTime;
+    if (isSabah) {
+      initialTime = const TimeOfDay(hour: 6, minute: 0);
     } else {
-      id = notificationsIDs.masaaNotificationID.index;
-      initialTime = TimeOfDay(hour: 16, minute: 0);
-      notificationKey = 'isMasaaActive';
-      hoursKey = 'masaaHours';
-      minutesKey = 'masaaMinutes';
+      initialTime = const TimeOfDay(hour: 17, minute: 0);
     }
-    if (widget.isActive == false) {
-      TimeOfDay timeofDay = await showRoundedTimePicker(
+    String title = isSabah ? 'الصباح' : 'المساء';
+    TimeOfDay? timeOfDay = await showTimePicker(
         context: context,
-        positiveBtn: 'تأكيد',
+        confirmText: 'تأكيد',
+        cancelText: 'إلغاء',
+        helpText: "اختر وقت إشعار $title",
         initialTime: initialTime,
-        theme: ThemeData(
-          dialogBackgroundColor:
-              Provider.of<Settings>(context, listen: false).isNightTheme
-                  ? kNightBackgroundColor
-                  : kLightBackgroundColor,
-          primarySwatch:
-              Provider.of<Settings>(context, listen: false).isGreenTheme
-                  ? kGreenMaterialPrimary
-                  : kBlueMaterialPrimary,
-        ),
-      );
-      if (timeofDay == null) {
-        setState(() {
-          widget.isActive = false;
-        });
-        return;
-      }
-      Provider.of<Settings>(context, listen: false)
-          .setNotification(id, timeofDay.hour, timeofDay.minute);
-      Provider.of<Settings>(context, listen: false).setPreferences(
-          notificationKey,
-          hoursKey,
-          minutesKey,
-          timeofDay.hour,
-          timeofDay.minute);
-      setState(() {
-        widget.isActive = true;
-      });
+        builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                alwaysUse24HourFormat: false,
+              ),
+              child: child!,
+            ));
+    if (timeOfDay == null) {
+      Provider.of<SettingsProvider>(context, listen: false).cancelNotification(
+          isSabah
+              ? NotificationIDs.morningNotificationID.index
+              : NotificationIDs.dawnNotificationID.index);
+      return;
+    }
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    bool? result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    if (result != true) {
+      Provider.of<SettingsProvider>(context, listen: false).cancelNotification(
+          isSabah
+              ? NotificationIDs.morningNotificationID.index
+              : NotificationIDs.dawnNotificationID.index);
+      return;
+    }
+    if (isSabah) {
+      Provider.of<SettingsProvider>(context, listen: false)
+          .activateMorningNotificationsTime(timeOfDay);
     } else {
-      Provider.of<Settings>(context, listen: false).cancelNotification(id);
-      setState(() {
-        widget.isActive = false;
-      });
+      Provider.of<SettingsProvider>(context, listen: false)
+          .activateDawnNotifications(timeOfDay);
     }
   }
 }

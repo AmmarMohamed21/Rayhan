@@ -1,12 +1,18 @@
-import 'package:flutter/material.dart';
-import 'semi_circle.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import 'semi_circle.dart';
 
 class TwoColouredCircle extends StatelessWidget {
   final Color upperColor;
   final Color lowerColor;
   final double diameter;
-  TwoColouredCircle({this.upperColor, this.lowerColor, this.diameter});
+  const TwoColouredCircle(
+      {super.key,
+      required this.upperColor,
+      required this.lowerColor,
+      required this.diameter});
 
   @override
   Widget build(BuildContext context) {

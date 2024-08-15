@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/app_drawer.dart';
 import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/services/settings.dart';
+import 'package:rayhan/providers/settings_provider.dart';
 
 import '../utilities/constants.dart';
 
 class AboutScreen extends StatelessWidget {
-  static final String id = 'about_screen';
+  static const String id = 'about_screen';
+
+  const AboutScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
-      backgroundColor: Provider.of<Settings>(context).isNightTheme
-          ? kNightBackgroundColor
-          : kLightBackgroundColor,
+      drawer: const AppDrawer(),
+      // backgroundColor: Provider.of<SettingsProvider>(context).isNightTheme
+      //     ? kDarkBackgroundColor
+      //     : kLightBackgroundColor,
       appBar: getAppBar(
         title: 'عن التطبيق',
         context: context,
@@ -24,7 +26,7 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              Provider.of<Settings>(context).isNightTheme
+              Theme.of(context).brightness == Brightness.dark
                   ? 'assets/icon/logodark.png'
                   : 'assets/icon/logo.png',
               height: 150.0 * sizeRatio,
@@ -37,7 +39,7 @@ class AboutScreen extends StatelessWidget {
               textAlign: TextAlign.justify,
               style: TextStyle(
                 fontSize: 25.0 * sizeRatio,
-                color: Provider.of<Settings>(context).isNightTheme
+                color:  Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
                     : Colors.black,
               ),

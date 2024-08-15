@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-const Color kNightBackgroundColor = Color(0xFF202020);
-final Color kLightBackgroundColor = Colors.grey[50];
+const Color kDarkBackgroundColor = Color(0xFF202020);
+final Color kLightBackgroundColor = Colors.grey[50]!;
 
-const Color kBluePrimaryColor = Color(0xFF1d3557);
-const Color kBlueLightPrimaryColor = Color(0xFF457b9d);
+const Color kBlueDarkColor = Color(0xFF1d3557);
+const Color kBluePrimaryColor = Color(0xFF457b9d);
 const Color kBlueLightColor = Color(0xFFa8dadc);
 const Color kBlueAccentColor = Color(0xFFf1faee);
 const Color kSecondaryColor = Color(0xFFe63946);
 
-const Color kGreenPrimaryColor = Color(0xFF1b4332);
-const Color kGreenLightPrimaryColor = Color(0xFF40916c);
+const Color kGreenDarkColor = Color(0xFF1b4332);
+const Color kGreenPrimaryColor = Color(0xFF40916c);
 const Color kGreenLightColor = Color(0xFF74c69d);
 const Color kGreenAccentColor = Color(0xFFf1faee);
 // Color kGSecondaryColor = Color(0xFFe63946);
 
-enum notificationsIDs { sabahNotificationID, masaaNotificationID }
+enum NotificationIDs { morningNotificationID, dawnNotificationID }
 
 const Map arabicNumbers = {
   0: '٠',
@@ -31,29 +31,29 @@ const Map arabicNumbers = {
 };
 
 const Map<int, Color> kGreenPrimaryColorMap = {
-  50: kGreenPrimaryColor,
-  100: kGreenPrimaryColor,
-  200: kGreenPrimaryColor,
-  300: kGreenPrimaryColor,
-  400: kGreenPrimaryColor,
-  500: kGreenPrimaryColor,
-  600: kGreenPrimaryColor,
-  700: kGreenPrimaryColor,
-  800: kGreenPrimaryColor,
-  900: kGreenPrimaryColor,
+  50: kGreenDarkColor,
+  100: kGreenDarkColor,
+  200: kGreenDarkColor,
+  300: kGreenDarkColor,
+  400: kGreenDarkColor,
+  500: kGreenDarkColor,
+  600: kGreenDarkColor,
+  700: kGreenDarkColor,
+  800: kGreenDarkColor,
+  900: kGreenDarkColor,
 };
 
 const Map<int, Color> kBluePrimaryColorMap = {
-  50: kBluePrimaryColor,
-  100: kBluePrimaryColor,
-  200: kBluePrimaryColor,
-  300: kBluePrimaryColor,
-  400: kBluePrimaryColor,
-  500: kBluePrimaryColor,
-  600: kBluePrimaryColor,
-  700: kBluePrimaryColor,
-  800: kBluePrimaryColor,
-  900: kBluePrimaryColor,
+  50: kBlueDarkColor,
+  100: kBlueDarkColor,
+  200: kBlueDarkColor,
+  300: kBlueDarkColor,
+  400: kBlueDarkColor,
+  500: kBlueDarkColor,
+  600: kBlueDarkColor,
+  700: kBlueDarkColor,
+  800: kBlueDarkColor,
+  900: kBlueDarkColor,
 };
 
 const MaterialColor kBlueMaterialPrimary =
@@ -61,6 +61,9 @@ const MaterialColor kBlueMaterialPrimary =
 
 const MaterialColor kGreenMaterialPrimary =
     MaterialColor(0xFF1b4332, kGreenPrimaryColorMap);
+
+const String sabahNotifyTitle = 'أذكار الصباح';
+const String masaaNotifyTitle = 'أذكار المساء';
 
 const List<String> azkarMessageBody = [
   '(وَسَبِّحُوهُ بُكْرَةً وَأَصِيلًا)',
@@ -76,4 +79,4 @@ const double kReferenceWidth = 392.7272;
 
 const double kReferenceHeight = 791.6363;
 
-double sizeRatio;
+double sizeRatio=1.0;

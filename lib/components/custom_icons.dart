@@ -19,7 +19,7 @@ class CustomIcons {
   CustomIcons._();
 
   static const _kFontFam = 'MyFlutterApp';
-  static const String _kFontPkg = null;
+  static const String? _kFontPkg = null;
 
   static const IconData arabicfont =
       IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);

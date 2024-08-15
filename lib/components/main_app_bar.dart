@@ -1,23 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rayhan/utilities/constants.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rayhan/screens/home_screen.dart';
 import 'dart:math' as math;
 
-import 'package:rayhan/services/settings.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rayhan/screens/home_screen.dart';
+import 'package:rayhan/utilities/constants.dart';
 
-AppBar getAppBar({String title, BuildContext context}) {
+AppBar getAppBar({required String title, required BuildContext context}) {
   return AppBar(
-    backgroundColor: Provider.of<Settings>(context).isGreenTheme
-        ? kGreenPrimaryColor
-        : kBluePrimaryColor,
+    backgroundColor: Theme.of(context).primaryColorDark,
     centerTitle: true,
     toolbarHeight: 56.0 * sizeRatio,
     leadingWidth: 56.0 * sizeRatio,
-    leading: ModalRoute.of(context).settings.name != HomeScreen.id
+    iconTheme: IconThemeData(color: Colors.white),
+    leading: ModalRoute.of(context)?.settings.name != HomeScreen.id
         ? IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
             onPressed: () {
               Navigator.pop(context);
             },
@@ -31,6 +29,7 @@ AppBar getAppBar({String title, BuildContext context}) {
           title,
           style: TextStyle(
             fontSize: 25.0 * sizeRatio,
+            color: Colors.white,
           ),
         ),
         Transform(
@@ -38,9 +37,7 @@ AppBar getAppBar({String title, BuildContext context}) {
           transform: Matrix4.rotationY(math.pi),
           child: Icon(
             FontAwesomeIcons.pagelines,
-            color: Provider.of<Settings>(context).isGreenTheme
-                ? kGreenLightColor
-                : kBlueLightColor,
+            color: Theme.of(context).primaryColorLight,
             size: 25.0 * sizeRatio,
           ),
         ),
