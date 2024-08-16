@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,18 +38,22 @@ void callbackDispatcher() {
   });
 }
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
-      isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-      );
+    callbackDispatcher, // The top level function, aka callbackDispatcher
+    // isInDebugMode:
+    //     true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+  );
   Workmanager().registerPeriodicTask(
     "dailyNotifRandom",
     "dailyNotifRandom",
     frequency: const Duration(hours: 24),
-    initialDelay: const Duration(seconds: 30),
+    initialDelay: const Duration(seconds: 10),
   );
 
   runApp(

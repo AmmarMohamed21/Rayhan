@@ -6,6 +6,7 @@ import '../services/local_storage.dart';
 class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme;
   String? currentThemeName;
+  double sizeRatio = 1.0;
 
   final ThemeData lightBlue = ThemeData(
     brightness: Brightness.light,
@@ -134,6 +135,7 @@ class ThemeProvider extends ChangeNotifier {
   );
 
   Future<void> initTheme(BuildContext context) async {
+    _initializeScaleFactor(context);
     String? theme = await LocalStorage.getTheme();
     if (theme == null) {
       bool isDarkMode =
@@ -170,5 +172,34 @@ class ThemeProvider extends ChangeNotifier {
     currentThemeName = theme;
     notifyListeners();
     LocalStorage.saveTheme(theme);
+  }
+
+  void _initializeScaleFactor(BuildContext context) {
+    double widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
+
+    double heightRatio = (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top -
+            MediaQuery.of(context).padding.bottom) /
+        kReferenceHeight;
+
+    if (widthRatio > 1.5) {
+      widthRatio = 1.3;
+    } else if (widthRatio > 1.1) {
+      widthRatio = 1.1;
+    }
+    if (heightRatio > 1.5) {
+      heightRatio = 1.3;
+    } else if (heightRatio > 1.1) {
+      heightRatio = 1.1;
+    }
+
+    if (widthRatio < 0.9) {
+      widthRatio = 0.9;
+    }
+    if (heightRatio < 0.9) {
+      heightRatio = 0.9;
+    }
+
+    sizeRatio = heightRatio * widthRatio;
   }
 }

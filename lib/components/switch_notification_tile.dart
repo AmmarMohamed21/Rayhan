@@ -6,6 +6,8 @@ import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
+import '../providers/theme_provider.dart';
+
 class SwitchNotificationTile extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -28,7 +30,9 @@ class SwitchNotificationTile extends StatelessWidget {
         setNotification(context);
       },
       child: Container(
-        constraints: BoxConstraints(minHeight: 45.0 * sizeRatio),
+        constraints: BoxConstraints(
+            minHeight: 45.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
         //height: 45.0 * heightRatio * widthRatio,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,17 +40,21 @@ class SwitchNotificationTile extends StatelessWidget {
             Icon(
               icon,
               color: iconColor,
-              size: 45.0 * sizeRatio,
+              size: 45.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             ),
             SizedBox(
-              width: 17.0 * sizeRatio,
+              width: 17.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             ),
             Column(
               children: [
                 Text(
                   label,
                   style: TextStyle(
-                    fontSize: 25.0 * sizeRatio,
+                    fontSize: 25.0 *
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .sizeRatio,
                     color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
                         : Colors.black,
@@ -56,7 +64,9 @@ class SwitchNotificationTile extends StatelessWidget {
                     ? Text(
                         getSubtitle(isSabah, context),
                         style: TextStyle(
-                          fontSize: 20.0 * sizeRatio,
+                          fontSize: 20.0 *
+                              Provider.of<ThemeProvider>(context, listen: false)
+                                  .sizeRatio,
                           color: Theme.of(context).brightness == Brightness.dark
                               ? Colors.white70
                               : Colors.black54,

@@ -25,6 +25,14 @@ class NotificationsService {
   static Future<void> setWeeklyFridayNotification() async {
     await notificationsPlugin.initialize(initializationSettings);
 
+    bool? result = await notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    if (result != true) {
+      return;
+    }
+
     tz.initializeTimeZones();
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
@@ -108,7 +116,7 @@ class NotificationsService {
           sound: const RawResourceAndroidNotificationSound('notify'),
           importance: Importance.max,
           priority: Priority.high,
-          //styleInformation: BigTextStyleInformation(''),
+          styleInformation: BigTextStyleInformation(''),
         ),
       ),
       androidAllowWhileIdle: true,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:rayhan/components/zikr_card_container.dart';
 import 'package:rayhan/components/zikr_card_counter.dart';
 import 'package:rayhan/components/zikr_card_icon.dart';
 import 'package:rayhan/components/zikr_card_title.dart';
 import 'package:rayhan/utilities/constants.dart';
+
+import '../providers/theme_provider.dart';
 
 class ZikrCard extends StatefulWidget {
   final String text;
@@ -46,7 +49,8 @@ class ZikrCardState extends State<ZikrCard> {
       splashColor: Theme.of(context).brightness == Brightness.dark
           ? const Color.fromRGBO(55, 55, 55, 0.2)
           : const Color.fromRGBO(215, 215, 215, 0.2),
-      borderRadius: BorderRadius.circular(20.0 * sizeRatio),
+      borderRadius: BorderRadius.circular(
+          20.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
       onTap: () {
         if (currentNumber > 0) {
           setState(() {
@@ -65,7 +69,8 @@ class ZikrCardState extends State<ZikrCard> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Harmattans',
-              fontSize: 20.0 * sizeRatio,
+              fontSize: 20.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,

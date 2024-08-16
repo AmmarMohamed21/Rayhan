@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rayhan/screens/azkar_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
-import 'package:rayhan/utilities/constants.dart';
 
+import '../providers/theme_provider.dart';
 import 'custom_icons.dart';
 
 class LeafButton extends StatelessWidget {
@@ -25,7 +26,8 @@ class LeafButton extends StatelessWidget {
       splashColor: Theme.of(context).brightness == Brightness.dark
           ? const Color.fromRGBO(45, 45, 45, 0.2)
           : const Color.fromRGBO(215, 215, 215, 0.2),
-      borderRadius: BorderRadius.circular(80.0 * sizeRatio),
+      borderRadius: BorderRadius.circular(
+          80.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
       onTap: () {
         if (label != 'الإعدادات') {
           Navigator.push(
@@ -71,7 +73,9 @@ class LeafButton extends StatelessWidget {
               child: Icon(
                 CustomIcons.leaf,
                 color: Colors.white,
-                size: 160.0 * sizeRatio,
+                size: 160.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
               ),
             ),
           ),
@@ -80,7 +84,8 @@ class LeafButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20.0 * sizeRatio,
+              fontSize: 20.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             ),
           ),
         ],

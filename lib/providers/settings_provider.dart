@@ -19,8 +19,6 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> initializeSettings(BuildContext context) async {
     //variables initializations
-    _initializeScaleFactor(context); //TODO
-
     await Future.delayed(Duration(seconds: 2));
 
     firstTime = await LocalStorage.isFirstTime();
@@ -32,8 +30,10 @@ class SettingsProvider extends ChangeNotifier {
     sabahTime = await LocalStorage.getMorningNotificationTime();
     masaaTime = await LocalStorage.getDawnNotificationTime();
 
-    if (!(await LocalStorage.isFridayNotificationsSet())) {
-      await NotificationsService.setWeeklyFridayNotification();
+    if (!(firstTime)!) {
+      if (!(await LocalStorage.isFridayNotificationsSet())) {
+        await NotificationsService.setWeeklyFridayNotification();
+      }
     }
 
     final FlutterLocalNotificationsPlugin notificationsPlugin =
@@ -64,6 +64,7 @@ class SettingsProvider extends ChangeNotifier {
         Navigator.popAndPushNamed(context, HomeScreen.id);
       }
     });
+    notifyListeners();
   }
 
   Future<void> cancelNotification(int id) async {
@@ -108,35 +109,9 @@ class SettingsProvider extends ChangeNotifier {
   Future<void> setFirstTime() async {
     firstTime = false;
     LocalStorage.setFirstTime();
+    if (!(await LocalStorage.isFridayNotificationsSet())) {
+      NotificationsService.setWeeklyFridayNotification();
+    }
     notifyListeners();
-  }
-
-  void _initializeScaleFactor(BuildContext context) {
-    double widthRatio = MediaQuery.of(context).size.width / kReferenceWidth;
-
-    double heightRatio = (MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.top -
-            MediaQuery.of(context).padding.bottom) /
-        kReferenceHeight;
-
-    if (widthRatio > 1.5) {
-      widthRatio = 1.3;
-    } else if (widthRatio > 1.1) {
-      widthRatio = 1.1;
-    }
-    if (heightRatio > 1.5) {
-      heightRatio = 1.3;
-    } else if (heightRatio > 1.1) {
-      heightRatio = 1.1;
-    }
-
-    if (widthRatio < 0.9) {
-      widthRatio = 0.9;
-    }
-    if (heightRatio < 0.9) {
-      heightRatio = 0.9;
-    }
-
-    sizeRatio = heightRatio * widthRatio;
   }
 }

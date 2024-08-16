@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:rayhan/utilities/constants.dart';
+
+import '../providers/theme_provider.dart';
 
 class ScaledSwitch extends StatelessWidget {
   const ScaledSwitch(
@@ -10,7 +13,7 @@ class ScaledSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.scale(
       alignment: Alignment.centerLeft,
-      scale: 0.7 * sizeRatio,
+      scale: 0.7 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
       child: CupertinoSwitch(
         value: isActive,
         activeColor: kSecondaryColor,

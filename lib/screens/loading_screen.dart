@@ -18,11 +18,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ThemeProvider>(context, listen: false)
-        .initTheme(context)
-        .then((_) {
-      Provider.of<SettingsProvider>(context, listen: false)
-          .initializeSettings(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ThemeProvider>(context, listen: false)
+          .initTheme(context)
+          .then((_) {
+        Provider.of<SettingsProvider>(context, listen: false)
+            .initializeSettings(context);
+      });
     });
   }
 

@@ -8,7 +8,7 @@ import 'package:rayhan/components/icon_label_tile.dart';
 import 'package:rayhan/components/main_app_bar.dart';
 
 import '../providers/prayer_times_provider.dart';
-import '../utilities/constants.dart';
+import '../providers/theme_provider.dart';
 
 class PrayerTimesScreen extends StatelessWidget {
   static const String id = 'prayer_times_screen';
@@ -19,10 +19,6 @@ class PrayerTimesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const AppDrawer(),
-      // backgroundColor:
-      //     Provider.of<SettingsProvider>(context).isNightTheme
-      //         ? kDarkBackgroundColor
-      //         : kLightBackgroundColor,
       appBar: getAppBar(
         title: 'مواقيت الصلاة',
         context: context,
@@ -42,7 +38,9 @@ class PrayerTimesScreen extends StatelessWidget {
                           .loadPrayerTimes(isRefreshing: true);
                     },
                     child: Padding(
-                      padding: EdgeInsets.all(20.0 * sizeRatio),
+                      padding: EdgeInsets.all(20.0 *
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .sizeRatio),
                       child: ListView(
                         children: [
                           IconLabelTile(
@@ -58,12 +56,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           IconLabelTile(
                             label: 'الشروق',
@@ -78,12 +82,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           IconLabelTile(
                             label: 'الظهر',
@@ -98,12 +108,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           IconLabelTile(
                             label: 'العصر',
@@ -118,12 +134,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           IconLabelTile(
                             label: 'المغرب',
@@ -138,12 +160,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           IconLabelTile(
                             label: 'العشاء',
@@ -161,12 +189,18 @@ class PrayerTimesScreen extends StatelessWidget {
                                         Brightness.dark
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 25.0 * sizeRatio,
+                                fontSize: 25.0 *
+                                    Provider.of<ThemeProvider>(context,
+                                            listen: false)
+                                        .sizeRatio,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 20.0 * sizeRatio,
+                            height: 20.0 *
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .sizeRatio,
                           ),
                           Text(
                             "${Provider.of<PrayerTimesProvider>(context).prayerTimes!.arabicDayName}، ${Provider.of<PrayerTimesProvider>(context).prayerTimes!.arabicDate}\n${Provider.of<PrayerTimesProvider>(context).prayerTimes!.city}",
@@ -175,7 +209,10 @@ class PrayerTimesScreen extends StatelessWidget {
                                       Brightness.dark
                                   ? Colors.white.withOpacity(0.5)
                                   : Colors.black.withOpacity(0.5),
-                              fontSize: 14.0 * sizeRatio,
+                              fontSize: 14.0 *
+                                  Provider.of<ThemeProvider>(context,
+                                          listen: false)
+                                      .sizeRatio,
                             ),
                           ),
                         ],
@@ -211,7 +248,9 @@ class PrayerTimesScreen extends StatelessWidget {
             return Center(
               child: SpinKitChasingDots(
                 color: Theme.of(context).primaryColorDark,
-                size: 60 * sizeRatio,
+                size: 60 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
               ),
             );
           }
@@ -238,13 +277,15 @@ class ErrorMessage extends StatelessWidget {
       children: [
         Icon(
           FontAwesomeIcons.faceFrown,
-          size: 50.0 * sizeRatio,
+          size: 50.0 *
+              Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
               : Colors.black,
         ),
         SizedBox(
-          height: 20 * sizeRatio,
+          height:
+              20 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
         ),
         Text(
           'تأكد من الاتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
@@ -253,7 +294,8 @@ class ErrorMessage extends StatelessWidget {
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
                 : Colors.black,
-            fontSize: 30 * sizeRatio,
+            fontSize: 30 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
         ),
       ],

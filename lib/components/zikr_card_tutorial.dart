@@ -2,8 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
+
+import '../providers/theme_provider.dart';
 
 class ZikrCardTutorial extends StatefulWidget {
   const ZikrCardTutorial({super.key});
@@ -28,20 +31,25 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
       children: [
         Container(
           width: double.infinity,
-          margin: EdgeInsets.all(20.0 * sizeRatio),
+          margin: EdgeInsets.all(20.0 *
+              Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(10.0 * sizeRatio),
+            borderRadius: BorderRadius.circular(10.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
             boxShadow: [
               BoxShadow(
                 color: kGreenPrimaryColor,
                 offset: const Offset(0.0, 1.0),
-                blurRadius: 3.0 * sizeRatio,
+                blurRadius: 3.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
               ),
             ],
           ),
           child: Padding(
-            padding: EdgeInsets.all(20.0 * sizeRatio),
+            padding: EdgeInsets.all(20.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +62,9 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
                     color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
                         : kGreenDarkColor,
-                    fontSize: 22 * sizeRatio,
+                    fontSize: 22 *
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .sizeRatio,
                   ),
                 ),
               ],
@@ -70,7 +80,9 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
                         Theme.of(context).brightness == Brightness.dark
                             ? Colors.white.withOpacity(0.1)
                             : Colors.black26.withOpacity(0.1),
-                    radius: 30.0 * sizeRatio,
+                    radius: 30.0 *
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .sizeRatio,
                   ),
                 ),
               )
@@ -80,7 +92,8 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
             alignment: const Alignment(0.5, 1),
             child: Icon(
               Icons.touch_app,
-              size: 65.0 * sizeRatio,
+              size: 65.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
@@ -91,18 +104,24 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
-              width: 45.0 * sizeRatio,
-              height: 45.0 * sizeRatio,
+              width: 45.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+              height: 45.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? kDarkBackgroundColor
                     : const Color.fromRGBO(245, 245, 245, 1),
-                borderRadius: BorderRadius.circular(45.0 * sizeRatio),
+                borderRadius: BorderRadius.circular(45.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio),
                 boxShadow: [
                   BoxShadow(
                     color: kGreenPrimaryColor,
                     offset: Offset(0.0, 1.0),
-                    blurRadius: 3.0 * sizeRatio,
+                    blurRadius: 3.0 *
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .sizeRatio,
                   ),
                 ],
               ),
@@ -110,7 +129,9 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Text(
                   getArabicNumber(number),
                   style: TextStyle(
-                    fontSize: 30.0 * sizeRatio,
+                    fontSize: 30.0 *
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .sizeRatio,
                     color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
                         : kGreenDarkColor,
@@ -129,7 +150,9 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
               child: Icon(
                 FontAwesomeIcons.pagelines,
                 color: kGreenPrimaryColor,
-                size: 60.0 * sizeRatio,
+                size: 60.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
               ),
             ),
           ),
@@ -145,7 +168,9 @@ class ZikrCardTutorialState extends State<ZikrCardTutorial> {
                 child: Icon(
                   FontAwesomeIcons.pagelines,
                   color: kGreenPrimaryColor,
-                  size: 60.0 * sizeRatio,
+                  size: 60.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
                 ),
               ),
             ),

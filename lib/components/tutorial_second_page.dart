@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rayhan/utilities/constants.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/theme_provider.dart';
 
 class TutorialSecondPage extends StatelessWidget {
   const TutorialSecondPage({super.key});
@@ -10,7 +12,8 @@ class TutorialSecondPage extends StatelessWidget {
       'يمكنك تفعيل إشعارات للتذكير بأذكار الصباح والمساء من قائمة الإعدادات وتغيير حجم خط الأذكار وألوان التطبيق.',
       textAlign: TextAlign.justify,
       style: TextStyle(
-        fontSize: 25.0 * sizeRatio,
+        fontSize:
+            25.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
         color: Theme.of(context).brightness == Brightness.dark
             ? Colors.white
             : Colors.black,

@@ -13,8 +13,11 @@ class ThemeChoice extends StatelessWidget {
           child: CircleAvatar(
             radius: Provider.of<ThemeProvider>(context).currentThemeName ==
                     'lightGreen'
-                ? 22.0 * sizeRatio
-                : 20.0 * sizeRatio,
+                ? 22.0 *
+                    Provider.of<ThemeProvider>(context, listen: false).sizeRatio
+                : 20.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
             backgroundColor:
                 Provider.of<ThemeProvider>(context).currentThemeName ==
                         'lightGreen'
@@ -25,8 +28,12 @@ class ThemeChoice extends StatelessWidget {
               lowerColor: kLightBackgroundColor,
               diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
                       'lightGreen'
-                  ? 38.0 * sizeRatio
-                  : 36.0 * sizeRatio,
+                  ? 38.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio
+                  : 36.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
             ),
           ),
           onTap: () {
@@ -35,14 +42,18 @@ class ThemeChoice extends StatelessWidget {
           },
         ),
         SizedBox(
-          width: 5.0 * sizeRatio,
+          width: 5.0 *
+              Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
         ),
         GestureDetector(
           child: CircleAvatar(
             radius: Provider.of<ThemeProvider>(context).currentThemeName ==
                     'lightBlue'
-                ? 22.0 * sizeRatio
-                : 20.0 * sizeRatio,
+                ? 22.0 *
+                    Provider.of<ThemeProvider>(context, listen: false).sizeRatio
+                : 20.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
             backgroundColor:
                 Provider.of<ThemeProvider>(context).currentThemeName ==
                         'lightBlue'
@@ -53,8 +64,12 @@ class ThemeChoice extends StatelessWidget {
               lowerColor: kLightBackgroundColor,
               diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
                       'lightBlue'
-                  ? 38.0 * sizeRatio
-                  : 36.0 * sizeRatio,
+                  ? 38.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio
+                  : 36.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
             ),
           ),
           onTap: () {
@@ -63,14 +78,18 @@ class ThemeChoice extends StatelessWidget {
           },
         ),
         SizedBox(
-          width: 5.0 * sizeRatio,
+          width: 5.0 *
+              Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
         ),
         GestureDetector(
           child: CircleAvatar(
             radius: Provider.of<ThemeProvider>(context).currentThemeName ==
                     'darkGreen'
-                ? 22.0 * sizeRatio
-                : 20.0 * sizeRatio,
+                ? 22.0 *
+                    Provider.of<ThemeProvider>(context, listen: false).sizeRatio
+                : 20.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
             backgroundColor:
                 Provider.of<ThemeProvider>(context).currentThemeName ==
                         'darkGreen'
@@ -81,8 +100,12 @@ class ThemeChoice extends StatelessWidget {
               lowerColor: const Color.fromRGBO(40, 40, 40, 1),
               diameter: Provider.of<ThemeProvider>(context).currentThemeName ==
                       'darkGreen'
-                  ? 38.0 * sizeRatio
-                  : 36.0 * sizeRatio,
+                  ? 38.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio
+                  : 36.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
             ),
           ),
           onTap: () {

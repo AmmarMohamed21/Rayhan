@@ -78,5 +78,3 @@ const List<String> azkarMessageBody = [
 const double kReferenceWidth = 392.7272;
 
 const double kReferenceHeight = 791.6363;
-
-double sizeRatio=1.0;

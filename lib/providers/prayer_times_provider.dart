@@ -86,7 +86,7 @@ class PrayerTimesProvider extends ChangeNotifier {
           double distanceInMeters = Geolocator.distanceBetween(
               position.latitude,
               position.longitude,
-              cachedPrayerTimes!.latitude,
+              cachedPrayerTimes.latitude,
               cachedPrayerTimes.longitude);
           if (distanceInMeters > 10000) {
             isDistanceBig = true;

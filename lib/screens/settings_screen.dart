@@ -12,6 +12,8 @@ import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
+import '../providers/theme_provider.dart';
+
 class SettingsScreen extends StatelessWidget {
   static const String id = 'azkar_screen';
 
@@ -20,9 +22,6 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const AppDrawer(),
-      // backgroundColor: Provider.of<SettingsProvider>(context).isNightTheme
-      //     ? kDarkBackgroundColor
-      //     : kLightBackgroundColor,
       appBar: getAppBar(
         title: 'الإعدادات',
         context: context,
@@ -38,7 +37,8 @@ class SettingsRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0 * sizeRatio),
+      padding: EdgeInsets.all(
+          20.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
       child: ListView(
         children: [
           SwitchNotificationTile(
@@ -50,7 +50,8 @@ class SettingsRows extends StatelessWidget {
             isSabah: true,
           ),
           SizedBox(
-            height: 20.0 * sizeRatio,
+            height: 20.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
           SwitchNotificationTile(
             label: 'إشعارات أذكار المساء',
@@ -63,7 +64,8 @@ class SettingsRows extends StatelessWidget {
             isSabah: false,
           ),
           SizedBox(
-            height: 20.0 * sizeRatio,
+            height: 20.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
           IconLabelTile(
             label: 'حجم الخط',
@@ -72,7 +74,8 @@ class SettingsRows extends StatelessWidget {
             endWidget: FontSizeChoice(),
           ),
           SizedBox(
-            height: 20.0 * sizeRatio,
+            height: 20.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
           IconLabelTile(
             label: 'ألوان التطبيق',

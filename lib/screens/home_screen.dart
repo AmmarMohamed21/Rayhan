@@ -5,7 +5,8 @@ import 'package:rayhan/components/leaf_button.dart';
 import 'package:rayhan/components/main_app_bar.dart';
 import 'package:rayhan/components/welcome_tutorial.dart';
 import 'package:rayhan/providers/settings_provider.dart';
-import 'package:rayhan/utilities/constants.dart';
+
+import '../providers/theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const id = 'home_screen';
@@ -23,7 +24,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  bottom: 50.0 * sizeRatio,
+                  bottom: 50.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
                 ),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -44,12 +47,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               // VerticalDivider(
-              //   thickness: 8.0 * sizeRatio,
-              //   width: 8.0 * sizeRatio,
+              //   thickness: 8.0 * Provider.of<ThemeProvider>(context,listen:false).sizeRatio,
+              //   width: 8.0 * Provider.of<ThemeProvider>(context,listen:false).sizeRatio,
               //   color: Theme.of(context).primaryColor,
               // ),
               Container(
-                width: 8.0 * sizeRatio,
+                width: 8.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio,
                 height: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -67,7 +72,9 @@ class HomeScreen extends StatelessWidget {
                           ? Theme.of(context).primaryColorDark
                           : Theme.of(context).primaryColorLight,
                       offset: Offset(-1, 1),
-                      blurRadius: 2 * sizeRatio,
+                      blurRadius: 2 *
+                          Provider.of<ThemeProvider>(context, listen: false)
+                              .sizeRatio,
                       spreadRadius: 0.5,
                     ),
                   ],
@@ -75,7 +82,9 @@ class HomeScreen extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 50.0 * sizeRatio,
+                  top: 50.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
                 ),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,

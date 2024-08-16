@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
+import '../providers/theme_provider.dart';
+
 class FontSizeChoice extends StatelessWidget {
   const FontSizeChoice({super.key});
 
@@ -29,13 +31,15 @@ class FontSizeChoice extends StatelessWidget {
         Text(
           'متوسط',
           style: TextStyle(
-            fontSize: 25.0 * sizeRatio,
+            fontSize: 25.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
         ),
         Text(
           'كبير',
           style: TextStyle(
-            fontSize: 25.0 * sizeRatio,
+            fontSize: 25.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
         ),
       ],

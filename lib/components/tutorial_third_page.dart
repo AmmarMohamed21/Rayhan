@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rayhan/components/zikr_card_tutorial.dart';
-import 'package:rayhan/utilities/constants.dart';
+
+import '../providers/theme_provider.dart';
 
 class TutorialThirdPage extends StatelessWidget {
   const TutorialThirdPage({super.key});
@@ -13,7 +15,8 @@ class TutorialThirdPage extends StatelessWidget {
           'أثناء قراءة الأذكار اضغط على المربع المخصص للذكر لمتابعة العدد.',
           textAlign: TextAlign.justify,
           style: TextStyle(
-            fontSize: 22.0 * sizeRatio,
+            fontSize: 22.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
                 : Colors.black,
