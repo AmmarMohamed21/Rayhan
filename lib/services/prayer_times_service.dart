@@ -32,11 +32,11 @@ class PrayerTimesService {
     return null;
   }
 
-  static Future<String?> _getCityName(Position pos) async {
+  static Future<String?> _getCityName(double latitude, double longitude) async {
     try {
       await setLocaleIdentifier('ar');
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(pos.latitude, pos.longitude);
+          await placemarkFromCoordinates(latitude, longitude);
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
         return await _formatString(placemark);
@@ -82,16 +82,18 @@ class PrayerTimesService {
     return result;
   }
 
-  static Future<PrayerTimes?> getPrayerTimes(Position pos) async {
+  static Future<PrayerTimes?> getPrayerTimes(
+      double latitude, double longitude, DateTime locationTimestamp) async {
     try {
       Uri uri = Uri.parse(
-          'http://api.aladhan.com/v1/timings?latitude=${pos.latitude}&longitude=${pos.longitude}');
+          'http://api.aladhan.com/v1/timings?latitude=$latitude&longitude=$longitude');
       http.Response response = await http.get(uri);
 
       if (response.statusCode == 200) {
         String data = response.body;
-        String city = await _getCityName(pos) ?? "";
-        return PrayerTimes.fromJson(_decodeData(data, pos, city));
+        String city = await _getCityName(latitude, longitude) ?? "";
+        return PrayerTimes.fromJson(
+            _decodeData(data, latitude, longitude, locationTimestamp, city));
       }
     } catch (e, st) {
       print("Error: $e");
@@ -101,8 +103,8 @@ class PrayerTimesService {
     return null;
   }
 
-  static Map<String, dynamic> _decodeData(
-      String data, Position position, String city) {
+  static Map<String, dynamic> _decodeData(String data, double latitude,
+      double longitude, DateTime locationTimestamp, String city) {
     Map<String, dynamic> json = jsonDecode(data);
     List<String> keys = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
@@ -114,7 +116,7 @@ class PrayerTimesService {
           getArabicNumber(int.parse(json["data"]["timings"][key][4]));
     }
     json["City"] = city;
-    json["LocationTimestamp"] = position.timestamp.toIso8601String();
+    json["LocationTimestamp"] = locationTimestamp.toIso8601String();
     json["ArabicDayName"] = json["data"]["date"]["hijri"]["weekday"]["ar"];
     json["ArabicDate"] =
         "${getArabicNumber(int.parse(json["data"]["date"]["hijri"]["day"]))} ${json["data"]["date"]["hijri"]["month"]["ar"]} ${getArabicNumber(int.parse(json["data"]["date"]["hijri"]["year"]))}";
@@ -122,8 +124,8 @@ class PrayerTimesService {
         .toString()
         .toDateTime()
         .toIso8601String();
-    json["Latitude"] = position.latitude;
-    json["Longitude"] = position.longitude;
+    json["Latitude"] = latitude;
+    json["Longitude"] = longitude;
     return json;
   }
 

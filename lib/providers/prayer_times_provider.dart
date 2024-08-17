@@ -71,7 +71,8 @@ class PrayerTimesProvider extends ChangeNotifier {
         //if we get the location we get the prayer times
         bool isInternet = await PrayerTimesService.isInternet();
         if (isInternet) {
-          prayerTimes = await PrayerTimesService.getPrayerTimes(position);
+          prayerTimes = await PrayerTimesService.getPrayerTimes(
+              position.latitude, position.longitude, position.timestamp);
         } else {
           isNoInternet = true;
         }
@@ -109,7 +110,6 @@ class PrayerTimesProvider extends ChangeNotifier {
     //if still no prayer times and the permission is denied forever we open the app settings to allow the user to enable the location
     //TODO make it a button?
     if (prayerTimes == null && permission == LocationPermission.deniedForever) {
-      print('hereeeee');
       Geolocator.openAppSettings();
     }
 

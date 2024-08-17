@@ -9,9 +9,12 @@ import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/loading_screen.dart';
 import 'package:rayhan/screens/prayer_times_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
+import 'package:rayhan/services/HomeWidgetRefreshPrayerService.dart';
+import 'package:rayhan/services/crashlytics_service.dart';
 import 'package:rayhan/services/local_storage.dart';
 import 'package:rayhan/services/notifications_service.dart';
 import 'package:rayhan/utilities/constants.dart';
+import 'package:rayhan/utilities/helper.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'providers/prayer_times_provider.dart';
@@ -23,17 +26,25 @@ import 'screens/home_screen.dart';
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     try {
-      if (await LocalStorage.isDawnNotificationsSet()) {
-        await NotificationsService.setAzkarNotification(
-            NotificationIDs.dawnNotificationID.index);
-      }
-      if (await LocalStorage.isMorningNotificationsSet()) {
-        await NotificationsService.setAzkarNotification(
-            NotificationIDs.morningNotificationID.index);
+      if (task == "dailyNotifRandom") {
+        if (await LocalStorage.isDawnNotificationsSet()) {
+          await NotificationsService.setAzkarNotification(
+              NotificationIDs.dawnNotificationID.index);
+        }
+        if (await LocalStorage.isMorningNotificationsSet()) {
+          await NotificationsService.setAzkarNotification(
+              NotificationIDs.morningNotificationID.index);
+        }
+        return Future.value(true);
+      } else if (task == "refreshPrayerTimes") {
+        HomeWidgetRefreshPrayerService.refreshPrayerTimes()
+            .timeout(Duration(minutes: 2));
       }
     } catch (e, st) {
+      CrashlyticsService.sendReport(e.toString(), st, true);
       return Future.value(false);
     }
+
     return Future.value(true);
   });
 }
@@ -53,7 +64,16 @@ Future<void> main() async {
     "dailyNotifRandom",
     "dailyNotifRandom",
     frequency: const Duration(hours: 24),
-    initialDelay: const Duration(seconds: 10),
+    //set initialDelay to be at 12:5 AM every day
+    initialDelay: getNextMidnight(5),
+  );
+
+  Workmanager().registerPeriodicTask(
+    "refreshPrayerTimes",
+    "refreshPrayerTimes",
+    frequency: const Duration(hours: 24),
+    //set initialDelay to be at 12:10 AM every day
+    initialDelay: getNextMidnight(10),
   );
 
   runApp(
