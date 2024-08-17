@@ -12,13 +12,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="16dp"
+        android:padding="12dp"
         android:background="#111111">
         <ImageButton
             android:id="@+id/refresh_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:scaleType="centerInside"
             android:background="#00000000"
             android:src="@drawable/refresh"
@@ -28,7 +27,6 @@
             />
 
         <TextView
-            android:paddingHorizontal="8dp"
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text=""
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:textAlignment="center"
             android:textColor="#AAFFFFFF"
             android:ellipsize="end"
@@ -47,8 +45,8 @@
 
         <ImageButton
             android:id="@+id/logo_button"
-            android:layout_height="40dp"
-            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_width="32dp"
             android:padding="0dp"
             android:background="#00000000"
             android:scaleType="centerInside"
@@ -64,7 +62,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="12dp"
         >
         <!-- Al-Isha -->
         <LinearLayout
@@ -75,8 +73,8 @@
             android:gravity="center">
             <ImageView android:paddingBottom="4dp"
                 android:id="@+id/isha_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/isha_icon" />
 
             <TextView
@@ -84,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="العشاء"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -94,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -112,15 +110,15 @@
 
             <ImageView android:paddingBottom="4dp"
                 android:id="@+id/maghrib_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/maghrib_icon" />
             <TextView
                 android:id="@+id/maghrib_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="المغرب"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -129,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="18sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -146,8 +144,8 @@
             >
             <ImageView android:paddingBottom="4dp"
                 android:id="@+id/asr_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/asr_icon" />
 
             <TextView
@@ -155,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="العصر"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -164,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -181,15 +179,15 @@
             >
             <ImageView android:paddingBottom="4dp"
                 android:id="@+id/dhuhr_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/dhuhr_icon" />
             <TextView
                 android:id="@+id/dhuhr_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="الظهر"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -198,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -216,8 +214,8 @@
 
             <ImageView android:paddingBottom="4dp"
                 android:id="@+id/shurooq_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/shurooq_icon" />
 
             <TextView
@@ -225,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="الشروق"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -234,7 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
                 android:textStyle="normal" />
@@ -250,8 +248,8 @@
             >
             <ImageView android:paddingBottom="4dp"
             android:id="@+id/fajr_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:src="@drawable/fajr_icon" />
             <!-- Prayer Name -->
             <TextView
@@ -260,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/fajr_icon"
                 android:text="الفجر"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
 
@@ -272,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:text=""
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textColor="#000000"
                 android:fontFamily="@font/harmattan"
 
