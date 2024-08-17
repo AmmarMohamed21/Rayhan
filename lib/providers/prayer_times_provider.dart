@@ -124,6 +124,9 @@ class PrayerTimesProvider extends ChangeNotifier {
         "${prayerTimes!.arabicDayName}، ${prayerTimes!.arabicDate}\n${prayerTimes!.city}");
 
     HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
+    HomeWidget.updateWidget(androidName: 'PrayerTimesSecondWidget');
+    HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
+    HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
     notifyListeners();
   }
 }
