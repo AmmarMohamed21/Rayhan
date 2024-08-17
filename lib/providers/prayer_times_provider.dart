@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:location/location.dart';
 import 'package:rayhan/models/prayer_times.dart';
 import 'package:rayhan/services/local_storage.dart';
@@ -43,7 +46,9 @@ class PrayerTimesProvider extends ChangeNotifier {
       locationServicesIssue = true;
     } else {
       //location is on, so we check for permission
+      log("before Permission");
       permission = await Geolocator.requestPermission();
+      log("after Permission");
       if (permission == LocationPermission.denied) {
         isPermissionDenied = true;
         isLocationServiceDisabled = false;
@@ -98,14 +103,27 @@ class PrayerTimesProvider extends ChangeNotifier {
       }
     } else {
       //cache the prayer times
-      LocalStorage.cachePrayerTimes(prayerTimes!);
+      await LocalStorage.cachePrayerTimes(prayerTimes!);
     }
 
     //if still no prayer times and the permission is denied forever we open the app settings to allow the user to enable the location
     //TODO make it a button?
     if (prayerTimes == null && permission == LocationPermission.deniedForever) {
+      print('hereeeee');
       Geolocator.openAppSettings();
     }
+
+    // await HomeWidget.saveWidgetData<Map<String, dynamic>>('prayerTimes', prayerTimes!.toJson());
+    await HomeWidget.saveWidgetData<String>('fajr', prayerTimes!.fajr);
+    await HomeWidget.saveWidgetData<String>('sunrise', prayerTimes!.sunrise);
+    await HomeWidget.saveWidgetData<String>('dhuhr', prayerTimes!.dhuhr);
+    await HomeWidget.saveWidgetData<String>('asr', prayerTimes!.asr);
+    await HomeWidget.saveWidgetData<String>('maghrib', prayerTimes!.maghrib);
+    await HomeWidget.saveWidgetData<String>('isha', prayerTimes!.isha);
+    await HomeWidget.saveWidgetData<String>('subtitle',
+        "${prayerTimes!.arabicDayName}، ${prayerTimes!.arabicDate}\n${prayerTimes!.city}");
+
+    HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
     notifyListeners();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/tutorial_first_page.dart';
+import 'package:rayhan/components/tutorial_fourth_page.dart';
 import 'package:rayhan/components/tutorial_second_page.dart';
 import 'package:rayhan/components/tutorial_third_page.dart';
 import 'package:rayhan/providers/settings_provider.dart';
@@ -22,6 +23,7 @@ class WelcomeTutorialState extends State<WelcomeTutorial> {
     TutorialFirstPage(),
     TutorialSecondPage(),
     TutorialThirdPage(),
+    TutorialFourthPage(),
   ];
 
   @override

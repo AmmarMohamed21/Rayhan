@@ -83,6 +83,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       builder: (context, child) => MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'روحٌ وريحان',
         theme: Provider.of<ThemeProvider>(context).currentTheme ??

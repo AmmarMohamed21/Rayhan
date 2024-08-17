@@ -145,30 +145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
-  firebase_analytics:
-    dependency: "direct main"
-    description:
-      name: firebase_analytics
-      sha256: "0240076090d77045d757aecb090616066d23b343840d4c21074094d6fe40a184"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.8.0"
-  firebase_analytics_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_analytics_platform_interface
-      sha256: "6d9baa077d16b47ef5f19d982c4fc475597991aa53b0c601216faa3e1cdab45f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.0"
-  firebase_analytics_web:
-    dependency: transitive
-    description:
-      name: firebase_analytics_web
-      sha256: "89a740249bce9d52a99db4e501be6087ca6749c73c47cff2b174802be10abd81"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.5+12"
   firebase_core:
     dependency: "direct main"
     description:
@@ -373,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3"
+  home_widget:
+    dependency: "direct main"
+    description:
+      name: home_widget
+      sha256: "2a0fdd6267ff975bd07bedf74686bd5577200f504f5de36527ac1b56bdbe68e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   http:
     dependency: "direct main"
     description:
@@ -517,6 +501,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  path_provider:
+    dependency: transitive
+    description:
+      name: path_provider
+      sha256: fec0d61223fba3154d87759e3cc27fe2c8dc498f6386c6d6fc80d1afdd1bf378
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
+  path_provider_android:
+    dependency: transitive
+    description:
+      name: path_provider_android
+      sha256: "6f01f8e37ec30b07bc424b4deabac37cacb1bc7e2e515ad74486039918a37eb7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.10"
+  path_provider_foundation:
+    dependency: transitive
+    description:
+      name: path_provider_foundation
+      sha256: f234384a3fdd67f989b4d54a5d73ca2a6c422fa55ae694381ae0f4375cd1ea16
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   path_provider_linux:
     dependency: transitive
     description:

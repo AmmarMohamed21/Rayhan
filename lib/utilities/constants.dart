@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 const Color kDarkBackgroundColor = Color(0xFF202020);
 final Color kLightBackgroundColor = Colors.grey[50]!;
 
