@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
@@ -74,4 +77,25 @@ Duration getNextMidnight(int minutesOffset) {
   DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1);
   nextMidnight = nextMidnight.add(Duration(minutes: minutesOffset));
   return nextMidnight.difference(now);
+}
+
+Future<bool> isInternet() async {
+  List<ConnectivityResult> connectivityResults =
+      await Connectivity().checkConnectivity();
+  if (connectivityResults.first == ConnectivityResult.none) {
+    return false;
+  }
+  try {
+    final result = await http.head(Uri.parse('https://www.google.com')).timeout(
+      const Duration(seconds: 7),
+      onTimeout: () {
+        throw Exception('no internet');
+      },
+    );
+    return result.statusCode.toString().startsWith('2');
+  } on SocketException catch (e) {
+    return false;
+  } catch (e) {
+    return false;
+  }
 }

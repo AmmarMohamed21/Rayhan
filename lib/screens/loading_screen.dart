@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/providers/azkar_provider.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/providers/theme_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
@@ -18,13 +19,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ThemeProvider>(context, listen: false)
-          .initTheme(context)
-          .then((_) {
-        Provider.of<SettingsProvider>(context, listen: false)
-            .initializeSettings(context);
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<ThemeProvider>(context, listen: false)
+          .initTheme(context);
+      await Provider.of<AzkarProvider>(context, listen: false).loadAzkarList();
+      await Provider.of<SettingsProvider>(context, listen: false)
+          .initializeSettings(context);
+      Provider.of<AzkarProvider>(context, listen: false).checkDatabaseUpdate();
     });
   }
 

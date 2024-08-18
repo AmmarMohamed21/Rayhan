@@ -54,6 +54,7 @@ dependencies:
   #firebase_analytics: ^10.8.0
   home_widget: ^0.6.0
   cloud_firestore: ^4.14.0
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/initialDB.json
     - assets/icon/logo.png
     - assets/icon/logodark.png
   fonts:

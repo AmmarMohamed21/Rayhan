@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:rayhan/components/azkar_components/zikr_card.dart';
 import 'package:rayhan/components/shared_components/app_drawer.dart';
 import 'package:rayhan/components/shared_components/main_app_bar.dart';
-import 'package:rayhan/data/azkar_list.dart';
 import 'package:rayhan/models/zikr.dart';
 
+import '../providers/azkar_provider.dart';
 import '../providers/theme_provider.dart';
 
 class AzkarScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class AzkarScreen extends StatelessWidget {
   }
 
   Scrollbar getAzkar(BuildContext context) {
-    List<Zikr> azkarList = AzkarList.getAzkarList(title);
+    List<Zikr> azkarList = getAzkarList(context, title);
     List<ZikrCard> zikrCards = [];
     for (Zikr zikr in azkarList) {
       zikrCards.add(ZikrCard(
@@ -53,5 +53,29 @@ class AzkarScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static List<Zikr> getAzkarList(BuildContext context, String title) {
+    if (title == 'أذكار الصباح')
+      return Provider.of<AzkarProvider>(context, listen: false)
+          .azkarList!
+          .azkarSabah;
+    if (title == 'أذكار المساء')
+      return Provider.of<AzkarProvider>(context, listen: false)
+          .azkarList!
+          .azkarMasaa;
+    if (title == 'أذكار الصلاة')
+      return Provider.of<AzkarProvider>(context, listen: false)
+          .azkarList!
+          .azkarSalah;
+    if (title == 'أذكار النوم')
+      return Provider.of<AzkarProvider>(context, listen: false)
+          .azkarList!
+          .azkarNawm;
+    if (title == 'أذكار متفرقة')
+      return Provider.of<AzkarProvider>(context, listen: false)
+          .azkarList!
+          .azkarMotafreqa;
+    return [];
   }
 }

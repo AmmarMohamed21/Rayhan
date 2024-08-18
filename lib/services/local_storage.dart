@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rayhan/models/azkar_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/prayer_times.dart';
@@ -109,5 +110,18 @@ class LocalStorage {
   static Future<void> cachePrayerTimes(PrayerTimes prayerTimes) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('prayerTimes', jsonEncode(prayerTimes.toJson()));
+  }
+
+  static Future<void> saveAzkarList(AzkarList azkarList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('azkarList', jsonEncode(azkarList.toJson()));
+  }
+
+  static Future<AzkarList?> getAzkarList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('azkarList')) {
+      return null;
+    }
+    return AzkarList.fromJson(jsonDecode(prefs.getString('azkarList')!));
   }
 }

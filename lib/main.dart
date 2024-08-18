@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:rayhan/providers/azkar_provider.dart';
 import 'package:rayhan/providers/theme_provider.dart';
 import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/loading_screen.dart';
@@ -100,6 +101,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PrayerTimesProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AzkarProvider(),
         ),
       ],
       builder: (context, child) => MaterialApp(
