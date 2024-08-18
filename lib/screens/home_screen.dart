@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/app_drawer.dart';
-import 'package:rayhan/components/leaf_button.dart';
-import 'package:rayhan/components/main_app_bar.dart';
-import 'package:rayhan/components/welcome_tutorial.dart';
+import 'package:rayhan/components/home_components/leaf_button.dart';
+import 'package:rayhan/components/home_components/welcome_tutorial.dart';
+import 'package:rayhan/components/shared_components/app_drawer.dart';
+import 'package:rayhan/components/shared_components/main_app_bar.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 
 import '../providers/theme_provider.dart';
@@ -46,11 +46,6 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // VerticalDivider(
-              //   thickness: 8.0 * Provider.of<ThemeProvider>(context,listen:false).sizeRatio,
-              //   width: 8.0 * Provider.of<ThemeProvider>(context,listen:false).sizeRatio,
-              //   color: Theme.of(context).primaryColor,
-              // ),
               Container(
                 width: 8.0 *
                     Provider.of<ThemeProvider>(context, listen: false)

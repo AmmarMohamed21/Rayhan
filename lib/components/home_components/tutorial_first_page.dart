@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
-class TutorialFourthPage extends StatelessWidget {
-  const TutorialFourthPage({super.key});
+class TutorialFirstPage extends StatelessWidget {
+  const TutorialFirstPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'يرجى السماح باستخدام خاصية تحديد الموقع وخاصية إرسال الإشعارات.',
+      'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
       textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize:

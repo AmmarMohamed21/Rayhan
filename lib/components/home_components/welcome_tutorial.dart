@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/tutorial_first_page.dart';
-import 'package:rayhan/components/tutorial_fourth_page.dart';
-import 'package:rayhan/components/tutorial_second_page.dart';
-import 'package:rayhan/components/tutorial_third_page.dart';
+import 'package:rayhan/components/home_components/tutorial_first_page.dart';
+import 'package:rayhan/components/home_components/tutorial_fourth_page.dart';
+import 'package:rayhan/components/home_components/tutorial_second_page.dart';
+import 'package:rayhan/components/home_components/tutorial_third_page.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class WelcomeTutorial extends StatefulWidget {
   const WelcomeTutorial({super.key});
@@ -131,7 +131,8 @@ class WelcomeTutorialState extends State<WelcomeTutorial> {
                   onPressed: () {
                     if (index == contentWidgets.length - 1) {
                       Provider.of<SettingsProvider>(context, listen: false)
-                          .setFirstTime();
+                          .setFirstTime(
+                              Theme.of(context).brightness == Brightness.dark);
                       return;
                     }
                     setState(() {

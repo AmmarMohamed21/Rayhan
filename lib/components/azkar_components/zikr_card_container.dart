@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class ZikrCardContainer extends StatelessWidget {
   const ZikrCardContainer({

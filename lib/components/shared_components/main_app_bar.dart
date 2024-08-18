@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/screens/home_screen.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 AppBar getAppBar({required String title, required BuildContext context}) {
   return AppBar(

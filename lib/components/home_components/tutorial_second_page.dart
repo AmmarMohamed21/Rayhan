@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
-class TutorialFirstPage extends StatelessWidget {
-  const TutorialFirstPage({super.key});
+class TutorialSecondPage extends StatelessWidget {
+  const TutorialSecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'يضم التطبيق مقتطفٌ يسير من الأذكار الواردة في السنة النبوية الشريفة من كتاب الأذكار للإمام النووي.',
+      'يمكنك تفعيل إشعارات للتذكير بأذكار الصباح والمساء من قائمة الإعدادات وتغيير حجم خط الأذكار وألوان التطبيق.',
       textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize:

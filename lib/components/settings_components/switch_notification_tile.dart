@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/scaled_switch.dart';
+import 'package:rayhan/components/settings_components/scaled_switch.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class SwitchNotificationTile extends StatelessWidget {
   final String label;

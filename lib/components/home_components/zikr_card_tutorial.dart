@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class ZikrCardTutorial extends StatefulWidget {
   const ZikrCardTutorial({super.key});

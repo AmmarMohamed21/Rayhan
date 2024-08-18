@@ -72,6 +72,6 @@ double calculateDistanceInMeters(
 Duration getNextMidnight(int minutesOffset) {
   DateTime now = DateTime.now();
   DateTime nextMidnight = DateTime(now.year, now.month, now.day + 1);
-  nextMidnight.add(Duration(minutes: minutesOffset));
+  nextMidnight = nextMidnight.add(Duration(minutes: minutesOffset));
   return nextMidnight.difference(now);
 }

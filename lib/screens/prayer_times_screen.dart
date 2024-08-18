@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/app_drawer.dart';
-import 'package:rayhan/components/icon_label_tile.dart';
-import 'package:rayhan/components/main_app_bar.dart';
+import 'package:rayhan/components/shared_components/app_drawer.dart';
+import 'package:rayhan/components/shared_components/icon_label_tile.dart';
+import 'package:rayhan/components/shared_components/main_app_bar.dart';
 
 import '../providers/prayer_times_provider.dart';
 import '../providers/theme_provider.dart';

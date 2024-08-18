@@ -18,7 +18,6 @@ class PrayerTimesProvider extends ChangeNotifier {
   bool isNoInternet = false;
 
   Future<void> loadPrayerTimes({bool isRefreshing = false}) async {
-    //First return the prayer times if it already loaded with location timestamp not older than 5 minutes
     if (!isRefreshing &&
         prayerTimes != null &&
         prayerTimes!.locationTimestamp
@@ -47,7 +46,11 @@ class PrayerTimesProvider extends ChangeNotifier {
     } else {
       //location is on, so we check for permission
       log("before Permission");
-      permission = await Geolocator.requestPermission();
+      permission = await Geolocator.checkPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        permission = await Geolocator.requestPermission();
+      }
       log("after Permission");
       if (permission == LocationPermission.denied) {
         isPermissionDenied = true;
@@ -113,20 +116,24 @@ class PrayerTimesProvider extends ChangeNotifier {
       Geolocator.openAppSettings();
     }
 
-    // await HomeWidget.saveWidgetData<Map<String, dynamic>>('prayerTimes', prayerTimes!.toJson());
-    await HomeWidget.saveWidgetData<String>('fajr', prayerTimes!.fajr);
-    await HomeWidget.saveWidgetData<String>('sunrise', prayerTimes!.sunrise);
-    await HomeWidget.saveWidgetData<String>('dhuhr', prayerTimes!.dhuhr);
-    await HomeWidget.saveWidgetData<String>('asr', prayerTimes!.asr);
-    await HomeWidget.saveWidgetData<String>('maghrib', prayerTimes!.maghrib);
-    await HomeWidget.saveWidgetData<String>('isha', prayerTimes!.isha);
-    await HomeWidget.saveWidgetData<String>('subtitle',
-        "${prayerTimes!.arabicDayName}، ${prayerTimes!.arabicDate}\n${prayerTimes!.city}");
+    if (prayerTimes != null) {
+      // await HomeWidget.saveWidgetData<Map<String, dynamic>>('prayerTimes', prayerTimes!.toJson());
+      await Future.wait([
+        HomeWidget.saveWidgetData<String>('fajr', prayerTimes!.fajr),
+        HomeWidget.saveWidgetData<String>('sunrise', prayerTimes!.sunrise),
+        HomeWidget.saveWidgetData<String>('dhuhr', prayerTimes!.dhuhr),
+        HomeWidget.saveWidgetData<String>('asr', prayerTimes!.asr),
+        HomeWidget.saveWidgetData<String>('maghrib', prayerTimes!.maghrib),
+        HomeWidget.saveWidgetData<String>('isha', prayerTimes!.isha),
+        HomeWidget.saveWidgetData<String>('subtitle',
+            "${prayerTimes!.arabicDayName}، ${prayerTimes!.arabicDate}\n${prayerTimes!.city}")
+      ]);
 
-    HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
-    HomeWidget.updateWidget(androidName: 'PrayerTimesSecondWidget');
-    HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
-    HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
+      HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
+      HomeWidget.updateWidget(androidName: 'PrayerTimesSecondWidget');
+      HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
+      HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
+    }
     notifyListeners();
   }
 }

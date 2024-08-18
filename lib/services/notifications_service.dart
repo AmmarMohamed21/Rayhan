@@ -149,4 +149,30 @@ class NotificationsService {
   static Future<void> cancelNotification(int id) async {
     await notificationsPlugin.cancel(id);
   }
+
+  static Future<void> showNormalNotification({
+    required String title,
+    required String body,
+  }) async {
+    await notificationsPlugin.initialize(initializationSettings);
+
+    await notificationsPlugin.show(
+      10,
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'روحٌ وريحان',
+          'روحٌ وريحان',
+          channelDescription: 'إشعارات عامة',
+          playSound: true,
+          sound: const RawResourceAndroidNotificationSound('notify'),
+          importance: Importance.max,
+          priority: Priority.high,
+          styleInformation: BigTextStyleInformation(''),
+        ),
+      ),
+      payload: 'روحٌ وريحان',
+    );
+  }
 }

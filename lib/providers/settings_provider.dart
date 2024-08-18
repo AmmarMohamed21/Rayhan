@@ -133,12 +133,18 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setFirstTime() async {
+  Future<void> setFirstTime(bool isDark) async {
     firstTime = false;
+    notifyListeners();
     LocalStorage.setFirstTime();
     if (!(await LocalStorage.isFridayNotificationsSet())) {
-      NotificationsService.setWeeklyFridayNotification();
+      await NotificationsService.setWeeklyFridayNotification();
     }
+
+    // await Geolocator.requestPermission();
+    HomeWidget.requestPinWidget(
+        androidName:
+            isDark ? 'PrayerTimesSecondDarkWidget' : 'PrayerTimesSecondWidget');
     notifyListeners();
   }
 }

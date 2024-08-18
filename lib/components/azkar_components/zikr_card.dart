@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/zikr_card_container.dart';
-import 'package:rayhan/components/zikr_card_counter.dart';
-import 'package:rayhan/components/zikr_card_icon.dart';
-import 'package:rayhan/components/zikr_card_title.dart';
+import 'package:rayhan/components/azkar_components/zikr_card_container.dart';
+import 'package:rayhan/components/azkar_components/zikr_card_counter.dart';
+import 'package:rayhan/components/azkar_components/zikr_card_icon.dart';
+import 'package:rayhan/components/azkar_components/zikr_card_title.dart';
 import 'package:rayhan/utilities/constants.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class ZikrCard extends StatefulWidget {
   final String text;

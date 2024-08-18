@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/app_drawer.dart';
-import 'package:rayhan/components/main_app_bar.dart';
+import 'package:rayhan/components/shared_components/app_drawer.dart';
+import 'package:rayhan/components/shared_components/main_app_bar.dart';
 
 import '../providers/theme_provider.dart';
 

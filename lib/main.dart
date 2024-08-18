@@ -9,8 +9,8 @@ import 'package:rayhan/screens/about_screen.dart';
 import 'package:rayhan/screens/loading_screen.dart';
 import 'package:rayhan/screens/prayer_times_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
-import 'package:rayhan/services/HomeWidgetRefreshPrayerService.dart';
 import 'package:rayhan/services/crashlytics_service.dart';
+import 'package:rayhan/services/daily_refresh_prayer_service.dart';
 import 'package:rayhan/services/local_storage.dart';
 import 'package:rayhan/services/notifications_service.dart';
 import 'package:rayhan/utilities/constants.dart';
@@ -23,7 +23,7 @@ import 'screens/home_screen.dart';
 
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-void callbackDispatcher() {
+void customCallbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     try {
       if (task == "dailyNotifRandom") {
@@ -35,16 +35,14 @@ void callbackDispatcher() {
           await NotificationsService.setAzkarNotification(
               NotificationIDs.morningNotificationID.index);
         }
-        return Future.value(true);
       } else if (task == "refreshPrayerTimes") {
-        HomeWidgetRefreshPrayerService.refreshPrayerTimes()
-            .timeout(Duration(minutes: 2));
+        await DailyRefreshPrayerService.refreshPrayerTimes();
       }
     } catch (e, st) {
+      CrashlyticsService.log("Error in task $task");
       CrashlyticsService.sendReport(e.toString(), st, true);
       return Future.value(false);
     }
-
     return Future.value(true);
   });
 }
@@ -55,22 +53,24 @@ Future<void> main() async {
 
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  Workmanager().initialize(
-    callbackDispatcher, // The top level function, aka callbackDispatcher
-    // isInDebugMode:
-    //     true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+
+  await Workmanager().initialize(
+    customCallbackDispatcher,
   );
   Workmanager().registerPeriodicTask(
-    "dailyNotifRandom",
-    "dailyNotifRandom",
+    "refreshPrayerTimes",
+    "refreshPrayerTimes",
     frequency: const Duration(hours: 24),
-    //set initialDelay to be at 12:5 AM every day
-    initialDelay: getNextMidnight(5),
+    //set initialDelay to be at 12:01 AM every day
+    initialDelay: getNextMidnight(1),
+    constraints: Constraints(
+      networkType: NetworkType.connected,
+    ),
   );
 
   Workmanager().registerPeriodicTask(
-    "refreshPrayerTimes",
-    "refreshPrayerTimes",
+    "dailyNotifRandom",
+    "dailyNotifRandom",
     frequency: const Duration(hours: 24),
     //set initialDelay to be at 12:10 AM every day
     initialDelay: getNextMidnight(10),

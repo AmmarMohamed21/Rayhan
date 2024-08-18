@@ -12,11 +12,29 @@ import 'package:rayhan/utilities/parsing_extensions.dart';
 import '../models/prayer_times.dart';
 
 class PrayerTimesService {
+  static Future<Position?> getLastKnownPosition() async {
+    try {
+      print("Getting last known geolocation");
+      Position? pos = await Geolocator.getLastKnownPosition(
+        forceAndroidLocationManager: true,
+      ).timeout(Duration(seconds: 10));
+      print("Position timestamp: ${pos?.timestamp}");
+      print("Position longitude: ${pos?.longitude}");
+      print("Position latitude: ${pos?.latitude}");
+      return pos;
+    } catch (e, st) {
+      print("Error: $e");
+      print("Stacktrace: $st");
+    }
+    return null;
+  }
+
   static Future<Position?> getCurrentLocation() async {
     try {
       print("Getting geolocation");
       Position pos = await Geolocator.getCurrentPosition(
-          locationSettings: const LocationSettings(
+          locationSettings: AndroidSettings(
+        forceLocationManager: true,
         accuracy: LocationAccuracy.high,
         distanceFilter: 3000,
         timeLimit: Duration(seconds: 60),
@@ -36,7 +54,8 @@ class PrayerTimesService {
     try {
       await setLocaleIdentifier('ar');
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(latitude, longitude);
+          await placemarkFromCoordinates(latitude, longitude)
+              .timeout(Duration(seconds: 45));
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
         return await _formatString(placemark);

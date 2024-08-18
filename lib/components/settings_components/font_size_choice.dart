@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class FontSizeChoice extends StatelessWidget {
   const FontSizeChoice({super.key});

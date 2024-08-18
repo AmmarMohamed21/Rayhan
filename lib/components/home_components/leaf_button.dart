@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:rayhan/screens/azkar_screen.dart';
 import 'package:rayhan/screens/settings_screen.dart';
 
-import '../providers/theme_provider.dart';
-import 'custom_icons.dart';
+import '../../providers/theme_provider.dart';
+import '../custom_icons.dart';
 
 class LeafButton extends StatelessWidget {
   final String label;

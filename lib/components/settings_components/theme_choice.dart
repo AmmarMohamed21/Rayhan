@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/two_coloured_circle.dart';
+import 'package:rayhan/components/settings_components/two_coloured_circle.dart';
 import 'package:rayhan/providers/theme_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 

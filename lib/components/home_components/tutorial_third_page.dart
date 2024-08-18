@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rayhan/components/zikr_card_tutorial.dart';
+import 'package:rayhan/components/home_components/zikr_card_tutorial.dart';
 
-import '../providers/theme_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class TutorialThirdPage extends StatelessWidget {
   const TutorialThirdPage({super.key});
