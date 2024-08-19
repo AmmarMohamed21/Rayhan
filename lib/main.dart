@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,6 +22,14 @@ import 'package:workmanager/workmanager.dart';
 import 'providers/prayer_times_provider.dart';
 import 'providers/settings_provider.dart';
 import 'screens/home_screen.dart';
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  NotificationsService.showNormalNotification(
+      title: message.notification?.title ?? "",
+      body: message.notification?.body ?? "");
+}
 
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
@@ -50,6 +59,7 @@ void customCallbackDispatcher() {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
   // Pass all uncaught "fatal" errors from the framework to Crashlytics

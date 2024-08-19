@@ -141,7 +141,8 @@ class SettingsProvider extends ChangeNotifier {
       await NotificationsService.setWeeklyFridayNotification();
     }
 
-    // await Geolocator.requestPermission();
+    await NotificationsService.initializeFirebaseNotifications(true);
+
     HomeWidget.requestPinWidget(
         androidName:
             isDark ? 'PrayerTimesSecondDarkWidget' : 'PrayerTimesSecondWidget');

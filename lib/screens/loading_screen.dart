@@ -6,6 +6,8 @@ import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/providers/theme_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 
+import '../services/notifications_service.dart';
+
 class LoadingScreen extends StatefulWidget {
   static const String id = 'loading_screen';
 
@@ -25,6 +27,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
       await Provider.of<AzkarProvider>(context, listen: false).loadAzkarList();
       await Provider.of<SettingsProvider>(context, listen: false)
           .initializeSettings(context);
+      if (!Provider.of<SettingsProvider>(context, listen: false).firstTime!) {
+        print('initializeFirebaseNotifications');
+        NotificationsService.initializeFirebaseNotifications(false);
+      }
       Provider.of<AzkarProvider>(context, listen: false).checkDatabaseUpdate();
     });
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_widget/home_widget.dart';
@@ -7,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:rayhan/models/prayer_times.dart';
 import 'package:rayhan/services/local_storage.dart';
 import 'package:rayhan/services/prayer_times_service.dart';
+import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/utilities/parsing_extensions.dart';
 
 class PrayerTimesProvider extends ChangeNotifier {
@@ -24,67 +23,81 @@ class PrayerTimesProvider extends ChangeNotifier {
                 .difference(DateTime.now())
                 .abs()
                 .inMinutes <=
-            5 &&
+            15 &&
         prayerTimes!.date.isSameDate(DateTime.now())) {
-      // The location is not older than 5 minutes and the date is the same
+      // The location is not older than 15 minutes and the date is the same
       return;
     }
 
-    //Try to get the current location
-    Location location = new Location();
-    bool serviceEnabled =
-        await location.requestService(); //request to enable location service
-
-    LocationPermission? permission;
-
+    isNoInternet = !(await isInternet());
     bool locationServicesIssue = false;
-    if (!serviceEnabled) {
-      isLocationServiceDisabled = true;
-      isPermissionDenied = false;
-      isPermissionDeniedForever = false;
-      locationServicesIssue = true;
-    } else {
-      //location is on, so we check for permission
-      log("before Permission");
-      permission = await Geolocator.checkPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        permission = await Geolocator.requestPermission();
-      }
-      log("after Permission");
-      if (permission == LocationPermission.denied) {
-        isPermissionDenied = true;
-        isLocationServiceDisabled = false;
+    LocationPermission? permission;
+    Position? position;
+    PrayerTimes? cachedPrayerTimes;
+    PrayerTimes? retrievedPrayerTimes;
+
+    if (!isNoInternet) //There is internet
+    {
+      //Check location service is on
+      Location location = new Location();
+      bool serviceEnabled = await location.requestService();
+
+      //Check for location permissions
+      if (!serviceEnabled) {
+        isLocationServiceDisabled = true;
+        isPermissionDenied = false;
         isPermissionDeniedForever = false;
         locationServicesIssue = true;
-      } //if denied forever
-      if (permission == LocationPermission.deniedForever) {
-        isPermissionDeniedForever = true;
-        isPermissionDenied = false;
-        isLocationServiceDisabled = false;
-        locationServicesIssue = true;
+      } else {
+        //location is on, so we check for permission
+        permission = await Geolocator.checkPermission();
+        if (isRefreshing &&
+            permission != LocationPermission.whileInUse &&
+            permission != LocationPermission.always) {
+          permission = await Geolocator.requestPermission();
+        }
+        if (permission == LocationPermission.denied) {
+          isPermissionDenied = true;
+          isLocationServiceDisabled = false;
+          isPermissionDeniedForever = false;
+          locationServicesIssue = true;
+        } //if denied forever
+        if (permission == LocationPermission.deniedForever) {
+          isPermissionDeniedForever = true;
+          isPermissionDenied = false;
+          isLocationServiceDisabled = false;
+          locationServicesIssue = true;
+        }
       }
-    }
 
-    //if location is on and permission is granted we try to get the location
-    Position? position;
-    if (!locationServicesIssue) {
-      position = await PrayerTimesService.getCurrentLocation();
+      //if location is on and permission is granted we try to get the location
+      if (!locationServicesIssue) {
+        position = await PrayerTimesService.getCurrentLocation();
+      }
+      if (position == null) {
+        //failed to get current location, we check last known
+        position = await PrayerTimesService.getLastKnownPosition();
+      }
       if (position != null) {
-        //if we get the location we get the prayer times
-        bool isInternet = await PrayerTimesService.isInternet();
-        if (isInternet) {
-          prayerTimes = await PrayerTimesService.getPrayerTimes(
-              position.latitude, position.longitude, position.timestamp);
-        } else {
-          isNoInternet = true;
+        retrievedPrayerTimes = await PrayerTimesService.getPrayerTimes(
+            position.latitude, position.longitude, position.timestamp);
+      } else //Failed to get any location so we use location of cached
+      {
+        cachedPrayerTimes =
+            prayerTimes ?? await LocalStorage.getCachedPrayerTimes();
+        if (cachedPrayerTimes != null) {
+          retrievedPrayerTimes = await PrayerTimesService.getPrayerTimes(
+              cachedPrayerTimes.latitude,
+              cachedPrayerTimes.longitude,
+              cachedPrayerTimes.locationTimestamp);
         }
       }
     }
 
     //if still we failed to get prayer times we try to get the cached prayer times
-    if (prayerTimes == null) {
-      PrayerTimes? cachedPrayerTimes =
+    if (retrievedPrayerTimes == null) {
+      cachedPrayerTimes = prayerTimes ??
+          cachedPrayerTimes ??
           await LocalStorage.getCachedPrayerTimes();
 
       //if same day we show it if we didn't get location or we got a location with a distance less than 10 km
@@ -102,11 +115,12 @@ class PrayerTimesProvider extends ChangeNotifier {
           }
         }
         if (!isDistanceBig) {
-          prayerTimes = cachedPrayerTimes;
+          retrievedPrayerTimes = cachedPrayerTimes;
         }
       }
     } else {
       //cache the prayer times
+      prayerTimes = retrievedPrayerTimes;
       await LocalStorage.cachePrayerTimes(prayerTimes!);
     }
 

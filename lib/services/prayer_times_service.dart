@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -146,30 +143,5 @@ class PrayerTimesService {
     json["Latitude"] = latitude;
     json["Longitude"] = longitude;
     return json;
-  }
-
-  static Future<bool> isInternet() async {
-    List<ConnectivityResult> connectivityResults =
-        await Connectivity().checkConnectivity();
-    if (connectivityResults.first == ConnectivityResult.none) {
-      return false;
-    }
-    try {
-      final result =
-          await http.head(Uri.parse('https://www.google.com')).timeout(
-        const Duration(seconds: 30),
-        onTimeout: () {
-          log("timeout");
-          throw Exception('no internet');
-        },
-      );
-      return result.statusCode.toString().startsWith('2');
-    } on SocketException catch (e) {
-      log(e.toString());
-      return false;
-    } catch (e) {
-      log(e.toString());
-      return false;
-    }
   }
 }

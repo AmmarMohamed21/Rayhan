@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../main.dart';
 import '../utilities/constants.dart';
 import 'local_storage.dart';
 
@@ -21,6 +23,33 @@ class NotificationsService {
             defaultPresentBadge: true,
             defaultPresentSound: true,
           ));
+
+  static Future<void> initializeFirebaseNotifications(bool isFirstTime) async {
+    if (!isFirstTime) {
+      NotificationSettings settings =
+          await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+      print('User granted permission: ${settings.authorizationStatus}');
+    }
+
+    if (isFirstTime) {
+      FirebaseMessaging.instance.subscribeToTopic("all");
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('here recieved message');
+        showNormalNotification(
+            title: message.notification?.title ?? "",
+            body: message.notification?.body ?? "");
+      });
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    }
+  }
 
   static Future<void> setWeeklyFridayNotification() async {
     await notificationsPlugin.initialize(initializationSettings);
@@ -54,7 +83,7 @@ class NotificationsService {
             styleInformation: BigTextStyleInformation(''),
           ),
         ),
-        androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: 'إشعار يوم الجمعة',
@@ -119,7 +148,7 @@ class NotificationsService {
           styleInformation: BigTextStyleInformation(''),
         ),
       ),
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       payload: NotificationIDs.morningNotificationID.index == id

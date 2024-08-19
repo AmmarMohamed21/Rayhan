@@ -87,7 +87,7 @@ Future<bool> isInternet() async {
   }
   try {
     final result = await http.head(Uri.parse('https://www.google.com')).timeout(
-      const Duration(seconds: 7),
+      const Duration(seconds: 25),
       onTimeout: () {
         throw Exception('no internet');
       },
