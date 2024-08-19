@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,13 +22,13 @@ import 'providers/prayer_times_provider.dart';
 import 'providers/settings_provider.dart';
 import 'screens/home_screen.dart';
 
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  NotificationsService.showNormalNotification(
-      title: message.notification?.title ?? "",
-      body: message.notification?.body ?? "");
-}
+// @pragma('vm:entry-point')
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   NotificationsService.showNormalNotification(
+//       title: message.notification?.title ?? "",
+//       body: message.notification?.body ?? "");
+// }
 
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
@@ -120,18 +119,22 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'روحٌ وريحان',
-        theme: Provider.of<ThemeProvider>(context).currentTheme ??
-            ThemeData(
-              brightness: Brightness.light,
-              fontFamily: 'Harmattans',
-              primaryColor: kBluePrimaryColor,
-              primaryColorLight: kBlueLightColor,
-              primaryColorDark: kBlueDarkColor,
-              timePickerTheme: TimePickerThemeData(
-                backgroundColor: kLightBackgroundColor,
-              ),
-              scaffoldBackgroundColor: kLightBackgroundColor,
-            ),
+        theme: Provider.of<ThemeProvider>(context).isAutoTheme == true
+            ? (MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Provider.of<ThemeProvider>(context, listen: false).darkGreen
+                : Provider.of<ThemeProvider>(context, listen: false).lightGreen)
+            : Provider.of<ThemeProvider>(context).currentTheme ??
+                ThemeData(
+                  brightness: Brightness.light,
+                  fontFamily: 'Harmattans',
+                  primaryColor: kBluePrimaryColor,
+                  primaryColorLight: kBlueLightColor,
+                  primaryColorDark: kBlueDarkColor,
+                  timePickerTheme: TimePickerThemeData(
+                    backgroundColor: kLightBackgroundColor,
+                  ),
+                  scaffoldBackgroundColor: kLightBackgroundColor,
+                ),
         initialRoute: LoadingScreen.id,
         locale: const Locale('ar', 'EG'),
         localizationsDelegates: const [

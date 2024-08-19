@@ -31,7 +31,7 @@ class SwitchNotificationTile extends StatelessWidget {
       },
       child: Container(
         constraints: BoxConstraints(
-            minHeight: 45.0 *
+            minHeight: 50.0 *
                 Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
         //height: 45.0 * heightRatio * widthRatio,
         child: Row(

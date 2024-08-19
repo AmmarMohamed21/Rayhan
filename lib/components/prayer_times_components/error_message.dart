@@ -3,49 +3,46 @@ import 'package:provider/provider.dart';
 
 import '../../providers/theme_provider.dart';
 
-class IconLabelTile extends StatelessWidget {
-  final String label;
+class ErrorMessage extends StatelessWidget {
+  const ErrorMessage({
+    super.key,
+    required this.icon,
+    required this.message,
+  });
   final IconData icon;
-  final Color iconColor;
-  final Widget endWidget;
-
-  const IconLabelTile(
-      {required this.label,
-      required this.icon,
-      required this.iconColor,
-      required this.endWidget});
+  final String message;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-          minHeight: 50.0 *
-              Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
-      child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
             icon,
-            color: iconColor,
-            size: 45.0 *
+            size: 50.0 *
                 Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
           ),
           SizedBox(
-            width: 17.0 *
+            height: 20 *
                 Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
           ),
           Text(
-            label,
+            message,
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 25.0 *
-                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
+              fontSize: 30 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             ),
           ),
-          const Spacer(),
-          endWidget,
         ],
       ),
     );

@@ -7,6 +7,7 @@ import 'package:rayhan/components/shared_components/app_drawer.dart';
 import 'package:rayhan/components/shared_components/icon_label_tile.dart';
 import 'package:rayhan/components/shared_components/main_app_bar.dart';
 
+import '../components/prayer_times_components/error_message.dart';
 import '../providers/prayer_times_provider.dart';
 import '../providers/theme_provider.dart';
 
@@ -256,49 +257,6 @@ class PrayerTimesScreen extends StatelessWidget {
           }
         },
       ),
-    );
-  }
-}
-
-class ErrorMessage extends StatelessWidget {
-  const ErrorMessage({
-    super.key,
-    required this.icon,
-    required this.message,
-  });
-  final IconData icon;
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          FontAwesomeIcons.faceFrown,
-          size: 50.0 *
-              Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
-          color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.white
-              : Colors.black,
-        ),
-        SizedBox(
-          height:
-              20 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
-        ),
-        Text(
-          'تأكد من الاتصال بشبكة الإنترنت وتفعيل خاصية تحديد الموقع',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
-            fontSize: 30 *
-                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
-          ),
-        ),
-      ],
     );
   }
 }

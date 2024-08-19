@@ -7,14 +7,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/prayer_times.dart';
 
 class LocalStorage {
-  static Future<void> saveTheme(String theme) async {
+  // static Future<void> saveTheme(String theme) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('theme', theme);
+  // }
+  //
+  // static Future<String?> getTheme() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getString('theme');
+  // }
+
+  static Future<bool> isAutoTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('theme', theme);
+    return prefs.getBool('autoTheme') ?? true;
   }
 
-  static Future<String?> getTheme() async {
+  static Future<void> setAutoTheme(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('theme');
+    await prefs.setBool('autoTheme', value);
+  }
+
+  static Future<bool> isDarkTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('darkTheme') ?? false;
+  }
+
+  static Future<void> setDarkTheme(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('darkTheme', value);
   }
 
   static Future<bool> isFridayNotificationsSet() async {

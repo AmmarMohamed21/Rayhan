@@ -4,51 +4,52 @@ import 'package:rayhan/utilities/constants.dart';
 import '../services/local_storage.dart';
 
 class ThemeProvider extends ChangeNotifier {
+  bool? isAutoTheme;
   ThemeData? currentTheme;
-  String? currentThemeName;
+  bool? isDarkTheme;
   double sizeRatio = 1.0;
-
-  final ThemeData lightBlue = ThemeData(
-    brightness: Brightness.light,
-    fontFamily: 'Harmattans',
-    primaryColor: kBluePrimaryColor,
-    primaryColorLight: kBlueLightColor,
-    primaryColorDark: kBlueDarkColor,
-    timePickerTheme: TimePickerThemeData(
-      backgroundColor: kLightBackgroundColor,
-      dialHandColor: kBluePrimaryColor,
-      dialBackgroundColor: kBlueLightColor.withOpacity(0.1),
-      dialTextColor: kBlueDarkColor,
-      dayPeriodColor: kBlueLightColor,
-      dayPeriodTextColor: kBlueDarkColor,
-      entryModeIconColor: kBlueDarkColor,
-      hourMinuteColor: kBlueLightColor.withOpacity(0.1),
-      hourMinuteTextColor: kBlueDarkColor,
-      helpTextStyle: TextStyle(
-        color: kBlueDarkColor,
-        fontSize: 16.0,
-      ),
-      cancelButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(kBluePrimaryColor),
-        textStyle: WidgetStateProperty.all(
-          const TextStyle(
-            color: kBluePrimaryColor,
-            fontSize: 16.0,
-          ),
-        ),
-      ),
-      confirmButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(kBlueDarkColor),
-        textStyle: WidgetStateProperty.all(
-          const TextStyle(
-            color: kBlueDarkColor,
-            fontSize: 16.0,
-          ),
-        ),
-      ),
-    ),
-    scaffoldBackgroundColor: kLightBackgroundColor,
-  );
+  //
+  // final ThemeData lightBlue = ThemeData(
+  //   brightness: Brightness.light,
+  //   fontFamily: 'Harmattans',
+  //   primaryColor: kBluePrimaryColor,
+  //   primaryColorLight: kBlueLightColor,
+  //   primaryColorDark: kBlueDarkColor,
+  //   timePickerTheme: TimePickerThemeData(
+  //     backgroundColor: kLightBackgroundColor,
+  //     dialHandColor: kBluePrimaryColor,
+  //     dialBackgroundColor: kBlueLightColor.withOpacity(0.1),
+  //     dialTextColor: kBlueDarkColor,
+  //     dayPeriodColor: kBlueLightColor,
+  //     dayPeriodTextColor: kBlueDarkColor,
+  //     entryModeIconColor: kBlueDarkColor,
+  //     hourMinuteColor: kBlueLightColor.withOpacity(0.1),
+  //     hourMinuteTextColor: kBlueDarkColor,
+  //     helpTextStyle: TextStyle(
+  //       color: kBlueDarkColor,
+  //       fontSize: 16.0,
+  //     ),
+  //     cancelButtonStyle: ButtonStyle(
+  //       foregroundColor: WidgetStateProperty.all(kBluePrimaryColor),
+  //       textStyle: WidgetStateProperty.all(
+  //         const TextStyle(
+  //           color: kBluePrimaryColor,
+  //           fontSize: 16.0,
+  //         ),
+  //       ),
+  //     ),
+  //     confirmButtonStyle: ButtonStyle(
+  //       foregroundColor: WidgetStateProperty.all(kBlueDarkColor),
+  //       textStyle: WidgetStateProperty.all(
+  //         const TextStyle(
+  //           color: kBlueDarkColor,
+  //           fontSize: 16.0,
+  //         ),
+  //       ),
+  //     ),
+  //   ),
+  //   scaffoldBackgroundColor: kLightBackgroundColor,
+  // );
 
   final ThemeData lightGreen = ThemeData(
     brightness: Brightness.light,
@@ -136,42 +137,27 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> initTheme(BuildContext context) async {
     _initializeScaleFactor(context);
-    String? theme = await LocalStorage.getTheme();
-    if (theme == null) {
-      bool isDarkMode =
-          MediaQuery.of(context).platformBrightness == Brightness.dark;
-      if (isDarkMode) {
-        currentTheme = darkGreen;
-        currentThemeName = 'darkGreen';
-      } else {
-        currentTheme = lightGreen;
-        currentThemeName = 'lightGreen';
-      }
-    } else {
-      currentThemeName = theme;
-      if (theme == 'lightBlue') {
-        currentTheme = lightBlue;
-      } else if (theme == 'lightGreen') {
-        currentTheme = lightGreen;
-      } else {
-        currentTheme = darkGreen;
-      }
-    }
-
+    bool isAuto = await LocalStorage.isAutoTheme();
+    bool isDark = await LocalStorage.isDarkTheme();
+    changeTheme(isAuto, isDark, context);
     notifyListeners();
   }
 
-  void changeTheme(String theme) {
-    if (theme == 'lightBlue') {
-      currentTheme = lightBlue;
-    } else if (theme == 'lightGreen') {
-      currentTheme = lightGreen;
-    } else {
-      currentTheme = darkGreen;
+  void changeTheme(bool isAuto, bool isDark, BuildContext context) {
+    isAutoTheme = isAuto;
+    if (isAuto) {
+      isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     }
-    currentThemeName = theme;
+    if (isDark) {
+      isDarkTheme = true;
+      currentTheme = darkGreen;
+    } else {
+      isDarkTheme = false;
+      currentTheme = lightGreen;
+    }
     notifyListeners();
-    LocalStorage.saveTheme(theme);
+    LocalStorage.setAutoTheme(isAuto);
+    LocalStorage.setDarkTheme(isDark);
   }
 
   void _initializeScaleFactor(BuildContext context) {

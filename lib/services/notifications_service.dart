@@ -7,7 +7,6 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../main.dart';
 import '../utilities/constants.dart';
 import 'local_storage.dart';
 
@@ -42,12 +41,11 @@ class NotificationsService {
     if (isFirstTime) {
       FirebaseMessaging.instance.subscribeToTopic("all");
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('here recieved message');
         showNormalNotification(
             title: message.notification?.title ?? "",
             body: message.notification?.body ?? "");
       });
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      //FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     }
   }
 

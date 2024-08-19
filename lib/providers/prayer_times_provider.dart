@@ -51,8 +51,7 @@ class PrayerTimesProvider extends ChangeNotifier {
       } else {
         //location is on, so we check for permission
         permission = await Geolocator.checkPermission();
-        if (isRefreshing &&
-            permission != LocationPermission.whileInUse &&
+        if (permission != LocationPermission.whileInUse &&
             permission != LocationPermission.always) {
           permission = await Geolocator.requestPermission();
         }
@@ -74,7 +73,9 @@ class PrayerTimesProvider extends ChangeNotifier {
       if (!locationServicesIssue) {
         position = await PrayerTimesService.getCurrentLocation();
       }
-      if (position == null) {
+      if (position == null &&
+          (permission == LocationPermission.always ||
+              permission == LocationPermission.whileInUse)) {
         //failed to get current location, we check last known
         position = await PrayerTimesService.getLastKnownPosition();
       }
