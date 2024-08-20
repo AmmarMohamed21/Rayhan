@@ -8,48 +8,6 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme;
   bool? isDarkTheme;
   double sizeRatio = 1.0;
-  //
-  // final ThemeData lightBlue = ThemeData(
-  //   brightness: Brightness.light,
-  //   fontFamily: 'Harmattans',
-  //   primaryColor: kBluePrimaryColor,
-  //   primaryColorLight: kBlueLightColor,
-  //   primaryColorDark: kBlueDarkColor,
-  //   timePickerTheme: TimePickerThemeData(
-  //     backgroundColor: kLightBackgroundColor,
-  //     dialHandColor: kBluePrimaryColor,
-  //     dialBackgroundColor: kBlueLightColor.withOpacity(0.1),
-  //     dialTextColor: kBlueDarkColor,
-  //     dayPeriodColor: kBlueLightColor,
-  //     dayPeriodTextColor: kBlueDarkColor,
-  //     entryModeIconColor: kBlueDarkColor,
-  //     hourMinuteColor: kBlueLightColor.withOpacity(0.1),
-  //     hourMinuteTextColor: kBlueDarkColor,
-  //     helpTextStyle: TextStyle(
-  //       color: kBlueDarkColor,
-  //       fontSize: 16.0,
-  //     ),
-  //     cancelButtonStyle: ButtonStyle(
-  //       foregroundColor: WidgetStateProperty.all(kBluePrimaryColor),
-  //       textStyle: WidgetStateProperty.all(
-  //         const TextStyle(
-  //           color: kBluePrimaryColor,
-  //           fontSize: 16.0,
-  //         ),
-  //       ),
-  //     ),
-  //     confirmButtonStyle: ButtonStyle(
-  //       foregroundColor: WidgetStateProperty.all(kBlueDarkColor),
-  //       textStyle: WidgetStateProperty.all(
-  //         const TextStyle(
-  //           color: kBlueDarkColor,
-  //           fontSize: 16.0,
-  //         ),
-  //       ),
-  //     ),
-  //   ),
-  //   scaffoldBackgroundColor: kLightBackgroundColor,
-  // );
 
   final ThemeData lightGreen = ThemeData(
     brightness: Brightness.light,

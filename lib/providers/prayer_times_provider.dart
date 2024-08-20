@@ -17,6 +17,7 @@ class PrayerTimesProvider extends ChangeNotifier {
   bool isNoInternet = false;
 
   Future<void> loadPrayerTimes({bool isRefreshing = false}) async {
+    await Future.delayed(Duration(seconds: 10));
     if (!isRefreshing &&
         prayerTimes != null &&
         prayerTimes!.locationTimestamp

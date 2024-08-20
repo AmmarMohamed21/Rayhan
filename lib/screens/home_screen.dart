@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                       position: 1,
                     ),
                     LeafButton(
-                      label: 'الإعدادات',
+                      label: 'مواقيت الصلاة',
                       isInverse: true,
                       position: 2,
                     ),

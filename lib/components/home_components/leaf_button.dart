@@ -3,9 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/screens/azkar_screen.dart';
-import 'package:rayhan/screens/settings_screen.dart';
 
 import '../../providers/theme_provider.dart';
+import '../../screens/prayer_times_screen.dart';
 import '../custom_icons.dart';
 
 class LeafButton extends StatelessWidget {
@@ -29,7 +29,7 @@ class LeafButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(
           80.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
       onTap: () {
-        if (label != 'الإعدادات') {
+        if (label != 'مواقيت الصلاة') {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -39,7 +39,7 @@ class LeafButton extends StatelessWidget {
             ),
           );
         } else {
-          Navigator.pushNamed(context, SettingsScreen.id);
+          Navigator.pushNamed(context, PrayerTimesScreen.id);
         }
       },
       child: Stack(
@@ -84,7 +84,7 @@ class LeafButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20.0 *
+              fontSize: 19.0 *
                   Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
             ),
           ),

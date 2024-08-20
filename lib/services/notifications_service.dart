@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:rayhan/services/crashlytics_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -24,68 +25,75 @@ class NotificationsService {
           ));
 
   static Future<void> initializeFirebaseNotifications(bool isFirstTime) async {
-    if (!isFirstTime) {
-      NotificationSettings settings =
-          await FirebaseMessaging.instance.requestPermission(
-        alert: true,
-        announcement: false,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true,
-      );
-      print('User granted permission: ${settings.authorizationStatus}');
-    }
+    try {
+      if (!isFirstTime) {
+        NotificationSettings settings =
+            await FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+        print('User granted permission: ${settings.authorizationStatus}');
+      }
 
-    if (isFirstTime) {
-      FirebaseMessaging.instance.subscribeToTopic("all");
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        showNormalNotification(
-            title: message.notification?.title ?? "",
-            body: message.notification?.body ?? "");
-      });
-      //FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      if (isFirstTime) {
+        FirebaseMessaging.instance.subscribeToTopic("all");
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          showNormalNotification(
+              title: message.notification?.title ?? "",
+              body: message.notification?.body ?? "");
+        });
+      }
+    } catch (e, st) {
+      CrashlyticsService.sendReport(e.toString(), st, true);
     }
   }
 
   static Future<void> setWeeklyFridayNotification() async {
-    await notificationsPlugin.initialize(initializationSettings);
+    try {
+      await notificationsPlugin.initialize(initializationSettings);
 
-    bool? result = await notificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
-    if (result != true) {
-      return;
-    }
+      bool? result = await notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+      if (result != true) {
+        return;
+      }
 
-    tz.initializeTimeZones();
-    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+      tz.initializeTimeZones();
+      final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-    await notificationsPlugin.zonedSchedule(
-        7,
-        'دعاء يوم الجمعة',
-        'قَالَ رسُولُ اللَّهِ ﷺ: "إِنَّ مِنْ أَفضَلِ أَيَّامِكُمْ يَوْم الجُمُعَةِ، فأَكثروا عليَّ مِنَ الصَّلاةِ فِيهِ، فَإِنَّ صَلاتَكُمْ مَعْروضَةٌ عليَّ"\n وقَالَ رسُولُ اللَّهِ ﷺ عن يوم الجمعة: "فيهِ ساعَةٌ لا يُوَافِقُها عَبْدٌ مُسْلِمٌ وَهُوَ قَائِمٌ يُصَلِّي يَسألُ اللَّهَ تَعالى شَيْئاً إِلاَّ أعْطاهُ إيَّاهُ".',
-        _nextInstanceOfFriday(),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'إشعار يوم الجمعة',
-            'إشعار يوم الجمعة',
-            channelDescription: 'إشعار للتذكير بالدعاء يوم الجمعة',
-            playSound: true,
-            sound: RawResourceAndroidNotificationSound('notify'),
-            importance: Importance.max,
-            priority: Priority.high,
-            styleInformation: BigTextStyleInformation(''),
+      await notificationsPlugin.zonedSchedule(
+          7,
+          'دعاء يوم الجمعة',
+          'قَالَ رسُولُ اللَّهِ ﷺ: "إِنَّ مِنْ أَفضَلِ أَيَّامِكُمْ يَوْم الجُمُعَةِ، فأَكثروا عليَّ مِنَ الصَّلاةِ فِيهِ، فَإِنَّ صَلاتَكُمْ مَعْروضَةٌ عليَّ"\n وقَالَ رسُولُ اللَّهِ ﷺ عن يوم الجمعة: "فيهِ ساعَةٌ لا يُوَافِقُها عَبْدٌ مُسْلِمٌ وَهُوَ قَائِمٌ يُصَلِّي يَسألُ اللَّهَ تَعالى شَيْئاً إِلاَّ أعْطاهُ إيَّاهُ".',
+          _nextInstanceOfFriday(),
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'إشعار يوم الجمعة',
+              'إشعار يوم الجمعة',
+              channelDescription: 'إشعار للتذكير بالدعاء يوم الجمعة',
+              playSound: true,
+              sound: RawResourceAndroidNotificationSound('notify'),
+              importance: Importance.max,
+              priority: Priority.high,
+              styleInformation: BigTextStyleInformation(''),
+            ),
           ),
-        ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        payload: 'إشعار يوم الجمعة',
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          payload: 'إشعار يوم الجمعة',
+          matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+    } catch (e, st) {
+      CrashlyticsService.sendReport(e.toString(), st, true);
+    }
   }
 
   static tz.TZDateTime _nextInstanceOfFriday() {
@@ -102,58 +110,62 @@ class NotificationsService {
   }
 
   static Future<void> setAzkarNotification(int id) async {
-    await notificationsPlugin.initialize(initializationSettings);
+    try {
+      await notificationsPlugin.initialize(initializationSettings);
 
-    tz.initializeTimeZones();
-    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+      tz.initializeTimeZones();
+      final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-    TimeOfDay? notificationTime =
-        NotificationIDs.morningNotificationID.index == id
-            ? await LocalStorage.getMorningNotificationTime()
-            : await LocalStorage.getDawnNotificationTime();
-
-    if (notificationTime == null) {
-      return;
-    }
-
-    String masaaNotifyBody =
-        '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار المساء.';
-    String sabahNotifyBody =
-        '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار الصباح.';
-    print('notificationTime: ${notificationTime.toString()}');
-
-    await notificationsPlugin.zonedSchedule(
-      id,
-      NotificationIDs.morningNotificationID.index == id
-          ? sabahNotifyTitle
-          : masaaNotifyTitle,
-      NotificationIDs.morningNotificationID.index == id
-          ? sabahNotifyBody
-          : masaaNotifyBody,
-      _nextInstanceOfTime(notificationTime.hour, notificationTime.minute),
-      NotificationDetails(
-        android: AndroidNotificationDetails(
+      TimeOfDay? notificationTime =
           NotificationIDs.morningNotificationID.index == id
-              ? sabahNotifyTitle
-              : masaaNotifyTitle,
-          'روحٌ وريحان',
-          channelDescription: 'إشعارات يومية لأذكار الصباح والمساء',
-          playSound: true,
-          sound: const RawResourceAndroidNotificationSound('notify'),
-          importance: Importance.max,
-          priority: Priority.high,
-          styleInformation: BigTextStyleInformation(''),
+              ? await LocalStorage.getMorningNotificationTime()
+              : await LocalStorage.getDawnNotificationTime();
+
+      if (notificationTime == null) {
+        return;
+      }
+
+      String masaaNotifyBody =
+          '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار المساء.';
+      String sabahNotifyBody =
+          '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار الصباح.';
+      print('notificationTime: ${notificationTime.toString()}');
+
+      await notificationsPlugin.zonedSchedule(
+        id,
+        NotificationIDs.morningNotificationID.index == id
+            ? sabahNotifyTitle
+            : masaaNotifyTitle,
+        NotificationIDs.morningNotificationID.index == id
+            ? sabahNotifyBody
+            : masaaNotifyBody,
+        _nextInstanceOfTime(notificationTime.hour, notificationTime.minute),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            NotificationIDs.morningNotificationID.index == id
+                ? sabahNotifyTitle
+                : masaaNotifyTitle,
+            'روحٌ وريحان',
+            channelDescription: 'إشعارات يومية لأذكار الصباح والمساء',
+            playSound: true,
+            sound: const RawResourceAndroidNotificationSound('notify'),
+            importance: Importance.max,
+            priority: Priority.high,
+            styleInformation: BigTextStyleInformation(''),
+          ),
         ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      payload: NotificationIDs.morningNotificationID.index == id
-          ? sabahNotifyTitle
-          : masaaNotifyTitle,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: NotificationIDs.morningNotificationID.index == id
+            ? sabahNotifyTitle
+            : masaaNotifyTitle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e, st) {
+      CrashlyticsService.sendReport(e.toString(), st, true);
+    }
   }
 
   static tz.TZDateTime _nextInstanceOfTime(int hours, int minutes) {

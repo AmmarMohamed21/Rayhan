@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,6 +8,7 @@ import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/utilities/parsing_extensions.dart';
 
 import '../models/prayer_times.dart';
+import 'crashlytics_service.dart';
 
 class PrayerTimesService {
   static Future<Position?> getLastKnownPosition() async {
@@ -20,8 +22,8 @@ class PrayerTimesService {
       print("Position latitude: ${pos?.latitude}");
       return pos;
     } catch (e, st) {
-      print("Error: $e");
-      print("Stacktrace: $st");
+      CrashlyticsService.sendReport(e.toString(), st);
+      log("Error: $e");
     }
     return null;
   }
@@ -36,30 +38,31 @@ class PrayerTimesService {
         distanceFilter: 3000,
         timeLimit: Duration(seconds: 60),
       ));
-      print("Position timestamp: ${pos.timestamp}");
-      print("Position longitude: ${pos.longitude}");
-      print("Position latitude: ${pos.latitude}");
+      log("Position timestamp: ${pos.timestamp}");
+      log("Position longitude: ${pos.longitude}");
+      log("Position latitude: ${pos.latitude}");
       return pos;
     } catch (e, st) {
-      print("Error: $e");
-      print("Stacktrace: $st");
+      CrashlyticsService.sendReport(e.toString(), st);
+      log("Error: $e");
     }
     return null;
   }
 
   static Future<String?> _getCityName(double latitude, double longitude) async {
+    CrashlyticsService.log("latitude: $latitude, longitude: $longitude");
     try {
-      await setLocaleIdentifier('ar');
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(latitude, longitude)
-              .timeout(Duration(seconds: 45));
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+              latitude, longitude,
+              localeIdentifier: "ar")
+          .timeout(Duration(seconds: 45));
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks[0];
         return await _formatString(placemark);
       }
     } catch (e, st) {
-      print("Error: $e");
-      print("Stacktrace: $st");
+      CrashlyticsService.sendReport(e.toString(), st, true);
+      log("Error: $e");
     }
 
     return null;
@@ -100,6 +103,7 @@ class PrayerTimesService {
 
   static Future<PrayerTimes?> getPrayerTimes(
       double latitude, double longitude, DateTime locationTimestamp) async {
+    CrashlyticsService.log("latitude: $latitude, longitude: $longitude");
     try {
       Uri uri = Uri.parse(
           'http://api.aladhan.com/v1/timings?latitude=$latitude&longitude=$longitude');
@@ -112,8 +116,8 @@ class PrayerTimesService {
             _decodeData(data, latitude, longitude, locationTimestamp, city));
       }
     } catch (e, st) {
-      print("Error: $e");
-      print("Stacktrace: $st");
+      CrashlyticsService.sendReport(e.toString(), st, true);
+      log("Error: $e");
     }
 
     return null;

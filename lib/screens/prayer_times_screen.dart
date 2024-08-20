@@ -247,7 +247,7 @@ class PrayerTimesScreen extends StatelessWidget {
                               );
           } else {
             return Center(
-              child: SpinKitChasingDots(
+              child: SpinKitPouringHourGlassRefined(
                 color: Theme.of(context).primaryColorDark,
                 size: 60 *
                     Provider.of<ThemeProvider>(context, listen: false)

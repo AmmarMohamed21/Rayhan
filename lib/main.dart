@@ -22,18 +22,11 @@ import 'providers/prayer_times_provider.dart';
 import 'providers/settings_provider.dart';
 import 'screens/home_screen.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   NotificationsService.showNormalNotification(
-//       title: message.notification?.title ?? "",
-//       body: message.notification?.body ?? "");
-// }
-
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void customCallbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
+    await Firebase.initializeApp();
     try {
       if (task == "dailyNotifRandom") {
         if (await LocalStorage.isDawnNotificationsSet()) {
