@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/utilities/parsing_extensions.dart';
 
-import '../models/prayer_times.dart';
+import '../models/monthly_prayer_times.dart';
 import 'crashlytics_service.dart';
 
 class PrayerTimesService {
@@ -101,18 +101,19 @@ class PrayerTimesService {
     return result;
   }
 
-  static Future<PrayerTimes?> getPrayerTimes(
+  static Future<MonthlyPrayerTimes?> getPrayerTimes(
       double latitude, double longitude, DateTime locationTimestamp) async {
     CrashlyticsService.log("latitude: $latitude, longitude: $longitude");
+    DateTime now = DateTime.now();
     try {
       Uri uri = Uri.parse(
-          'http://api.aladhan.com/v1/timings?latitude=$latitude&longitude=$longitude');
+          'http://api.aladhan.com/v1/calendar/${now.year}/${now.month}?latitude=$latitude&longitude=$longitude');
       http.Response response = await http.get(uri);
 
       if (response.statusCode == 200) {
         String data = response.body;
         String city = await _getCityName(latitude, longitude) ?? "";
-        return PrayerTimes.fromJson(
+        return MonthlyPrayerTimes.fromJson(
             _decodeData(data, latitude, longitude, locationTimestamp, city));
       }
     } catch (e, st) {
@@ -126,26 +127,42 @@ class PrayerTimesService {
   static Map<String, dynamic> _decodeData(String data, double latitude,
       double longitude, DateTime locationTimestamp, String city) {
     Map<String, dynamic> json = jsonDecode(data);
-    List<String> keys = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+    List<String> prayerKeys = [
+      'Fajr',
+      'Sunrise',
+      'Dhuhr',
+      'Asr',
+      'Maghrib',
+      'Isha'
+    ];
 
-    for (String key in keys) {
-      json[key] = getArabicNumber(int.parse(json["data"]["timings"][key][0])) +
-          getArabicNumber(int.parse(json["data"]["timings"][key][1])) +
-          ':' +
-          getArabicNumber(int.parse(json["data"]["timings"][key][3])) +
-          getArabicNumber(int.parse(json["data"]["timings"][key][4]));
+    json["PrayerTimes"] = [];
+
+    for (var obj in json["data"]) {
+      Map<String, dynamic> prayerBody = {};
+      for (String key in prayerKeys) {
+        prayerBody[key] = getArabicNumber(int.parse(obj["timings"][key][0])) +
+            getArabicNumber(int.parse(obj["timings"][key][1])) +
+            ':' +
+            getArabicNumber(int.parse(obj["timings"][key][3])) +
+            getArabicNumber(int.parse(obj["timings"][key][4]));
+      }
+      prayerBody["ArabicDayName"] = obj["date"]["hijri"]["weekday"]["ar"];
+      prayerBody["ArabicDate"] =
+          "${getArabicNumber(int.parse(obj["date"]["hijri"]["day"]))} ${obj["date"]["hijri"]["month"]["ar"]} ${getArabicNumber(int.parse(obj["date"]["hijri"]["year"]))}";
+      prayerBody["Date"] = obj["date"]["gregorian"]["date"]
+          .toString()
+          .toDateTime()
+          .toIso8601String();
+
+      json["PrayerTimes"].add(prayerBody);
     }
+
     json["City"] = city;
     json["LocationTimestamp"] = locationTimestamp.toIso8601String();
-    json["ArabicDayName"] = json["data"]["date"]["hijri"]["weekday"]["ar"];
-    json["ArabicDate"] =
-        "${getArabicNumber(int.parse(json["data"]["date"]["hijri"]["day"]))} ${json["data"]["date"]["hijri"]["month"]["ar"]} ${getArabicNumber(int.parse(json["data"]["date"]["hijri"]["year"]))}";
-    json["Date"] = json["data"]["date"]["gregorian"]["date"]
-        .toString()
-        .toDateTime()
-        .toIso8601String();
     json["Latitude"] = latitude;
     json["Longitude"] = longitude;
+    json["MonthYear"] = DateTime.now().toIso8601String();
     return json;
   }
 }

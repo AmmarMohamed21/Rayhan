@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:location/location.dart';
-import 'package:rayhan/models/prayer_times.dart';
 import 'package:rayhan/services/local_storage.dart';
 import 'package:rayhan/services/prayer_times_service.dart';
 import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/utilities/parsing_extensions.dart';
 
+import '../models/monthly_prayer_times.dart';
+
 class PrayerTimesProvider extends ChangeNotifier {
-  PrayerTimes? prayerTimes;
+  MonthlyPrayerTimes? prayerTimes;
 
   bool isPermissionDenied = false;
   bool isLocationServiceDisabled = false;
@@ -17,7 +18,6 @@ class PrayerTimesProvider extends ChangeNotifier {
   bool isNoInternet = false;
 
   Future<void> loadPrayerTimes({bool isRefreshing = false}) async {
-    await Future.delayed(Duration(seconds: 10));
     if (!isRefreshing &&
         prayerTimes != null &&
         prayerTimes!.locationTimestamp
@@ -25,7 +25,7 @@ class PrayerTimesProvider extends ChangeNotifier {
                 .abs()
                 .inMinutes <=
             15 &&
-        prayerTimes!.date.isSameDate(DateTime.now())) {
+        prayerTimes!.monthYear.isSameMonth(DateTime.now())) {
       // The location is not older than 15 minutes and the date is the same
       return;
     }
@@ -34,8 +34,8 @@ class PrayerTimesProvider extends ChangeNotifier {
     bool locationServicesIssue = false;
     LocationPermission? permission;
     Position? position;
-    PrayerTimes? cachedPrayerTimes;
-    PrayerTimes? retrievedPrayerTimes;
+    MonthlyPrayerTimes? cachedPrayerTimes;
+    MonthlyPrayerTimes? retrievedPrayerTimes;
 
     if (!isNoInternet) //There is internet
     {
@@ -104,7 +104,7 @@ class PrayerTimesProvider extends ChangeNotifier {
 
       //if same day we show it if we didn't get location or we got a location with a distance less than 10 km
       if (cachedPrayerTimes != null &&
-          cachedPrayerTimes.date.isSameDate(DateTime.now())) {
+          cachedPrayerTimes.monthYear.isSameMonth(DateTime.now())) {
         bool isDistanceBig = false;
         if (position != null) {
           double distanceInMeters = Geolocator.distanceBetween(
@@ -133,16 +133,22 @@ class PrayerTimesProvider extends ChangeNotifier {
     }
 
     if (prayerTimes != null) {
-      // await HomeWidget.saveWidgetData<Map<String, dynamic>>('prayerTimes', prayerTimes!.toJson());
+      int dayIndex = DateTime.now().day - 1;
       await Future.wait([
-        HomeWidget.saveWidgetData<String>('fajr', prayerTimes!.fajr),
-        HomeWidget.saveWidgetData<String>('sunrise', prayerTimes!.sunrise),
-        HomeWidget.saveWidgetData<String>('dhuhr', prayerTimes!.dhuhr),
-        HomeWidget.saveWidgetData<String>('asr', prayerTimes!.asr),
-        HomeWidget.saveWidgetData<String>('maghrib', prayerTimes!.maghrib),
-        HomeWidget.saveWidgetData<String>('isha', prayerTimes!.isha),
+        HomeWidget.saveWidgetData<String>(
+            'fajr', prayerTimes!.prayerTimes[dayIndex].fajr),
+        HomeWidget.saveWidgetData<String>(
+            'sunrise', prayerTimes!.prayerTimes[dayIndex].sunrise),
+        HomeWidget.saveWidgetData<String>(
+            'dhuhr', prayerTimes!.prayerTimes[dayIndex].dhuhr),
+        HomeWidget.saveWidgetData<String>(
+            'asr', prayerTimes!.prayerTimes[dayIndex].asr),
+        HomeWidget.saveWidgetData<String>(
+            'maghrib', prayerTimes!.prayerTimes[dayIndex].maghrib),
+        HomeWidget.saveWidgetData<String>(
+            'isha', prayerTimes!.prayerTimes[dayIndex].isha),
         HomeWidget.saveWidgetData<String>('subtitle',
-            "${prayerTimes!.arabicDayName}، ${prayerTimes!.arabicDate}\n${prayerTimes!.city}")
+            "${prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${prayerTimes!.prayerTimes[dayIndex].arabicDate}\n${prayerTimes!.city}")
       ]);
 
       HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');

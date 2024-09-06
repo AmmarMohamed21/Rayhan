@@ -4,7 +4,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:rayhan/models/monthly_prayer_times.dart';
 import 'package:rayhan/services/crashlytics_service.dart';
+import 'package:rayhan/utilities/parsing_extensions.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -80,7 +82,7 @@ class NotificationsService {
               'إشعار يوم الجمعة',
               channelDescription: 'إشعار للتذكير بالدعاء يوم الجمعة',
               playSound: true,
-              sound: RawResourceAndroidNotificationSound('notify'),
+              sound: const RawResourceAndroidNotificationSound('notify'),
               importance: Importance.max,
               priority: Priority.high,
               styleInformation: BigTextStyleInformation(''),
@@ -117,10 +119,9 @@ class NotificationsService {
       final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
       tz.setLocalLocation(tz.getLocation(currentTimeZone));
 
-      TimeOfDay? notificationTime =
-          NotificationIDs.morningNotificationID.index == id
-              ? await LocalStorage.getMorningNotificationTime()
-              : await LocalStorage.getDawnNotificationTime();
+      TimeOfDay? notificationTime = morningNotificationId == id
+          ? await LocalStorage.getMorningNotificationTime()
+          : await LocalStorage.getDawnNotificationTime();
 
       if (notificationTime == null) {
         return;
@@ -134,33 +135,26 @@ class NotificationsService {
 
       await notificationsPlugin.zonedSchedule(
         id,
-        NotificationIDs.morningNotificationID.index == id
-            ? sabahNotifyTitle
-            : masaaNotifyTitle,
-        NotificationIDs.morningNotificationID.index == id
-            ? sabahNotifyBody
-            : masaaNotifyBody,
+        morningNotificationId == id ? sabahNotifyTitle : masaaNotifyTitle,
+        morningNotificationId == id ? sabahNotifyBody : masaaNotifyBody,
         _nextInstanceOfTime(notificationTime.hour, notificationTime.minute),
         NotificationDetails(
           android: AndroidNotificationDetails(
-            NotificationIDs.morningNotificationID.index == id
-                ? sabahNotifyTitle
-                : masaaNotifyTitle,
+            morningNotificationId == id ? sabahNotifyTitle : masaaNotifyTitle,
             'روحٌ وريحان',
             channelDescription: 'إشعارات يومية لأذكار الصباح والمساء',
             playSound: true,
             sound: const RawResourceAndroidNotificationSound('notify'),
             importance: Importance.max,
-            priority: Priority.high,
+            priority: Priority.max,
             styleInformation: BigTextStyleInformation(''),
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        payload: NotificationIDs.morningNotificationID.index == id
-            ? sabahNotifyTitle
-            : masaaNotifyTitle,
+        payload:
+            morningNotificationId == id ? sabahNotifyTitle : masaaNotifyTitle,
         matchDateTimeComponents: DateTimeComponents.time,
       );
     } catch (e, st) {
@@ -213,5 +207,58 @@ class NotificationsService {
       ),
       payload: 'روحٌ وريحان',
     );
+  }
+
+  static Future<void> updateFajrNotification() async {
+    if (!await LocalStorage.isFajrNotificationSet()) {
+      return;
+    }
+
+    MonthlyPrayerTimes? cachedPrayerTimes =
+        await LocalStorage.getCachedPrayerTimes();
+    if (cachedPrayerTimes == null ||
+        !cachedPrayerTimes.monthYear.isSameMonth(DateTime.now())) {
+      return;
+    }
+
+    try {
+      await notificationsPlugin.initialize(initializationSettings);
+
+      tz.initializeTimeZones();
+      final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(currentTimeZone));
+
+      TimeOfDay notificationTime = cachedPrayerTimes
+          .prayerTimes[DateTime.now().day - 1].fajr
+          .toTimeOfDay();
+
+      await notificationsPlugin.zonedSchedule(
+        fajrNotificationId,
+        fajrNotifyTitle,
+        fajrNotifyBody,
+        _nextInstanceOfTime(notificationTime.hour, notificationTime.minute),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            fajrNotifyTitle,
+            'روحٌ وريحان',
+            channelDescription: 'منبه إلى صلاة الفجر',
+            playSound: true,
+            sound: const RawResourceAndroidNotificationSound('adhan'),
+            importance: Importance.max,
+            priority: Priority.max,
+            styleInformation: BigTextStyleInformation(''),
+            audioAttributesUsage: AudioAttributesUsage.alarm,
+            autoCancel: false,
+            category: AndroidNotificationCategory.alarm,
+          ),
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (e, st) {
+      CrashlyticsService.sendReport(e.toString(), st, true);
+    }
   }
 }

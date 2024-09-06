@@ -1,14 +1,21 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:rayhan/models/monthly_prayer_times.dart';
 import 'package:rayhan/services/crashlytics_service.dart';
 import 'package:rayhan/services/prayer_times_service.dart';
+import 'package:rayhan/utilities/parsing_extensions.dart';
 
-import '../models/prayer_times.dart';
 import 'local_storage.dart';
 
 class DailyRefreshPrayerService {
   static Future<void> refreshPrayerTimes() async {
     try {
+      //get current saved cached prayer times
+      MonthlyPrayerTimes? cachedPrayerTimes =
+          await LocalStorage.getCachedPrayerTimes();
+
+      MonthlyPrayerTimes? resultPrayerTimes;
+
       LocationPermission permission = await Geolocator.checkPermission();
       bool? isLocationServiceEnabled =
           await Geolocator.isLocationServiceEnabled();
@@ -37,8 +44,6 @@ class DailyRefreshPrayerService {
         }
       } //if failed get it from last cached prayer times
       if (latitude == null || longitude == null || locationTimestamp == null) {
-        PrayerTimes? cachedPrayerTimes =
-            await LocalStorage.getCachedPrayerTimes();
         if (cachedPrayerTimes != null) {
           latitude = cachedPrayerTimes.latitude;
           longitude = cachedPrayerTimes.longitude;
@@ -47,27 +52,57 @@ class DailyRefreshPrayerService {
       }
 
       if (latitude != null && longitude != null && locationTimestamp != null) {
-        PrayerTimes? prayerTimes = await PrayerTimesService.getPrayerTimes(
-            latitude, longitude, locationTimestamp);
-        if (prayerTimes != null) {
-          await LocalStorage.cachePrayerTimes(prayerTimes);
-
-          await Future.wait([
-            HomeWidget.saveWidgetData<String>('fajr', prayerTimes.fajr),
-            HomeWidget.saveWidgetData<String>('sunrise', prayerTimes.sunrise),
-            HomeWidget.saveWidgetData<String>('dhuhr', prayerTimes.dhuhr),
-            HomeWidget.saveWidgetData<String>('asr', prayerTimes.asr),
-            HomeWidget.saveWidgetData<String>('maghrib', prayerTimes.maghrib),
-            HomeWidget.saveWidgetData<String>('isha', prayerTimes.isha),
-            HomeWidget.saveWidgetData<String>('subtitle',
-                "${prayerTimes.arabicDayName}، ${prayerTimes.arabicDate}\n${prayerTimes.city}")
-          ]);
-
-          HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
-          HomeWidget.updateWidget(androidName: 'PrayerTimesSecondWidget');
-          HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
-          HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
+        if (cachedPrayerTimes != null) {
+          bool isDistanceBig = false;
+          double distanceInMeters = Geolocator.distanceBetween(
+              latitude,
+              longitude,
+              cachedPrayerTimes.latitude,
+              cachedPrayerTimes.longitude);
+          if (distanceInMeters > 10000) {
+            isDistanceBig = true;
+          }
+          if (cachedPrayerTimes.monthYear.isSameMonth(DateTime.now()) &&
+              !isDistanceBig) {
+            resultPrayerTimes = cachedPrayerTimes;
+          }
         }
+        if (resultPrayerTimes == null) {
+          resultPrayerTimes = await PrayerTimesService.getPrayerTimes(
+              latitude, longitude, locationTimestamp);
+        }
+      }
+      if (resultPrayerTimes == null &&
+          cachedPrayerTimes != null &&
+          cachedPrayerTimes.monthYear.isSameMonth(DateTime.now())) {
+        resultPrayerTimes = cachedPrayerTimes;
+      }
+
+      if (resultPrayerTimes != null) {
+        int dayIndex = DateTime.now().day - 1;
+        await LocalStorage.cachePrayerTimes(resultPrayerTimes);
+
+        await Future.wait([
+          HomeWidget.saveWidgetData<String>(
+              'fajr', resultPrayerTimes.prayerTimes[dayIndex].fajr),
+          HomeWidget.saveWidgetData<String>(
+              'sunrise', resultPrayerTimes.prayerTimes[dayIndex].sunrise),
+          HomeWidget.saveWidgetData<String>(
+              'dhuhr', resultPrayerTimes.prayerTimes[dayIndex].dhuhr),
+          HomeWidget.saveWidgetData<String>(
+              'asr', resultPrayerTimes.prayerTimes[dayIndex].asr),
+          HomeWidget.saveWidgetData<String>(
+              'maghrib', resultPrayerTimes.prayerTimes[dayIndex].maghrib),
+          HomeWidget.saveWidgetData<String>(
+              'isha', resultPrayerTimes.prayerTimes[dayIndex].isha),
+          HomeWidget.saveWidgetData<String>('subtitle',
+              "${resultPrayerTimes.prayerTimes[dayIndex].arabicDayName}، ${resultPrayerTimes.prayerTimes[dayIndex].arabicDate}\n${resultPrayerTimes.city}")
+        ]);
+
+        HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');
+        HomeWidget.updateWidget(androidName: 'PrayerTimesSecondWidget');
+        HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
+        HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
       }
     } catch (e, st) {
       CrashlyticsService.sendReport(e.toString(), st, true);

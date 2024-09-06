@@ -14,10 +14,10 @@ class FontSizeChoice extends StatelessWidget {
       color: Theme.of(context).brightness == Brightness.dark
           ? Colors.white70
           : Colors.black54,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       selectedColor: kSecondaryColor,
-      fillColor: Theme.of(context).brightness == Brightness.dark
-          ? kDarkBackgroundColor
-          : kLightBackgroundColor,
+      fillColor: Colors.transparent,
       renderBorder: false,
       onPressed: (int index) {
         Provider.of<SettingsProvider>(context, listen: false)
@@ -28,11 +28,14 @@ class FontSizeChoice extends StatelessWidget {
         !(Provider.of<SettingsProvider>(context).isFontMed ?? true)
       ],
       children: [
-        Text(
-          'متوسط',
-          style: TextStyle(
-            fontSize: 25.0 *
-                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Text(
+            'متوسط',
+            style: TextStyle(
+              fontSize: 25.0 *
+                  Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+            ),
           ),
         ),
         Text(

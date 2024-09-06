@@ -1,2 +1,2 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@mipmap/launcher_icon,@raw/notify" />
+    tools:keep="@mipmap/launcher_icon,@raw/notify,@raw/adhan" />

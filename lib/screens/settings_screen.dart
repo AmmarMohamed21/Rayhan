@@ -42,12 +42,24 @@ class SettingsRows extends StatelessWidget {
       child: ListView(
         children: [
           SwitchNotificationTile(
+            label: 'منبه صلاة الفجر',
+            icon: Icons.alarm,
+            iconColor: kBluePrimaryColor,
+            isActive:
+                Provider.of<SettingsProvider>(context).isFajrActive ?? false,
+            notificationId: fajrNotificationId,
+          ),
+          SizedBox(
+            height: 20.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+          ),
+          SwitchNotificationTile(
             label: 'إشعارات أذكار الصباح',
             icon: Icons.wb_sunny,
             iconColor: Colors.orangeAccent,
             isActive:
                 Provider.of<SettingsProvider>(context).isSabahActive ?? false,
-            isSabah: true,
+            notificationId: morningNotificationId,
           ),
           SizedBox(
             height: 20.0 *
@@ -61,7 +73,7 @@ class SettingsRows extends StatelessWidget {
                 : const Color(0xFF1d3557),
             isActive:
                 Provider.of<SettingsProvider>(context).isMasaaActive ?? false,
-            isSabah: false,
+            notificationId: dawnNotificationId,
           ),
           SizedBox(
             height: 20.0 *

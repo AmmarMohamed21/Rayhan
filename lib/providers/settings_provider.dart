@@ -14,6 +14,7 @@ import '../services/local_storage.dart';
 class SettingsProvider extends ChangeNotifier {
   bool? isSabahActive;
   bool? isMasaaActive;
+  bool? isFajrActive;
   TimeOfDay? sabahTime;
   TimeOfDay? masaaTime;
 
@@ -28,6 +29,8 @@ class SettingsProvider extends ChangeNotifier {
     firstTime = await LocalStorage.isFirstTime();
 
     isFontMed = await LocalStorage.isFontMed();
+
+    isFajrActive = await LocalStorage.isFajrNotificationSet();
 
     isSabahActive = await LocalStorage.isMorningNotificationsSet();
     isMasaaActive = await LocalStorage.isDawnNotificationsSet();
@@ -95,15 +98,23 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> cancelNotification(int id) async {
-    NotificationsService.cancelNotification(
-        NotificationIDs.dawnNotificationID.index);
-    if (id == NotificationIDs.morningNotificationID.index) {
+    NotificationsService.cancelNotification(dawnNotificationId);
+    if (id == morningNotificationId) {
       LocalStorage.setMorningNotifications(false);
       isSabahActive = false;
-    } else {
+    } else if (id == dawnNotificationId) {
       LocalStorage.setDawnNotifications(false);
       isMasaaActive = false;
+    } else if (id == fajrNotificationId) {
+      LocalStorage.setFajrNotification(false);
+      isFajrActive = false;
     }
+    notifyListeners();
+  }
+
+  Future<void> activateFajrNotification() async {
+    LocalStorage.setFajrNotification(true);
+    isFajrActive = true;
     notifyListeners();
   }
 
@@ -112,8 +123,7 @@ class SettingsProvider extends ChangeNotifier {
     LocalStorage.setDawnNotifications(true);
     masaaTime = timeOfDay;
     isMasaaActive = true;
-    NotificationsService.setAzkarNotification(
-        NotificationIDs.dawnNotificationID.index);
+    NotificationsService.setAzkarNotification(dawnNotificationId);
     notifyListeners();
   }
 
@@ -122,8 +132,7 @@ class SettingsProvider extends ChangeNotifier {
     await LocalStorage.setMorningNotifications(true);
     sabahTime = timeOfDay;
     isSabahActive = true;
-    NotificationsService.setAzkarNotification(
-        NotificationIDs.morningNotificationID.index);
+    NotificationsService.setAzkarNotification(morningNotificationId);
     notifyListeners();
   }
 

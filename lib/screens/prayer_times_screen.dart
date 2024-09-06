@@ -18,6 +18,8 @@ class PrayerTimesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int dayIndex = DateTime.now().day - 1;
+
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: getAppBar(
@@ -51,6 +53,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .fajr,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -77,6 +80,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .sunrise,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -103,6 +107,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .dhuhr,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -129,6 +134,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .asr,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -155,6 +161,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .maghrib,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -184,6 +191,7 @@ class PrayerTimesScreen extends StatelessWidget {
                             endWidget: Text(
                               Provider.of<PrayerTimesProvider>(context)
                                   .prayerTimes!
+                                  .prayerTimes[dayIndex]
                                   .isha,
                               style: TextStyle(
                                 color: Theme.of(context).brightness ==
@@ -204,7 +212,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                     .sizeRatio,
                           ),
                           Text(
-                            "${Provider.of<PrayerTimesProvider>(context).prayerTimes!.arabicDayName}، ${Provider.of<PrayerTimesProvider>(context).prayerTimes!.arabicDate}\n${Provider.of<PrayerTimesProvider>(context).prayerTimes!.city}",
+                            "${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].arabicDate}\n${Provider.of<PrayerTimesProvider>(context).prayerTimes!.city}",
                             style: TextStyle(
                               color: Theme.of(context).brightness ==
                                       Brightness.dark
@@ -248,7 +256,7 @@ class PrayerTimesScreen extends StatelessWidget {
           } else {
             return Center(
               child: SpinKitPouringHourGlassRefined(
-                color: Theme.of(context).primaryColorDark,
+                color: Colors.amber,
                 size: 60 *
                     Provider.of<ThemeProvider>(context, listen: false)
                         .sizeRatio,

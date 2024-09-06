@@ -2,32 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/settings_components/scaled_switch.dart';
+import 'package:rayhan/components/shared_components/full_screen_loading.dart';
+import 'package:rayhan/models/monthly_prayer_times.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
 import 'package:rayhan/utilities/helper.dart';
 
+import '../../providers/prayer_times_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/local_storage.dart';
 
 class SwitchNotificationTile extends StatelessWidget {
   final String label;
   final IconData icon;
   final Color iconColor;
-  final bool isSabah;
   final bool isActive;
+  final int notificationId;
 
   const SwitchNotificationTile(
       {super.key,
       required this.label,
       required this.icon,
       required this.iconColor,
-      required this.isSabah,
+      required this.notificationId,
       required this.isActive});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        setNotification(context);
+        if (notificationId == fajrNotificationId) {
+          if (isActive) {
+            Provider.of<SettingsProvider>(context, listen: false)
+                .cancelNotification(notificationId);
+          } else {
+            setFajrNotification(context);
+          }
+        } else {
+          setAzkarNotification(context);
+        }
       },
       child: Container(
         constraints: BoxConstraints(
@@ -60,9 +73,9 @@ class SwitchNotificationTile extends StatelessWidget {
                         : Colors.black,
                   ),
                 ),
-                isActive
+                isActive && notificationId != fajrNotificationId
                     ? Text(
-                        getSubtitle(isSabah, context),
+                        getSubtitle(notificationId, context),
                         style: TextStyle(
                           fontSize: 20.0 *
                               Provider.of<ThemeProvider>(context, listen: false)
@@ -80,17 +93,12 @@ class SwitchNotificationTile extends StatelessWidget {
               isActive: isActive,
               onChanged: (bool value) {
                 if (value) {
-                  setNotification(context);
+                  notificationId == fajrNotificationId
+                      ? setFajrNotification(context)
+                      : setAzkarNotification(context);
                 } else {
-                  if (isSabah) {
-                    Provider.of<SettingsProvider>(context, listen: false)
-                        .cancelNotification(
-                            NotificationIDs.morningNotificationID.index);
-                  } else {
-                    Provider.of<SettingsProvider>(context, listen: false)
-                        .cancelNotification(
-                            NotificationIDs.dawnNotificationID.index);
-                  }
+                  Provider.of<SettingsProvider>(context, listen: false)
+                      .cancelNotification(notificationId);
                 }
               },
             ),
@@ -100,14 +108,47 @@ class SwitchNotificationTile extends StatelessWidget {
     );
   }
 
-  void setNotification(BuildContext context) async {
+  void setFajrNotification(BuildContext context) async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    bool? result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    if (result != true) {
+      Provider.of<SettingsProvider>(context, listen: false)
+          .cancelNotification(notificationId);
+      return;
+    }
+    MonthlyPrayerTimes? cachedPrayerTimes =
+        await LocalStorage.getCachedPrayerTimes();
+    if (cachedPrayerTimes == null) {
+      DialogueManager.showLoadingDialog(context);
+      await Provider.of<PrayerTimesProvider>(context, listen: false)
+          .loadPrayerTimes();
+      Navigator.of(context).pop();
+      if (Provider.of<PrayerTimesProvider>(context, listen: false)
+              .prayerTimes ==
+          null) {
+        Provider.of<SettingsProvider>(context, listen: false)
+            .cancelNotification(notificationId);
+        return;
+      }
+    }
+
+    Provider.of<SettingsProvider>(context, listen: false)
+        .activateFajrNotification();
+  }
+
+  void setAzkarNotification(BuildContext context) async {
     late TimeOfDay initialTime;
-    if (isSabah) {
+    if (notificationId == morningNotificationId) {
       initialTime = const TimeOfDay(hour: 6, minute: 0);
     } else {
       initialTime = const TimeOfDay(hour: 17, minute: 0);
     }
-    String title = isSabah ? 'الصباح' : 'المساء';
+    String title =
+        notificationId == morningNotificationId ? 'الصباح' : 'المساء';
     TimeOfDay? timeOfDay = await showTimePicker(
         context: context,
         confirmText: 'تأكيد',
@@ -122,9 +163,9 @@ class SwitchNotificationTile extends StatelessWidget {
             ));
     if (timeOfDay == null) {
       Provider.of<SettingsProvider>(context, listen: false).cancelNotification(
-          isSabah
-              ? NotificationIDs.morningNotificationID.index
-              : NotificationIDs.dawnNotificationID.index);
+          notificationId == morningNotificationId
+              ? morningNotificationId
+              : dawnNotificationId);
       return;
     }
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -135,12 +176,12 @@ class SwitchNotificationTile extends StatelessWidget {
         ?.requestNotificationsPermission();
     if (result != true) {
       Provider.of<SettingsProvider>(context, listen: false).cancelNotification(
-          isSabah
-              ? NotificationIDs.morningNotificationID.index
-              : NotificationIDs.dawnNotificationID.index);
+          notificationId == morningNotificationId
+              ? morningNotificationId
+              : dawnNotificationId);
       return;
     }
-    if (isSabah) {
+    if (notificationId == morningNotificationId) {
       Provider.of<SettingsProvider>(context, listen: false)
           .activateMorningNotificationsTime(timeOfDay);
     } else {

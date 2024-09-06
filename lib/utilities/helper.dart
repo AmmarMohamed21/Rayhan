@@ -10,15 +10,15 @@ import 'package:rayhan/utilities/constants.dart';
 
 String getArabicNumber(int num) {
   String arabicNum = '';
-  arabicNum = arabicNumbers[num % 10];
+  arabicNum = arabicNumbers[num % 10]!;
   if (num >= 10) {
-    arabicNum = arabicNumbers[num % 100 ~/ 10] + arabicNum;
+    arabicNum = arabicNumbers[num % 100 ~/ 10]! + arabicNum;
   }
   if (num >= 100) {
-    arabicNum = arabicNumbers[num % 1000 ~/ 100] + arabicNum;
+    arabicNum = arabicNumbers[num % 1000 ~/ 100]! + arabicNum;
   }
   if (num >= 1000) {
-    arabicNum = arabicNumbers[num % 10000 ~/ 1000] + arabicNum;
+    arabicNum = arabicNumbers[num % 10000 ~/ 1000]! + arabicNum;
   }
   return arabicNum;
 }
@@ -30,10 +30,10 @@ String addZeroToSingleDigit(String number) {
   return number;
 }
 
-String getSubtitle(bool isSabah, BuildContext context) {
+String getSubtitle(int notificationId, BuildContext context) {
   int hours;
   int minutes;
-  if (isSabah) {
+  if (notificationId == morningNotificationId) {
     hours =
         Provider.of<SettingsProvider>(context, listen: false).sabahTime!.hour;
     minutes =

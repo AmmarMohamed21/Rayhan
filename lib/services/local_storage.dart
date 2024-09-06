@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rayhan/models/azkar_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/prayer_times.dart';
+import '../models/monthly_prayer_times.dart';
 
 class LocalStorage {
   // static Future<void> saveTheme(String theme) async {
@@ -119,17 +119,29 @@ class LocalStorage {
     return prefs.getBool('isFontMed') ?? true;
   }
 
-  static Future<PrayerTimes?> getCachedPrayerTimes() async {
+  static Future<bool> isFajrNotificationSet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('prayerTimes')) {
-      return null;
-    }
-    return PrayerTimes.fromJson(jsonDecode(prefs.getString('prayerTimes')!));
+    return prefs.getBool('fajrNotification') ?? false;
   }
 
-  static Future<void> cachePrayerTimes(PrayerTimes prayerTimes) async {
+  static Future<void> setFajrNotification(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('prayerTimes', jsonEncode(prayerTimes.toJson()));
+    await prefs.setBool('fajrNotification', value);
+  }
+
+  static Future<MonthlyPrayerTimes?> getCachedPrayerTimes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('monthlyPrayerTimes')) {
+      return null;
+    }
+    return MonthlyPrayerTimes.fromJson(
+        jsonDecode(prefs.getString('monthlyPrayerTimes')!));
+  }
+
+  static Future<void> cachePrayerTimes(MonthlyPrayerTimes prayerTimes) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+        'monthlyPrayerTimes', jsonEncode(prayerTimes.toJson()));
   }
 
   static Future<void> saveAzkarList(AzkarList azkarList) async {

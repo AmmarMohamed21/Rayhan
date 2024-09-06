@@ -30,15 +30,16 @@ void customCallbackDispatcher() {
     try {
       if (task == "dailyNotifRandom") {
         if (await LocalStorage.isDawnNotificationsSet()) {
-          await NotificationsService.setAzkarNotification(
-              NotificationIDs.dawnNotificationID.index);
+          await NotificationsService.setAzkarNotification(dawnNotificationId);
         }
         if (await LocalStorage.isMorningNotificationsSet()) {
           await NotificationsService.setAzkarNotification(
-              NotificationIDs.morningNotificationID.index);
+              morningNotificationId);
         }
       } else if (task == "refreshPrayerTimes") {
         await DailyRefreshPrayerService.refreshPrayerTimes();
+      } else if (task == "updateFajrNotification") {
+        await NotificationsService.updateFajrNotification();
       }
     } catch (e, st) {
       CrashlyticsService.log("Error in task $task");
@@ -66,17 +67,25 @@ Future<void> main() async {
     frequency: const Duration(hours: 24),
     //set initialDelay to be at 12:01 AM every day
     initialDelay: getNextMidnight(1),
-    constraints: Constraints(
-      networkType: NetworkType.connected,
-    ),
+    // constraints: Constraints(
+    //   networkType: NetworkType.connected,
+    // ),
+  );
+
+  Workmanager().registerPeriodicTask(
+    "updateFajrNotification",
+    "updateFajrNotification",
+    frequency: const Duration(hours: 24),
+    //set initialDelay to be at 12:07 AM every day
+    initialDelay: getNextMidnight(7),
   );
 
   Workmanager().registerPeriodicTask(
     "dailyNotifRandom",
     "dailyNotifRandom",
     frequency: const Duration(hours: 24),
-    //set initialDelay to be at 12:10 AM every day
-    initialDelay: getNextMidnight(10),
+    //set initialDelay to be at 12:15 AM every day
+    initialDelay: getNextMidnight(15),
   );
 
   runApp(

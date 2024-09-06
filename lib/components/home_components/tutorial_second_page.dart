@@ -9,7 +9,7 @@ class TutorialSecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'يمكنك تفعيل إشعارات للتذكير بأذكار الصباح والمساء من قائمة الإعدادات وتغيير حجم خط الأذكار وألوان التطبيق.',
+      'يمكنك تفعيل منبه صلاة الفجر وإشعارات للتذكير بأذكار الصباح والمساء من قائمة الإعدادات وتغيير حجم خط الأذكار وألوان التطبيق.',
       textAlign: TextAlign.justify,
       style: TextStyle(
         fontSize:

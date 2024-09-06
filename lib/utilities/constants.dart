@@ -17,9 +17,12 @@ const Color kGreenLightColor = Color(0xFF74c69d);
 const Color kGreenAccentColor = Color(0xFFf1faee);
 // Color kGSecondaryColor = Color(0xFFe63946);
 
-enum NotificationIDs { morningNotificationID, dawnNotificationID }
+const morningNotificationId = 0;
+const dawnNotificationId = 1;
+const fajrNotificationId = 2;
+const fridayNotificationId = 7;
 
-const Map arabicNumbers = {
+const Map<int, String> arabicNumbers = {
   0: '٠',
   1: '١',
   2: '٢',
@@ -30,6 +33,19 @@ const Map arabicNumbers = {
   7: '٧',
   8: '٨',
   9: '٩',
+};
+
+const Map<String, int> reverseArabicNumbers = {
+  '٠': 0,
+  '١': 1,
+  '٢': 2,
+  '٣': 3,
+  '٤': 4,
+  '٥': 5,
+  '٦': 6,
+  '٧': 7,
+  '٨': 8,
+  '٩': 9,
 };
 
 const Map<int, Color> kGreenPrimaryColorMap = {
@@ -69,13 +85,18 @@ const String masaaNotifyTitle = 'أذكار المساء';
 
 const List<String> azkarMessageBody = [
   '(وَسَبِّحُوهُ بُكْرَةً وَأَصِيلًا)',
-  '(وَاذْكُرْ رَبَّكَ فِي نَفْسِكَ تَضَرُّعاً وَخِيفَةً وَدُونَ الْجَهْرِ مِنْ الْقَوْلِ بِالْغُدُوِّ وَالآصَالِ وَلا تَكُنْ مِنْ الْغَافِلِين)َ',
+  '(وَاذْكُرْ رَبَّكَ فِي نَفْسِكَ تَضَرُّعاً وَخِيفَةً وَدُونَ الْجَهْرِ مِنْ الْقَوْلِ بِالْغُدُوِّ وَالآصَالِ وَلا تَكُنْ مِنْ الْغَافِلِين)',
   '(وَاذْكُر رَّبَّكَ كَثِيرًا وَسَبِّحْ بِالْعَشِيِّ وَالْإِبْكَارِ)',
   '(يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْراً كَثِيراً)',
   '(الَّذِينَ يَذْكُرُونَ اللَّهَ قِيَامًا وَقُعُودًا وَعَلَىٰ جُنُوبِهِمْ)',
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "يقول الله تعالى : أنا عند ظن عبدي بي، و أنا معه إذا ذكرني، فان ذكرني في نفسه ذكرته في نفسي و ان ذكرني في ملأ ذكرته في ملأ خير منهم.."',
   'قال رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ: "مثل الذي يذكر ربه و الذي لا يذكر ربه مثل الحي و الميت"',
 ];
+
+const String fajrNotifyTitle = "منبه صلاة الفجر";
+
+const String fajrNotifyBody =
+    "أَقِمِ الصَّلاةَ لِدُلُوكِ الشَّمْسِ إِلَى غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودا";
 
 const double kReferenceWidth = 392.7272;
 
