@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/screens/home_screen.dart';
 
+import '../../providers/prayer_times_provider.dart';
 import '../../providers/theme_provider.dart';
 
 AppBar getAppBar({required String title, required BuildContext context}) {
@@ -24,6 +25,18 @@ AppBar getAppBar({required String title, required BuildContext context}) {
               Navigator.pop(context);
             },
           )
+        : null,
+    actions: title == 'مواقيت الصلاة'
+        ? [
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              color: Colors.white,
+              onPressed: () {
+                Provider.of<PrayerTimesProvider>(context, listen: false)
+                    .loadPrayerTimes(context, isRefreshing: true);
+              },
+            ),
+          ]
         : null,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -115,6 +115,7 @@ class SettingsProvider extends ChangeNotifier {
   Future<void> activateFajrNotification() async {
     LocalStorage.setFajrNotification(true);
     isFajrActive = true;
+    NotificationsService.updateFajrNotification();
     notifyListeners();
   }
 

@@ -17,7 +17,14 @@ class PrayerTimesProvider extends ChangeNotifier {
   bool isPermissionDeniedForever = false;
   bool isNoInternet = false;
 
-  Future<void> loadPrayerTimes({bool isRefreshing = false}) async {
+  bool isRefreshing = false;
+  bool isLoading = false;
+
+  Future<void> loadPrayerTimes(BuildContext context,
+      {bool isRefreshing = false}) async {
+    if (isLoading) {
+      return;
+    }
     if (!isRefreshing &&
         prayerTimes != null &&
         prayerTimes!.locationTimestamp
@@ -29,6 +36,10 @@ class PrayerTimesProvider extends ChangeNotifier {
       // The location is not older than 15 minutes and the date is the same
       return;
     }
+
+    this.isRefreshing = isRefreshing;
+    isLoading = true;
+    Future.delayed(Duration(milliseconds: 10), () => notifyListeners());
 
     isNoInternet = !(await isInternet());
     bool locationServicesIssue = false;
@@ -156,6 +167,9 @@ class PrayerTimesProvider extends ChangeNotifier {
       HomeWidget.updateWidget(androidName: 'PrayerTimesDarkWidget');
       HomeWidget.updateWidget(androidName: 'PrayerTimesSecondDarkWidget');
     }
+
+    this.isRefreshing = false;
+    isLoading = false;
     notifyListeners();
   }
 }

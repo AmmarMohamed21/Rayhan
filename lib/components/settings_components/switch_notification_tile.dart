@@ -125,7 +125,7 @@ class SwitchNotificationTile extends StatelessWidget {
     if (cachedPrayerTimes == null) {
       DialogueManager.showLoadingDialog(context);
       await Provider.of<PrayerTimesProvider>(context, listen: false)
-          .loadPrayerTimes();
+          .loadPrayerTimes(context);
       Navigator.of(context).pop();
       if (Provider.of<PrayerTimesProvider>(context, listen: false)
               .prayerTimes ==
