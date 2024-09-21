@@ -1,61 +1,40 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:rayhan/components/azkar_components/zikr_card.dart';
 import 'package:rayhan/components/shared_components/app_drawer.dart';
 import 'package:rayhan/components/shared_components/main_app_bar.dart';
 import 'package:rayhan/models/zikr.dart';
+import 'package:rayhan/providers/azkar_list_provider.dart';
+import 'package:rayhan/utilities/constants.dart';
 
+import '../components/custom_icons.dart';
 import '../providers/azkar_provider.dart';
 import '../providers/theme_provider.dart';
 
 class AzkarScreen extends StatelessWidget {
   static const String id = 'azkar_screen';
   final String title;
-  const AzkarScreen({super.key, required this.title});
+  final random = Random();
+
+  AzkarScreen({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const AppDrawer(),
-      appBar: getAppBar(
-        title: title,
-        context: context,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20.0 *
-            Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
-        child: getAzkar(context),
-      ),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) =>
+          AzkarListProvider(currentAzkar: getAzkarList(context, title)),
+      builder: (context, child) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: getStackList(context),
+        );
+      },
     );
   }
 
-  Scrollbar getAzkar(BuildContext context) {
-    List<Zikr> azkarList = getAzkarList(context, title);
-    List<ZikrCard> zikrCards = [];
-    for (Zikr zikr in azkarList) {
-      zikrCards.add(ZikrCard(
-        text: zikr.text,
-        number: zikr.count,
-        title: zikr.title,
-        isCounted: zikr.count == 0 ? false : true,
-      ));
-    }
-    return Scrollbar(
-      scrollbarOrientation: ScrollbarOrientation.right,
-      thickness:
-          3.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(2.0 *
-              Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
-          child: Column(
-            children: zikrCards,
-          ),
-        ),
-      ),
-    );
-  }
-
-  static List<Zikr> getAzkarList(BuildContext context, String title) {
+  List<Zikr> getAzkarList(BuildContext context, String title) {
     if (title == 'أذكار الصباح')
       return Provider.of<AzkarProvider>(context, listen: false)
           .azkarList!
@@ -77,5 +56,70 @@ class AzkarScreen extends StatelessWidget {
           .azkarList!
           .azkarMotafreqa;
     return [];
+  }
+
+  List<Widget> getStackList(BuildContext context) {
+    List<Color> possibleColors = [
+      kGreenLightColor,
+      kGreenPrimaryColor,
+      kGreenDarkColor
+    ];
+    List<Widget> widgets = [
+      Scaffold(
+        drawer: const AppDrawer(),
+        appBar: getAppBar(
+          title: title,
+          context: context,
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20.0 *
+              Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
+          child: Scrollbar(
+            scrollbarOrientation: ScrollbarOrientation.right,
+            thickness: 3.0 *
+                Provider.of<ThemeProvider>(context, listen: false).sizeRatio,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(2.0 *
+                    Provider.of<ThemeProvider>(context, listen: false)
+                        .sizeRatio),
+                child: Column(
+                  children:
+                      Provider.of<AzkarListProvider>(context, listen: false)
+                          .currentAzkar
+                          .map((Zikr zikr) {
+                    return ZikrCard(zikr: zikr);
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      )
+    ];
+    for (int i = 0; i < 50; i++) {
+      widgets.add(Provider.of<AzkarListProvider>(context).isCounterDone
+          ? Positioned(
+              left: (MediaQuery.of(context).size.width) * random.nextDouble(),
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..scale(random.nextBool() ? -1.0 : 1.0, 1.0),
+                child: Icon(
+                  CustomIcons.leaf,
+                  color: possibleColors[random.nextInt(3)],
+                  size: 40.0 *
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .sizeRatio,
+                ).animate().moveY(
+                    duration:
+                        Duration(milliseconds: 3000 + random.nextInt(9001)),
+                    curve: Curves.easeInOut,
+                    begin: -50,
+                    end: MediaQuery.of(context).size.height + 50),
+              ),
+            )
+          : SizedBox.shrink());
+    }
+    return widgets;
   }
 }
