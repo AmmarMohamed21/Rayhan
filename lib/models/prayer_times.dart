@@ -1,3 +1,5 @@
+import 'package:rayhan/utilities/parsing_extensions.dart';
+
 class PrayerTimes {
   final String fajr;
   final String sunrise;
@@ -7,8 +9,9 @@ class PrayerTimes {
   final String isha;
 
   final DateTime date;
-  final String arabicDate;
   final String arabicDayName;
+
+  final DateTime hijriDate;
 
   PrayerTimes({
     required this.fajr,
@@ -17,9 +20,9 @@ class PrayerTimes {
     required this.asr,
     required this.maghrib,
     required this.isha,
-    required this.arabicDate,
     required this.arabicDayName,
     required this.date,
+    required this.hijriDate,
   });
 
   factory PrayerTimes.fromJson(Map<String, dynamic> json) {
@@ -30,9 +33,9 @@ class PrayerTimes {
       asr: json['Asr'],
       maghrib: json['Maghrib'],
       isha: json['Isha'],
-      arabicDate: json["ArabicDate"] ?? "",
       arabicDayName: json["ArabicDayName"] ?? "",
       date: DateTime.tryParse(json["Date"]) ?? DateTime.now(),
+      hijriDate: json["HijriDate"].toString().toDateTime(),
     );
   }
 
@@ -46,7 +49,7 @@ class PrayerTimes {
       'Isha': isha,
       'Date': date.toIso8601String(),
       'ArabicDayName': arabicDayName,
-      'ArabicDate': arabicDate,
+      'HijriDate': hijriDate.convertToString(),
     };
   }
 }

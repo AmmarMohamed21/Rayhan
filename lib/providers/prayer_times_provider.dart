@@ -105,6 +105,8 @@ class PrayerTimesProvider extends ChangeNotifier {
               cachedPrayerTimes.locationTimestamp);
         }
       }
+
+      //TODO: Correct hijri date (if hijri day is 29/30/1/2)
     }
 
     //if still we failed to get prayer times we try to get the cached prayer times
@@ -159,7 +161,7 @@ class PrayerTimesProvider extends ChangeNotifier {
         HomeWidget.saveWidgetData<String>(
             'isha', prayerTimes!.prayerTimes[dayIndex].isha),
         HomeWidget.saveWidgetData<String>('subtitle',
-            "${prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${prayerTimes!.prayerTimes[dayIndex].arabicDate}\n${prayerTimes!.city}")
+            "${prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${prayerTimes!.prayerTimes[dayIndex].hijriDate.convertToHijriFormat()}\n${prayerTimes!.city}")
       ]);
 
       HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');

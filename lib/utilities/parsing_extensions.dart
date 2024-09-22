@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rayhan/utilities/constants.dart';
+import 'package:rayhan/utilities/helper.dart';
 
 extension ParsingString on String {
   ///This method used to parse date in both dd-mm-yyyy and yyyy-mm-dd formats into DateTime
@@ -37,5 +38,27 @@ extension GetTimeOfDay on String {
     int minute = reverseArabicNumbers[timeSplit[1][0]]! * 10 +
         reverseArabicNumbers[timeSplit[1][1]]!;
     return TimeOfDay(hour: hour, minute: minute);
+  }
+}
+
+extension ParsingDate on DateTime {
+  ///Converts DateTime to 'dd-mm-yyyy' instead of the normal toString() method
+  String convertToString() {
+    DateTime date = this;
+    String convertedDate = date.toString(); //yyyy-mm-dd hh:mm:ss.mmm
+    convertedDate = convertedDate.split(' ')[0]; //yyyy-mm-dd
+    convertedDate =
+        convertedDate.split('-').reversed.toList().join('-'); //dd-mm-yyyy
+    return convertedDate;
+  }
+}
+
+extension HijriDate on DateTime {
+  String convertToHijriFormat() {
+    DateTime date = this;
+    String day = getArabicNumber(date.day);
+    String month = hijriMonths[date.month]!;
+    String year = getArabicNumber(date.year);
+    return '$day $month $year';
   }
 }

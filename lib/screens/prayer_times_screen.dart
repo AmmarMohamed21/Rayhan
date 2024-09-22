@@ -9,6 +9,7 @@ import 'package:rayhan/components/shared_components/app_drawer.dart';
 import 'package:rayhan/components/shared_components/icon_label_tile.dart';
 import 'package:rayhan/components/shared_components/main_app_bar.dart';
 import 'package:rayhan/utilities/constants.dart';
+import 'package:rayhan/utilities/parsing_extensions.dart';
 
 import '../components/prayer_times_components/error_message.dart';
 import '../providers/prayer_times_provider.dart';
@@ -219,7 +220,7 @@ class PrayerTimesScreen extends StatelessWidget {
                                         .sizeRatio,
                               ),
                               Text(
-                                "${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].arabicDate}\n${Provider.of<PrayerTimesProvider>(context).prayerTimes!.city}",
+                                "${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].arabicDayName}، ${Provider.of<PrayerTimesProvider>(context).prayerTimes!.prayerTimes[dayIndex].hijriDate.convertToHijriFormat()}\n${Provider.of<PrayerTimesProvider>(context).prayerTimes!.city}",
                                 style: TextStyle(
                                   color: Theme.of(context).brightness ==
                                           Brightness.dark

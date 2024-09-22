@@ -113,8 +113,10 @@ class PrayerTimesService {
       if (response.statusCode == 200) {
         String data = response.body;
         String city = await _getCityName(latitude, longitude) ?? "";
-        return MonthlyPrayerTimes.fromJson(
+        MonthlyPrayerTimes monthlyPrayerTimes = MonthlyPrayerTimes.fromJson(
             _decodeData(data, latitude, longitude, locationTimestamp, city));
+        //TODO: correct hijri date
+        return monthlyPrayerTimes;
       }
     } catch (e, st) {
       CrashlyticsService.sendReport(e.toString(), st, true);
@@ -148,8 +150,9 @@ class PrayerTimesService {
             getArabicNumber(int.parse(obj["timings"][key][4]));
       }
       prayerBody["ArabicDayName"] = obj["date"]["hijri"]["weekday"]["ar"];
-      prayerBody["ArabicDate"] =
-          "${getArabicNumber(int.parse(obj["date"]["hijri"]["day"]))} ${obj["date"]["hijri"]["month"]["ar"]} ${getArabicNumber(int.parse(obj["date"]["hijri"]["year"]))}";
+      prayerBody["HijriDate"] = obj["date"]["hijri"]["date"].toString();
+      // prayerBody["ArabicDate"] =
+      //     "${getArabicNumber(int.parse(obj["date"]["hijri"]["day"]))} ${obj["date"]["hijri"]["month"]["ar"]} ${getArabicNumber(int.parse(obj["date"]["hijri"]["year"]))}";
       prayerBody["Date"] = obj["date"]["gregorian"]["date"]
           .toString()
           .toDateTime()

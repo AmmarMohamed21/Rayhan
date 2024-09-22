@@ -78,6 +78,8 @@ class DailyRefreshPrayerService {
         resultPrayerTimes = cachedPrayerTimes;
       }
 
+      //TODO correct hijri date if hijri day is 29/30/1/2
+
       if (resultPrayerTimes != null) {
         int dayIndex = DateTime.now().day - 1;
         await LocalStorage.cachePrayerTimes(resultPrayerTimes);
@@ -96,7 +98,7 @@ class DailyRefreshPrayerService {
           HomeWidget.saveWidgetData<String>(
               'isha', resultPrayerTimes.prayerTimes[dayIndex].isha),
           HomeWidget.saveWidgetData<String>('subtitle',
-              "${resultPrayerTimes.prayerTimes[dayIndex].arabicDayName}، ${resultPrayerTimes.prayerTimes[dayIndex].arabicDate}\n${resultPrayerTimes.city}")
+              "${resultPrayerTimes.prayerTimes[dayIndex].arabicDayName}، ${resultPrayerTimes.prayerTimes[dayIndex].hijriDate.convertToHijriFormat()}\n${resultPrayerTimes.city}")
         ]);
 
         HomeWidget.updateWidget(androidName: 'PrayerTimesWidget');

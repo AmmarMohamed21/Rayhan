@@ -5,8 +5,11 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:rayhan/models/monthly_prayer_times.dart';
 import 'package:rayhan/providers/settings_provider.dart';
 import 'package:rayhan/utilities/constants.dart';
+
+import '../models/prayer_times.dart';
 
 String getArabicNumber(int num) {
   String arabicNum = '';
@@ -98,4 +101,17 @@ Future<bool> isInternet() async {
   } catch (e) {
     return false;
   }
+}
+
+bool isDateForCorrection(MonthlyPrayerTimes monthlyPrayerTimes) {
+  int currentDayIndex = DateTime.now().day - 1;
+  PrayerTimes prayerTimes = monthlyPrayerTimes.prayerTimes[currentDayIndex];
+  DateTime hijriDate = prayerTimes.hijriDate;
+  if (hijriDate.day == 29 ||
+      hijriDate.day == 30 ||
+      hijriDate.day == 1 ||
+      hijriDate.day == 2) {
+    return true;
+  }
+  return false;
 }
