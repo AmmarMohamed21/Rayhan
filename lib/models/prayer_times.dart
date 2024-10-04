@@ -52,4 +52,28 @@ class PrayerTimes {
       'HijriDate': hijriDate.convertToString(),
     };
   }
+
+  PrayerTimes copyWith({
+    String? fajr,
+    String? sunrise,
+    String? dhuhr,
+    String? asr,
+    String? maghrib,
+    String? isha,
+    DateTime? date,
+    String? arabicDayName,
+    DateTime? hijriDate,
+  }) {
+    return PrayerTimes(
+      fajr: fajr ?? this.fajr,
+      sunrise: sunrise ?? this.sunrise,
+      dhuhr: dhuhr ?? this.dhuhr,
+      asr: asr ?? this.asr,
+      maghrib: maghrib ?? this.maghrib,
+      isha: isha ?? this.isha,
+      date: date ?? this.date,
+      arabicDayName: arabicDayName ?? this.arabicDayName,
+      hijriDate: hijriDate ?? this.hijriDate,
+    );
+  }
 }

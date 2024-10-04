@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class NotificationsService {
           provisional: false,
           sound: true,
         );
-        print('User granted permission: ${settings.authorizationStatus}');
+        log('User granted permission: ${settings.authorizationStatus}');
       }
 
       if (isFirstTime) {
@@ -128,10 +129,10 @@ class NotificationsService {
       }
 
       String masaaNotifyBody =
-          '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار المساء.';
+          '${azkarMessageBody[math.Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار المساء.';
       String sabahNotifyBody =
-          '${azkarMessageBody[Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار الصباح.';
-      print('notificationTime: ${notificationTime.toString()}');
+          '${azkarMessageBody[math.Random().nextInt(azkarMessageBody.length)]}.\nاضغط على الإشعار لقراءة أذكار الصباح.';
+      log('notificationTime: ${notificationTime.toString()}');
 
       await notificationsPlugin.zonedSchedule(
         id,
@@ -175,7 +176,7 @@ class NotificationsService {
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    print('scheduledDate: ${scheduledDate.toString()}');
+    log('scheduledDate: ${scheduledDate.toString()}');
     return scheduledDate;
   }
 

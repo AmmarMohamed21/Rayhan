@@ -98,7 +98,7 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future<void> cancelNotification(int id) async {
-    NotificationsService.cancelNotification(dawnNotificationId);
+    NotificationsService.cancelNotification(id);
     if (id == morningNotificationId) {
       LocalStorage.setMorningNotifications(false);
       isSabahActive = false;

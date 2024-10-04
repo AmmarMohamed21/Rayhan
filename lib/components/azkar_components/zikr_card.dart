@@ -8,14 +8,15 @@ import 'package:rayhan/components/azkar_components/zikr_card_title.dart';
 import 'package:rayhan/utilities/constants.dart';
 
 import '../../models/zikr.dart';
-import '../../providers/theme_provider.dart';
 import '../../providers/azkar_list_provider.dart';
+import '../../providers/theme_provider.dart';
 
 class ZikrCard extends StatefulWidget {
   final Zikr zikr;
-  const ZikrCard(
-      {super.key,
-      required this.zikr,});
+  const ZikrCard({
+    super.key,
+    required this.zikr,
+  });
 
   @override
   ZikrCardState createState() => ZikrCardState();
@@ -26,7 +27,6 @@ class ZikrCardState extends State<ZikrCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     currentNumber = widget.zikr.count;
   }
@@ -44,7 +44,8 @@ class ZikrCardState extends State<ZikrCard> {
           20.0 * Provider.of<ThemeProvider>(context, listen: false).sizeRatio),
       onTap: () {
         if (currentNumber > 0) {
-          Provider.of<AzkarListProvider>(context,listen:false).decrementCounter();
+          Provider.of<AzkarListProvider>(context, listen: false)
+              .decrementCounter();
           setState(() {
             currentNumber--;
           });

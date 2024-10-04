@@ -41,4 +41,28 @@ class MonthlyPrayerTimes {
       'PrayerTimes': prayerTimes.map((e) => e.toJson()).toList(),
     };
   }
+
+  MonthlyPrayerTimes copyWith({
+    String? city,
+    double? latitude,
+    double? longitude,
+    DateTime? locationTimestamp,
+    DateTime? monthYear,
+    List<PrayerTimes>? prayerTimes,
+  }) {
+    List<PrayerTimes> newPrayerTimes = [];
+    if (prayerTimes != null) {
+      newPrayerTimes = prayerTimes;
+    } else {
+      newPrayerTimes.addAll(this.prayerTimes);
+    }
+    return MonthlyPrayerTimes(
+      city: city ?? this.city,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      locationTimestamp: locationTimestamp ?? this.locationTimestamp,
+      monthYear: monthYear ?? this.monthYear,
+      prayerTimes: newPrayerTimes,
+    );
+  }
 }

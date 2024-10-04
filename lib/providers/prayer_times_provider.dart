@@ -105,8 +105,6 @@ class PrayerTimesProvider extends ChangeNotifier {
               cachedPrayerTimes.locationTimestamp);
         }
       }
-
-      //TODO: Correct hijri date (if hijri day is 29/30/1/2)
     }
 
     //if still we failed to get prayer times we try to get the cached prayer times

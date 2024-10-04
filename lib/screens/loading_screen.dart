@@ -28,7 +28,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
       await Provider.of<SettingsProvider>(context, listen: false)
           .initializeSettings(context);
       if (!Provider.of<SettingsProvider>(context, listen: false).firstTime!) {
-        print('initializeFirebaseNotifications');
         NotificationsService.initializeFirebaseNotifications(false);
       }
       Provider.of<AzkarProvider>(context, listen: false).checkDatabaseUpdate();

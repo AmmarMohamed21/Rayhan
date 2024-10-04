@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:rayhan/services/hijri_date_service.dart';
 import 'package:rayhan/utilities/helper.dart';
 import 'package:rayhan/utilities/parsing_extensions.dart';
 
@@ -13,13 +14,13 @@ import 'crashlytics_service.dart';
 class PrayerTimesService {
   static Future<Position?> getLastKnownPosition() async {
     try {
-      print("Getting last known geolocation");
+      log("Getting last known geolocation");
       Position? pos = await Geolocator.getLastKnownPosition(
         forceAndroidLocationManager: true,
       ).timeout(Duration(seconds: 10));
-      print("Position timestamp: ${pos?.timestamp}");
-      print("Position longitude: ${pos?.longitude}");
-      print("Position latitude: ${pos?.latitude}");
+      log("Position timestamp: ${pos?.timestamp}");
+      log("Position longitude: ${pos?.longitude}");
+      log("Position latitude: ${pos?.latitude}");
       return pos;
     } catch (e, st) {
       CrashlyticsService.sendReport(e.toString(), st);
@@ -30,7 +31,7 @@ class PrayerTimesService {
 
   static Future<Position?> getCurrentLocation() async {
     try {
-      print("Getting geolocation");
+      log("Getting geolocation");
       Position pos = await Geolocator.getCurrentPosition(
           locationSettings: AndroidSettings(
         forceLocationManager: true,
@@ -97,7 +98,7 @@ class PrayerTimesService {
     }
 
     String result = parts.join("، ");
-    print(result);
+    log(result);
     return result;
   }
 
@@ -108,14 +109,19 @@ class PrayerTimesService {
     try {
       Uri uri = Uri.parse(
           'http://api.aladhan.com/v1/calendar/${now.year}/${now.month}?latitude=$latitude&longitude=$longitude');
-      http.Response response = await http.get(uri);
+      http.Response response =
+          await http.get(uri).timeout(Duration(seconds: 60));
 
       if (response.statusCode == 200) {
         String data = response.body;
         String city = await _getCityName(latitude, longitude) ?? "";
         MonthlyPrayerTimes monthlyPrayerTimes = MonthlyPrayerTimes.fromJson(
             _decodeData(data, latitude, longitude, locationTimestamp, city));
+
         //TODO: correct hijri date
+        monthlyPrayerTimes =
+            await HijriDateService.correctHijriDate(monthlyPrayerTimes);
+
         return monthlyPrayerTimes;
       }
     } catch (e, st) {
